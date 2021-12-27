@@ -1,0 +1,9 @@
+body {
+  background-color: lightblue;
+}
+
+.avatar {
+  border-radius: 5px;
+  width: 150px;
+  height: 150px;
+}
