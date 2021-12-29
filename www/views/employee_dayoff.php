@@ -8,9 +8,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   </head>
-  <body>      
+  <body>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <div class="container">
             <!-- Brand -->
@@ -22,20 +21,6 @@
             </button>
         
             <!-- Navbar links -->
-            <!-- <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <strong>Hello, NPH</strong>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Thông tin cá nhân</a>
-                            <a class="dropdown-item" href="#">Đổi mật khẩu</a>
-                            <a class="dropdown-item" href="#">Đăng xuất</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>   -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -56,31 +41,43 @@
     </nav>
 
     <div class="container">
-        <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách nhiệm vụ</h2>
+        <h2 class="text-center" style="margin:30px 30px 30px 30px">Thông tin nghỉ phép</h2>
+        <table class="table table-bordered text-center">
+            <tr>
+                <th>Tổng số ngày nghỉ phép</th>
+                <th>Số ngày đã nghỉ</th>
+                <th>Số ngày còn lại</th>
+                <th>Tạo đơn</th>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>12</td>
+                <td>3</td>
+                <td><p>Nhấn vào đây để <a href="create_form_dayoff.php"> tạo đơn mới</a></p></td>
+            </tr>
+        </table>
+        <!-- <div>
+            Tổng số ngày nghỉ phép: 
+        </div> -->
+        <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách yêu cầu</h2>
         <table class="table table-bordered text-center">
             <tr >
                 <th>ID</th>
-                <th>Tên nhiệm vụ</th>
-                <th>Ngày giao</th>
-                <th>Ngày hoàn thành</th>
+                <th>Ngày yêu cầu</th>
+                <th>Ngày phản hồi</th>
                 <th>Trạng thái</th>
-                <th>Chi tiết</th>
             </tr> 
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td>Task</td>
                     <td>24/12/2021</td>
-                    <td>31/12/2021</td>
-                    <td>chưa bắt đầu</td>
-                    <td>
-                        <p>Nhấp vào đây để<a href="#"> xem chi tiết</a></p> 
-                    </td>
+                    <td>28/12/2021</td>
+                    <td>Hợp lệ</td>
                 </tr>  
             </tbody>        
         </table>
     </div>
-
+      
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
