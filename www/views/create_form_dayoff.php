@@ -15,9 +15,25 @@
             <div class="col-md-6 col-lg-5">
                 <h3 class="text-center text-secondary mt-5 mb-3">Yêu cầu nghỉ phép</h3>
                 <form method="post" action="" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
-                    <div class="form-group">
-                        <label>Số ngày muốn nghỉ</label>
-                        <input class ="form-control " name="songaynghi" id="songaynghi" type="text" placeholder="Số ngày muốn nghỉ">
+                <div class="form-group">
+                        <label for="">Số ngày muốn nghỉ</label>
+                        <select class="form-control" id="dayoff">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <!-- <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option> -->
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Lý do</label>
