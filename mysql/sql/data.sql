@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 04, 2022 lúc 05:06 AM
+-- Thời gian đã tạo: Th1 04, 2022 lúc 09:52 AM
 -- Phiên bản máy phục vụ: 10.4.22-MariaDB
 -- Phiên bản PHP: 8.1.1
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `webassingment_database`
+-- Cơ sở dữ liệu: `dbagm`
 --
 CREATE DATABASE IF NOT EXISTS `dbagm` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `dbagm`;
@@ -32,7 +32,7 @@ USE `dbagm`;
 CREATE TABLE `account` (
   `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `fullname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `hash_password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `hash_password` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `possition` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `department` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `avatar` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL
@@ -43,7 +43,18 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`username`, `fullname`, `hash_password`, `possition`, `department`, `avatar`) VALUES
-('admin', 'Phan Van An', '$2a$12$EPloFHUnsX3G0lhjFJO11OFSzTfJqTOembcWAKUwFih', 'admin', '', '');
+('admin', 'Phan Van An', '$2a$12$EPloFHUnsX3G0lhjFJO11OFSzTfJqTOembcWAKUwFih', 'admin', '', ''),
+('hung', 'Nguyen Van D', '$2y$10$sVKsTIR9V7Rx0vwjmwL.HOc/LU7xsXqRfq1Thgnks1hQ0RQL1.9m2', 'employee', 'account', 'chuaco'),
+('hunghung', 'Nguyen Van D', '$2y$10$w9sagb6cmeM9Ab/qi5dQU.rKDgpKdVsMz..VcLYEpG0zwx5OiqQRG', 'employee', 'account', 'chuaco'),
+('vaA', 'Nguyen Van D', '$2y$10$opaSGZbpqwg0DzNbOzzqYO5R6is8KFOwS3xnOVdEase', 'account', 'employee', 'chuaco'),
+('vaaA', 'Nguyen Van D', '$2y$10$HHx6qq9zBnZQN53QL4TrnOvjY3ULh8T6b1o.A9bvofC', 'account', 'employee', 'chuaco'),
+('vaADaA', 'Nguyen Van D', '$2y$10$jWGQu931PB/ELKVBu98SPekE6FHn91Xr8RdGMn6P3TN', 'employee', 'account', 'chuaco'),
+('vanA', 'Nguyen Van A', '$2a$12$lr8oMIsU4nghqgAyv6BB0uAGi.noUlMB64P530.gAgdVnIqoq3Ecu', 'employee', '12345', ''),
+('vanB', 'Nguyen Van B', '$2a$12$EPloFHUnsX3G0lhjFJO11OFSzTfJqTOembcWAKUwFih', 'employee', '12345', ''),
+('vanC', 'Nguyen Van C', '$2a$12$EPloFHUnsX3G0lhjFJO11OFSzTfJqTOembcWAKUwFih', 'account', 'employee', 'chuaco'),
+('vanD', 'Nguyen Van D', '$2a$12$EPloFHUnsX3G0lhjFJO11OFSzTfJqTOembcWAKUwFih', 'account', 'employee', 'chuaco'),
+('vanE', 'Nguyen Van D', '$2a$12$EPloFHUnsX3G0lhjFJO11OFSzTfJqTOembcWAKUwFih', 'account', 'employee', 'chuaco'),
+('vanF', 'Nguyen Van D', '$2a$12$EPloFHUnsX3G0lhjFJO11OFSzTfJqTOembcWAKUwFih', 'account', 'employee', 'chuaco');
 
 -- --------------------------------------------------------
 
