@@ -31,7 +31,7 @@
                     <div class="form-group">
                         <p class="text-center">
                             <button class="btn btn-success px-5 h-5">Change</button></span>
-                            <button class="btn btn-danger px-5 h-5">Cancel</button></span>
+                            <a href="employee_index.php" class="btn btn-danger px-5 h-5">Cancel</a></span>
                         </p>
                         
                     </div>
