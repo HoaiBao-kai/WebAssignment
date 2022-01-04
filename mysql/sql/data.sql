@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `webassingment_database`
 --
-CREATE DATABASE IF NOT EXISTS `webassingment_database` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `webassingment_database`;
+CREATE DATABASE IF NOT EXISTS `dbagm` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `dbagm`;
 
 -- --------------------------------------------------------
 

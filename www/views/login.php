@@ -1,6 +1,51 @@
-<?php 
+<?php
     session_start();
+    if (isset($_SESSION['user'])) {
+        header('Location: index.php');
+        exit();
+    }
+
+    require_once('../admin/db.php');
+
+    $error = '';
+
+    $user = '';
+    $pass = '';
+
+    if (isset($_POST['user']) && isset($_POST['pass'])) {
+        $user = $_POST['user'];
+        $pass = $_POST['pass'];
+
+        echo($user);
+        echo($pass);
+
+        if (empty($user)) {
+            $error = 'Please enter your username';
+        }
+        else if (empty($pass)) {
+            $error = 'Please enter your password';
+        }
+        else if (strlen($pass) < 6) {
+            $error = 'Password must have at least 6 characters';
+        }
+        else {
+            $result = login($user, $pass);
+
+            print_r($result);
+
+            if ($result['code'] == 0) {
+                $data = $result['data'];
+
+                header('Location: ../index.php');
+                exit();
+            }
+            else {
+                $error = $result['error'];
+            }
+        }
+    }
 ?>
+
 
 <!doctype html>
 <html lang="en">
@@ -28,7 +73,12 @@
                         <input name="pass" id="password" type="password" class="form-control" placeholder="Password">
                     </div>
                     <div class="form-group text-center">
-                        <button class="btn btn-success px-5 h-5">Login</button>
+                        <?php
+                            if (!empty($error)) {
+                                echo "<div class='alert alert-danger'>$error</div>";
+                            }
+                        ?>
+                        <button class="btn btn-success px-5">Login</button>
                     </div>
                 </form>
             </div>
