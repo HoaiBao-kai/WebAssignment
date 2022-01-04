@@ -61,6 +61,10 @@
 		print_r($data);
 
         $hashed_password = $data['hash_password'];
+		if(password_verify($user, $hashed_password)){
+			
+			die(header("location:../views/ft_resetpass.php"));
+		}
 
         if (!password_verify($pass, $hashed_password)) {
             return array('code' => 3, 'error' => 'invalid password');
