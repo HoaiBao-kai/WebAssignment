@@ -110,25 +110,44 @@
 
        return $output;
 	}
-
-	function addEmployee($username, $fullname, $hashed_password,$posstion,$department,$avatar) {
-        $sql = 'insert into account(username, fullname, hash_password,posstion,department,$avatar) values(?,?,?)';
+	function updatePassword($username, $password)
+	{
+		$sql = 'update account set hash_password = ? where username = ?';
         $conn = open_database();
-
-        $stm = $conn->prepare($sql);
-        $stm->bind_param('sss',$name, $price, $des);
+		
+		$hash = password_hash($password, PASSWORD_DEFAULT);
+        $stm = $conn->prepare($sql);		
+        $stm->bind_param('ss', $hash,$username);
 
         if(!$stm->execute()) {
             return array('code' => 1, 'error' => 'Can not execute command');
         }
 
+        if ($stm->affected_rows == 0) {
 
-        $result = $stm->get_result();
-        if ($result->num_rows == 0) {
-            return array('code' => 2, 'error' => 'ID not exist');
+            return array('code' => 2, 'error' => 'An error occured');
         }
 
-       return $result->fetch_assoc();
+        return array('code' => 0, 'message' => 'Update successful');
+	}
+
+	function addEmployee($username, $fullname, $hashed_password,$possition,$department,$avatar) {
+        $sql = 'insert into account(username, fullname, hash_password,possition,department,avatar) values(?,?,?,?,?,?)';
+        $conn = open_database();
+
+        $stm = $conn->prepare($sql);
+		$hash = password_hash($hashed_password, PASSWORD_DEFAULT);
+        $stm->bind_param('ssssss',$username, $fullname, $hash,$possition,$department,$avatar);
+
+        if(!$stm->execute()) {
+            return array('code' => 1, 'error' => 'Can not execute command');
+        }
+
+        if ($stm->affected_rows == 0) {
+            return array('code' => 2, 'error' => 'An error occured');
+        }
+
+        return array('code' => 0, 'message' => 'Create successful');
 	}
 
     function get_departments() {
@@ -173,5 +192,57 @@
        return $result->fetch_assoc();
 	}
 
-    
+    function add_department($id, $name, $room, $detail) {
+        $sql = 'insert into department(id, name, room, detail) values(?,?,?,?)';
+        $conn = open_database();
+
+        $stm = $conn->prepare($sql);
+        $stm->bind_param('ssss', $id, $name, $room, $detail);
+
+        if(!$stm->execute()) {
+            return array('code' => 1, 'error' => 'Can not execute command');
+        }
+
+        if ($stm->affected_rows == 0) {
+            return array('code' => 2, 'error' => 'An error occured');
+        }
+
+        return array('code' => 0, 'error' => 'Create successful');
+    }
+
+    function update_department($id, $name, $room, $detail) {
+        $sql = 'update department set name = ?, room = ?, detail = ? where id = ?';
+        $conn = open_database();
+
+        $stm = $conn->prepare($sql);
+        $stm->bind_param('ssss',$name, $room, $detail, $id);
+
+        if(!$stm->execute()) {
+            return array('code' => 1, 'error' => 'Can not execute command');
+        }
+
+        if ($stm->affected_rows == 0) {
+            return array('code' => 2, 'error' => 'An error occured');
+        }
+
+        return array('code' => 0, 'error' => 'Update successful');
+    }
+
+    function delete_department($id) {
+        $sql = 'delete from department where id = ?';
+        $conn = open_database();
+
+        $stm = $conn->prepare($sql);
+        $stm->bind_param('i', $id);
+
+        if(!$stm->execute()) {
+            return array('code' => 1, 'error' => 'Can not execute command');
+        }
+
+        if ($stm->affected_rows == 0) {
+            return array('code' => 2, 'error' => 'ID not exist');
+        }
+
+        return array('code' => 0, 'error' => 'Delete successful');
+    }
 ?>
