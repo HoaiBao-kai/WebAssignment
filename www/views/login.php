@@ -34,7 +34,15 @@
             if ($result['code'] == 0) {
                 $data = $result['data'];
                 $_SESSION['user']= $user;
-                header('Location: admin_index.php');
+
+                $_SESSION['possition'] = $data['possition'];
+                if ($_SESSION['possition'] === 'employee') {
+                    header('Location: ../views/employee_index.php');
+                }
+                else
+                {
+                    header('Location: admin_index.php');
+                }
                 exit();
             }
             else if($result['code'] == 100){

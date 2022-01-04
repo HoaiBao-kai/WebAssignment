@@ -1,3 +1,11 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: ../views/login.php');
+        exit();
+    }
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,7 +21,7 @@
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" href="#"><strong>NPH</strong></a>
+            <a class="navbar-brand" href="#"><strong><?= $_SESSION['user'] ?></strong></a>
         
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -24,16 +32,16 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                        <a class="nav-link" href="#">Nghỉ phép</a>
+                        <a class="nav-link" href="../views/employee_dayoff.php">Nghỉ phép</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Thông tin cá nhân</a>
+                        <a class="nav-link" href="../views/employeeprofile.php">Thông tin cá nhân</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Đổi mật khẩu</a>
+                        <a class="nav-link" href="../views/resetpassword.php">Đổi mật khẩu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Đăng xuất</a>
+                        <a class="nav-link" href="../views/logout.php">Đăng xuất</a>
                     </li>
                 </ul>
             </div>
