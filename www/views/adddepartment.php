@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../style.css">
+    <script src="../main.js"></script>
   </head>
   <body>
 
@@ -15,10 +16,10 @@
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
                 <h3 class="text-center text-secondary mt-5 mb-3">Thêm phòng ban</h3>
-                <form method="post" action="" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
+                <form method="post" action="" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light" id="add_department_form">
                     <div class="form-group">
                         <label>Mã phòng ban</label>
-                        <input disabled class ="form-control " name="maphongban" id="maphongban" type="text" placeholder="Chưa xác định được mã phòng ban">
+                        <input class ="form-control " name="maphongban" id="maphongban" type="text" placeholder="Chưa xác định được mã phòng ban">
                     </div>
                     <div class="form-group">
                         <label>Tên phòng ban</label>
@@ -26,16 +27,16 @@
                     </div>
                     <div class="form-group">
                         <label>Số phòng</label>
-                        <input class ="form-control" name="name" id="name" type="text" placeholder="Nhập số phòng">
+                        <input class ="form-control" name="room" id="room" type="text" placeholder="Nhập số phòng">
                     </div>
                     <div class="form-group">
                         <label>Mô tả</label>
-                        <textarea  class ="form-control"name="" id="" cols="20" rows="10" style="height:100px" placeholder="Thêm mô tả về phòng ban"></textarea>
+                        <textarea  class ="form-control"name="detail" id="detail" cols="20" rows="10" style="height:100px" placeholder="Thêm mô tả về phòng ban"></textarea>
                     </div>
                     <div class="form-group">
                         <p class="text-center"style="margin:15px">
-                            <button class="btn btn-success px-5 h-5">Thêm</button></span>
-                            <button class="btn btn-danger px-5 h-5">Huỷ bỏ</button></span>
+                            <button onclick="add_department()" class="btn btn-success px-5 h-5">Thêm</button></span>
+                            <a href="../views/employee_index.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
                         </p> 
                     </div>
                 </form>

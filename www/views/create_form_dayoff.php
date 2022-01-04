@@ -46,7 +46,7 @@
                     <div class="form-group">
                         <p class="text-center"style="margin:15px">
                             <button class="btn btn-success px-5 h-5">Tạo</button></span>
-                            <button class="btn btn-danger px-5 h-5">Huỷ bỏ</button></span>
+                            <a href="../views/employee_dayoff.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
                         </p> 
                     </div>
                 </form>
