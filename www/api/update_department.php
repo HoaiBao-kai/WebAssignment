@@ -4,9 +4,9 @@
     header("Access-Control-Allow-Origin:*");
     header('Content-Type: application/json; charset=utf-8');
 
-    if($_SERVER['REQUEST_METHOD'] != 'POST') {
+    if($_SERVER['REQUEST_METHOD'] != 'PUT') {
         http_response_code(405);
-        die(json_encode(array('code' => 4, 'error' => 'API nay chi ho tro POST')));
+        die(json_encode(array('code' => 4, 'error' => 'API nay chi ho tro PUT')));
     }
 
     $input = json_decode(file_get_contents('php://input'));
@@ -25,7 +25,7 @@
     }
 
     
-    $result = add_department($input->id, $input->name, $input->room, $input->detail);
+    $result = update_department($input->id, $input->name, $input->room, $input->detail);
 
     die(json_encode($result));
 ?>
