@@ -1,3 +1,11 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: ../views/login.php');
+        exit();
+    }
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,7 +21,7 @@
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" href="#"><strong>NPH</strong></a>
+            <a class="navbar-brand" href="#"><strong><?= $_SESSION['user'] ?></strong></a>
         
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
