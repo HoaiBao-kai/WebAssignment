@@ -1,3 +1,27 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: login.php');
+        exit();
+    }
+    $error = '';
+    require_once('../admin/db.php');
+    if (isset($_POST['password']) && isset($_POST['cfpassword'])) {
+        if(!empty($_POST['password']) && !empty($_POST['cfpassword'])){
+            if($_POST['password']!=$_POST['cfpassword']){
+                $error = 'Password does not match';
+            }
+            else{
+                $ft_result = updatePassword($_SESSION['user'],$_POST['cfpassword']);
+                if($ft_result['code']==0){
+                    header('Location: login.php');
+                }
+            }
+        }
+       
+    }
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -18,16 +42,22 @@
                 <form method="post" action="" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="form-group">
                         <label for="password">New Password</label>
-                        <input name="pass" id="password" type="password" class="form-control" placeholder="Enter your new password">
+                        <input name="password" id="password" type="password" class="form-control" placeholder="Enter your new password">
                     </div>
                     <div class="form-group">
                         <label for="password">Confirm Password</label>
-                        <input name="pass" id="password" type="password" class="form-control" placeholder="Confirm your new password">
+                        <input name="cfpassword" id="cfpassword" type="password" class="form-control" placeholder="Confirm your new password">
                     </div>
+                    <div class="form-group text-center">
+                        <?php
+                            if (!empty($error)) {
+                                echo "<div class='alert alert-danger'>$error</div>";
+                            }
+                        ?>
                     <div class="form-group">
                         <p class="text-center">
-                            <button class="btn btn-success px-5 h-5">Change</button></span>
-                            <button class="btn btn-danger px-5 h-5">Cancel</button></span>
+                            <button class="btn btn-success px-5 h-5">Change</button>
+                            <button class="btn btn-danger px-5 h-5">Cancel</button>
                         </p>
                         
                     </div>

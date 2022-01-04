@@ -1,7 +1,7 @@
 <?php
     session_start();
     if (isset($_SESSION['user'])) {
-        header('Location: index.php');
+        header('Location: ../index.php');
         exit();
     }
 
@@ -31,12 +31,15 @@
         else {
             $result = login($user, $pass);
 
-            print_r($result);
-
             if ($result['code'] == 0) {
                 $data = $result['data'];
-
+                $_SESSION['user']= $user;
                 header('Location: ../index.php');
+                exit();
+            }
+            else if($result['code'] == 100){
+                $_SESSION['user']= $user;
+                header('Location:ft_resetpass.php');
                 exit();
             }
             else {
