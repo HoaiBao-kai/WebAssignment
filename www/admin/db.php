@@ -69,4 +69,46 @@
         return array('code' => 0, 'error' => '', 'data' => $data);
 	}
 
+	function get_departments() {
+		$sql = 'select * from department';
+        $conn = open_database();
+
+        $stm = $conn->prepare($sql);
+    
+        if(!$stm->execute()) {
+            return array('code' => 1, 'error' => 'Can not execute command');
+        }
+
+        $result = $stm->get_result();
+        if ($result->num_rows == 0) {
+            return array('code' => 2, 'error' => 'An error occured');
+        }
+
+       $output = array();
+       while($row = $result->fetch_assoc()) {
+           $output[] = $row;
+       }
+
+       return $output;
+	}
+
+	function get_department($id) {
+		$sql = 'select * from department where id = ?';
+        $conn = open_database();
+
+        $stm = $conn->prepare($sql);
+        $stm->bind_param('s', $id);
+    
+        if(!$stm->execute()) {
+            return array('code' => 1, 'error' => 'Can not execute command');
+        }
+
+        $result = $stm->get_result();
+        if ($result->num_rows == 0) {
+            return array('code' => 2, 'error' => 'ID not exist');
+        }
+
+       return $result->fetch_assoc();
+	}
+
 ?>
