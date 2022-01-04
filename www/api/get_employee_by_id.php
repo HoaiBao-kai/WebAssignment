@@ -7,6 +7,7 @@
         die(json_encode(array('code' => 4, 'error' => 'API nay chi ho tro GET')));
     
     }
-    $result = getEmployee();
+    $result = getEmployeeByID();
     die(json_encode($result)); 
+
 ?>

@@ -69,7 +69,69 @@
         return array('code' => 0, 'error' => '', 'data' => $data);
 	}
 
-	function get_departments() {
+
+	function getEmployee(){
+        $sql = 'select * from account where possition <> "admin"';
+        $conn = open_database();
+
+
+        $result = $conn->query($sql);
+
+        $output = array();
+
+        while(($row=$result->fetch_assoc())){
+            $output[]= $row;
+        }
+        return $output;
+    }
+
+	function getEmployeeByID(){
+        $sql = 'select * from account where username = ?';
+        $conn = open_database();
+
+        $stm = $conn->prepare($sql);
+        
+        $stm->bind_param('s',$_GET['username']);
+
+        if(!$stm->execute()) {
+            return array('code' => 1, 'error' => 'Can not execute command');
+        }
+
+
+        $result = $stm->get_result();
+        if ($result->num_rows == 0) {
+            return array('code' => 2, 'error' => 'An error occured');
+        }
+
+       $output = array();
+       while($row = $result->fetch_assoc()) {
+           $output[] = $row;
+       }
+
+       return $output;
+	}
+
+	function addEmployee($username, $fullname, $hashed_password,$posstion,$department,$avatar) {
+        $sql = 'insert into account(username, fullname, hash_password,posstion,department,$avatar) values(?,?,?)';
+        $conn = open_database();
+
+        $stm = $conn->prepare($sql);
+        $stm->bind_param('sss',$name, $price, $des);
+
+        if(!$stm->execute()) {
+            return array('code' => 1, 'error' => 'Can not execute command');
+        }
+
+
+        $result = $stm->get_result();
+        if ($result->num_rows == 0) {
+            return array('code' => 2, 'error' => 'ID not exist');
+        }
+
+       return $result->fetch_assoc();
+	}
+
+    function get_departments() {
 		$sql = 'select * from department';
         $conn = open_database();
 
@@ -111,4 +173,5 @@
        return $result->fetch_assoc();
 	}
 
+    
 ?>
