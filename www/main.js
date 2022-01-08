@@ -17,33 +17,3 @@ $(document).ready(() => {
 		$("h3").html("jQuery đã hoạt động");
 	});
 });
-
-function add_department() {
-	let form = document.getElementById('add_department_form');
-		form.addEventListener('submit', e => {
-			e.preventDefault();
-
-			let id = document.getElementById('maphongban').value;
-			let name = document.getElementById('tenphongban').value;
-			let room = document.getElementById('room').value;
-			let detail = document.getElementById('detail').value;
-
-			if (id === '' || name === '' || room === '' || detail === '') {
-				return alert('Invalid input');
-			}
-
-		
-			fetch("http://localhost/WebAssignment/www/api/add_department.php",
-				{
-					headers: {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json'
-					},
-					method: "POST",
-					body:  JSON.stringify({ 'id': id, 'name': name, 'room': room ,'detail':detail})
-				})
-			
-			}
-		)
-		header('Location:../views/department_management.php'); 
-}
