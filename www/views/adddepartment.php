@@ -11,7 +11,7 @@
     <script src="../main.js"></script>
   </head>
   <body>
-
+      
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
@@ -36,7 +36,7 @@
                     <div class="form-group">
                         <p class="text-center"style="margin:15px">
                             <button onclick="add_department()" class="btn btn-success px-5 h-5">Thêm</button></span>
-                            <a href="../views/employee_index.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
+                            <a href="../views/department_management.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
                         </p> 
                     </div>
                 </form>

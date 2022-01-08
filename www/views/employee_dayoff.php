@@ -31,7 +31,10 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../views/employee_index.php">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="../views/employee_dayoff.php">Nghỉ phép</a>
                     </li>
                     <li class="nav-item">
@@ -61,12 +64,9 @@
                 <td>15</td>
                 <td>12</td>
                 <td>3</td>
-                <td><p>Nhấn vào đây để <a href="create_form_dayoff.php"> tạo đơn mới</a></p></td>
+                <td><a href="create_form_dayoff.php" class="btn btn-primary">Tạo đơn mới</a></td>
             </tr>
         </table>
-        <!-- <div>
-            Tổng số ngày nghỉ phép: 
-        </div> -->
         <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách yêu cầu</h2>
         <table class="table table-bordered text-center">
             <tr >

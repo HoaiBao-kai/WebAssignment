@@ -34,18 +34,16 @@ function add_department() {
 
 		
 			fetch("http://localhost/WebAssignment/www/api/add_department.php",
-			{
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-				method: "POST",
-				body:  JSON.stringify({ 'id': id, 'name': name, 'room': room ,'detail':detail})
-			})
-			.then(function(res){ console.log(res) })
-			.catch(function(res){ console.log(res) })
+				{
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					method: "POST",
+					body:  JSON.stringify({ 'id': id, 'name': name, 'room': room ,'detail':detail})
+				})
+			
 			}
 		)
-		location.reload();
-		// modal.style.display="none";
+		header('Location:../views/department_management.php'); 
 }

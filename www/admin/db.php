@@ -169,12 +169,12 @@
             return array('code' => 2, 'error' => 'An error occured');
         }
 
-       $output = array();
-       while($row = $result->fetch_assoc()) {
-           $output[] = $row;
-       }
+    //    $output = array();
+    //    while($row = $result->fetch_assoc()) {
+    //        $output[] = $row;
+    //    }
 
-       return $output;
+       return $result;
 	}
 
 	function get_department($id) {
