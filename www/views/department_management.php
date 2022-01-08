@@ -22,6 +22,40 @@
     <script src="../main.js"></script>
   </head>
   <body>
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <div class="container">
+            <!-- Brand -->
+            <a class="navbar-brand" href="#"><strong><?= $_SESSION['user'] ?></strong></a>
+        
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../views/admin_index.php">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../views/#">Tài khoản</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../views/department_management.php">Phòng ban</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../views/resetpassword.php">Đổi mật khẩu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../views/logout.php">Đăng xuất</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
   <div class="container">
         <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách phòng ban</h2>
         <div class="form-group">
