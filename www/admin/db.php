@@ -272,7 +272,7 @@ function addTask($accountID, $deadline, $departmentID, $detail, $id, $startDay, 
         return array('code' => 2, 'error' => 'An error occured');
     }
 
-    return array('code' => 0, 'message' => 'Update successful');
+    return array('code' => 0, 'message' => 'Create successful');
 }
 
 

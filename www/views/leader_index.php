@@ -36,7 +36,7 @@ if (!isset($_SESSION['user'])) {
                         <a class="nav-link" href="#">Quản lý ngày nghỉ phép</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"></a>
+                        <a class="nav-link" href="addtask.php">Thêm nhiệm vụ</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Đổi mật khẩu</a>

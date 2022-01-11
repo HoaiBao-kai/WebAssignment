@@ -8,17 +8,32 @@ require_once('../admin/db.php');
 $department = get_department_user($_SESSION['user']);
 $account = getEmployeebyDepartment($department);
 $idtask = uniqid();
+$error = '';
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 $date = date("d/m/Y H:i");
-// $accountID, $deadline, $departmentID, $detail, $id, $startDay, $status, $tagFile, $title
+
+// addTask($accountID, $deadline, $departmentID, $detail, $id, $startDay, $status, $tagFile, $title)
 if (
-    isset($_POST['id']) && isset($_POST['accountID']) && isset($_POST['deadline'])
-    && isset($_POST['department']) && isset($_POST['detail']) && isset($_POST['startDay'])
-    && isset($_POST['tagFile']) && isset($_POST['title'])
+    isset($_POST['deadline']) && isset($_POST['title']) && isset($_POST['detail'])
+    && isset($_POST['tagFile']) && isset($_POST['deadline']) && $_POST['accountID']
 ) {
-    echo "Ahihi";
+    $re = addTask(
+        $_POST['accountID'],
+        $_POST['deadline'],
+        $department,
+        $_POST['detail'],
+        $idtask,
+        $date,
+        "Waiting",
+        $_POST['tagFile'],
+        $_POST['title']
+    );
+    if ($re['code'] == 0) {
+        header('Location: ../views/leader_index.php');
+    }
+} else {
+    $error = "Check your infomation";
 }
-echo $_POST['deadline'];
 ?>
 <!doctype html>
 <html lang="en">
@@ -67,7 +82,7 @@ echo $_POST['deadline'];
                             <?php
                             while ($row = $account->fetch_assoc()) {
                             ?>
-                                <option value='<?php $row["username"] ?>'><?php echo $row['username'] ?></option>
+                                <option value='<?php echo $employee = $row["username"] ?>'><?php echo $row['username'] ?></option>
                             <?php
                             }
                             ?>
@@ -82,12 +97,18 @@ echo $_POST['deadline'];
                         <label for="">File đính kèm (nếu có)</label>
                         <input type='file' id="tagFile" name="tagFile" />
                     </div>
-                    <div class="form-group">
-                        <p class="text-center" style="margin:15px">
-                            <button type="submit" onclick="submitTask()" class="btn btn-success px-5 h-5">Thêm</button></span>
-                            <button class="btn btn-danger px-5 h-5">Huỷ bỏ</button></span>
-                        </p>
-                    </div>
+                    <div class="form-group text-center">
+                        <?php
+                        if (!empty($error)) {
+                            echo "<div class='alert alert-danger'>$error</div>";
+                        }
+                        ?>
+                        <div class="form-group">
+                            <p class="text-center" style="margin:15px">
+                                <button type="submit" onclick="submitTask()" class="btn btn-success px-5 h-5">Thêm</button></span>
+                                <button class="btn btn-danger px-5 h-5">Huỷ bỏ</button></span>
+                            </p>
+                        </div>
                 </form>
             </div>
         </div>
