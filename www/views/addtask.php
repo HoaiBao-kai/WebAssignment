@@ -10,7 +10,8 @@ $account = getEmployeebyDepartment($department);
 $idtask = uniqid();
 $error = '';
 date_default_timezone_set('Asia/Ho_Chi_Minh');
-$date = date("d/m/Y H:i");
+$deadline = '';
+$startDay = date("Y-m-d\TH:i");
 
 // addTask($accountID, $deadline, $departmentID, $detail, $id, $startDay, $status, $tagFile, $title)
 if (
@@ -23,7 +24,7 @@ if (
         $department,
         $_POST['detail'],
         $idtask,
-        $date,
+        $startDay,
         "Waiting",
         $_POST['tagFile'],
         $_POST['title']
@@ -65,7 +66,7 @@ if (
                     </div>
                     <div class="form-group">
                         <label>Ngày giao</label>
-                        <input disabled value="<?php echo  $date ?>" class="form-control" name="startDay" id="startDay" type="text" placeholder="Ngày giao">
+                        <input disabled value="<?php echo $startDay ?>" class="form-control" name="startDay" id="startDay" type="datetime-local" placeholder="Ngày giao">
                     </div>
                     <div class="form-group">
                         <label>Deadline</label>

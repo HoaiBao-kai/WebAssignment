@@ -317,7 +317,8 @@ function get_department_user($id)
     return $result->fetch_assoc()['department'];
 }
 
-function get_task_department($id) {
+function get_task_department($id)
+{
     $sql = "select * from task where department_id = ?";
     $conn = open_database();
 
@@ -334,4 +335,4 @@ function get_task_department($id) {
     }
 
     return $result;
-} 
+}
