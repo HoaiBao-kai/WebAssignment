@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 11, 2022 lúc 05:23 AM
+-- Thời gian đã tạo: Th1 11, 2022 lúc 10:05 AM
 -- Phiên bản máy phục vụ: 10.4.22-MariaDB
 -- Phiên bản PHP: 8.1.1
 
@@ -44,8 +44,11 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`username`, `fullname`, `hash_password`, `possition`, `department`, `avatar`, `id`) VALUES
+('12321', '3123', '$2y$10$8ZFR703RTKAXTOaAXC0dZ.3hXeBbA5G3oMJGqrEBOddf4dJf4WJnO', 'leader', NULL, '', ''),
 ('admin', 'Phan Van An', '$2a$12$lr8oMIsU4nghqgAyv6BB0uAGi.noUlMB64P530.gAgdVnIqoq3Ecu', 'admin', '', '', 'admin'),
-('vanA', 'Nguyen Van A', '$2a$12$lr8oMIsU4nghqgAyv6BB0uAGi.noUlMB64P530.gAgdVnIqoq3Ecu', 'employee', '12345', '', ''),
+('admin1', 'hggaga', '$2y$10$9UQ2RBxmSh8cCuoEvr1vq.XARTDBlv7IzANa12IexjUsajeJoLnre', 'admin', 'Phòng hành chính', NULL, ''),
+('hungnguyen', 'Nguyen Phuoc Hung', '$2y$10$REAanlDYTJGZBgPHQ7PYluCHXlpvYPx89tjlwdkGecgp9TMsNThV6', 'employee', '115', '', ''),
+('vanA', 'Nguyen Van A', '$2a$12$lr8oMIsU4nghqgAyv6BB0uAGi.noUlMB64P530.gAgdVnIqoq3Ecu', 'leader', '123', '', ''),
 ('vanB', 'Nguyen Van B', '$2a$12$EPloFHUnsX3G0lhjFJO11OFSzTfJqTOembcWAKUwFih', 'employee', '12345', '', ''),
 ('vanC', 'Nguyen Van C', '$2a$12$EPloFHUnsX3G0lhjFJO11OFSzTfJqTOembcWAKUwFih', 'account', 'employee', 'chuaco', ''),
 ('vanD', 'Nguyen Van D', '$2a$12$EPloFHUnsX3G0lhjFJO11OFSzTfJqTOembcWAKUwFih', 'account', 'employee', 'chuaco', ''),
@@ -65,8 +68,16 @@ CREATE TABLE `day_off` (
   `day_end` date NOT NULL,
   `reason` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `result` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `reason_result` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL
+  `reason_result` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `department_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `day_off`
+--
+
+INSERT INTO `day_off` (`id`, `employeeId`, `day_start`, `day_end`, `reason`, `result`, `reason_result`, `department_id`) VALUES
+('[value-1]', '[value-2]', '0000-00-00', '0000-00-00', '[value-5]', '[value-6]', '[value-7]', '123');
 
 -- --------------------------------------------------------
 
@@ -86,8 +97,8 @@ CREATE TABLE `department` (
 --
 
 INSERT INTO `department` (`id`, `name`, `room`, `detail`) VALUES
-('115', 'ITPE', 'A005', 'Technology'),
-('117', 'ITTT', 'A007', 'lllllll');
+('115', 'Phòng hành chính', 'A005', 'Technology'),
+('117', 'Phòng nhân sự', 'A007', 'lllllll');
 
 -- --------------------------------------------------------
 
@@ -125,21 +136,7 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`id`, `title`, `detail`, `start_day`, `deadline`, `account_id`, `status`, `tag_file`, `department_id`) VALUES
-('61dcff7d3d7ad', '31231', '31231', '0000-00-00 00:00:00', '2022-01-11 11:54:00', '', 'Waiting', 'avt.png', '12345'),
-('61dd0044803ef', '31231', '31231', '0000-00-00 00:00:00', '2022-01-11 11:54:00', '', 'Waiting', 'avt.png', '12345'),
-('61dd0054a1ca4', '312321', '312312', '0000-00-00 00:00:00', '2022-01-11 10:58:00', '', 'Waiting', '', '12345'),
-('61dd0092c7069', '312321', '312312', '0000-00-00 00:00:00', '2022-01-11 10:58:00', '', 'Waiting', '', '12345'),
-('61dd0095bb4ae', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Waiting', '', '12345'),
-('61dd00bbddf67', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Waiting', '', '12345'),
-('61dd00cdaa0e9', '32424', '43223', '0000-00-00 00:00:00', '2022-01-11 11:00:00', '', 'Waiting', 'download.png', '12345'),
-('61dd00f5d0c72', '32424', '43223', '0000-00-00 00:00:00', '2022-01-11 11:00:00', '', 'Waiting', 'download.png', '12345'),
-('61dd010a906ef', '32424', '43223', '0000-00-00 00:00:00', '2022-01-11 11:00:00', '', 'Waiting', 'download.png', '12345'),
-('61dd0116030a1', '32424', '43223', '0000-00-00 00:00:00', '2022-01-11 11:00:00', '', 'Waiting', 'download.png', '12345'),
-('61dd0129324f3', '32131', '1231', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Waiting', 'download.png', '12345'),
-('61dd018681c29', '32131', '1231', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Waiting', 'download.png', '12345'),
-('61dd0191d396f', '', '312132', '0000-00-00 00:00:00', '2022-01-11 11:03:00', '', 'Waiting', '', '12345'),
-('61dd020d65705', '', '312132', '0000-00-00 00:00:00', '2022-01-11 11:03:00', 'vanA', 'Waiting', '', '12345'),
-('61dd026069d47', '1231', '312313', '0000-00-00 00:00:00', '2022-01-11 11:06:00', 'vanA', 'Waiting', 'avt.png', '12345');
+('61dd337c67c5d', 'Assignment Web', 'Phải thực hiện nghiêm túc', '2022-01-11 14:36:00', '2022-01-12 14:35:00', 'vanA', 'Waiting', '', '123');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -152,9 +149,21 @@ ALTER TABLE `account`
   ADD PRIMARY KEY (`username`);
 
 --
+-- Chỉ mục cho bảng `day_off`
+--
+ALTER TABLE `day_off`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `department`
 --
 ALTER TABLE `department`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `task`
+--
+ALTER TABLE `task`
   ADD PRIMARY KEY (`id`);
 COMMIT;
 
