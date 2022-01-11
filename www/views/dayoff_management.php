@@ -1,14 +1,16 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: login.php');
-    exit();
-}
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: login.php');
+        exit();
+    }
 
-require_once('../admin/db.php');
-$user_id = $_SESSION['user'];
-$id = get_department_user($user_id);
-$data = get_dayoff_department($id);
+    $user_id = $_SESSION['user'];
+
+    require_once('../admin/db.php');
+    $user_id = $_SESSION['user'];
+    $id = get_department_user($user_id);
+    $data = get_dayoff_department($id);
 ?>
 <!doctype html>
 <html lang="en">
@@ -44,13 +46,13 @@ $data = get_dayoff_department($id);
                         <a class="nav-link" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../views/employee_dayoff.php">Quản lý ngày nghỉ</a>
+                        <a class="nav-link" href="../views/dayoff_management.php">Quản lý ngày nghỉ</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="addtask.php">Thêm nhiệm vụ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../views/employeeprofile.php">Thông tin cá nhân</a>
+                        <a class="nav-link" href="../views/employeeprofile.php?username=<?=$user_id?>">Thông tin cá nhân</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../views/resetpassword.php">Đổi mật khẩu</a>

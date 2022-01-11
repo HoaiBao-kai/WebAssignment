@@ -4,6 +4,8 @@
         header('Location: ../views/login.php');
         exit();
     }
+
+    $user_id = $_SESSION['user'];
 ?>
 
 <!doctype html>
@@ -41,10 +43,13 @@
                                     <a class="nav-link" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="../views/dayoff_management.php">Quản lý ngày nghỉ</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="addtask.php">Thêm nhiệm vụ</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="../views/employeeprofile.php">Thông tin cá nhân</a>
+                                    <a class="nav-link" href="../views/employeeprofile.php?username=<?=$user_id?>">Thông tin cá nhân</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="../views/resetpassword.php">Đổi mật khẩu</a>
@@ -63,7 +68,7 @@
                                     <a class="nav-link" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="../views/employeeprofile.php">Thông tin cá nhân</a>
+                                    <a class="nav-link" href="../views/employeeprofile.php?username=<?=$user_id?>">Thông tin cá nhân</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="../views/resetpassword.php">Đổi mật khẩu</a>
