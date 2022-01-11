@@ -2,14 +2,15 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 08, 2022 at 08:04 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.10
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th1 11, 2022 lúc 05:23 AM
+-- Phiên bản máy phục vụ: 10.4.22-MariaDB
+-- Phiên bản PHP: 8.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -17,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dbagm`
+-- Cơ sở dữ liệu: `dbagm`
 --
 CREATE DATABASE IF NOT EXISTS `dbagm` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `dbagm`;
@@ -25,7 +26,7 @@ USE `dbagm`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account`
+-- Cấu trúc bảng cho bảng `account`
 --
 
 CREATE TABLE `account` (
@@ -39,7 +40,7 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `account`
+-- Đang đổ dữ liệu cho bảng `account`
 --
 
 INSERT INTO `account` (`username`, `fullname`, `hash_password`, `possition`, `department`, `avatar`, `id`) VALUES
@@ -54,7 +55,7 @@ INSERT INTO `account` (`username`, `fullname`, `hash_password`, `possition`, `de
 -- --------------------------------------------------------
 
 --
--- Table structure for table `day_off`
+-- Cấu trúc bảng cho bảng `day_off`
 --
 
 CREATE TABLE `day_off` (
@@ -70,7 +71,7 @@ CREATE TABLE `day_off` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `department`
+-- Cấu trúc bảng cho bảng `department`
 --
 
 CREATE TABLE `department` (
@@ -81,7 +82,7 @@ CREATE TABLE `department` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `department`
+-- Đang đổ dữ liệu cho bảng `department`
 --
 
 INSERT INTO `department` (`id`, `name`, `room`, `detail`) VALUES
@@ -91,7 +92,7 @@ INSERT INTO `department` (`id`, `name`, `room`, `detail`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `file`
+-- Cấu trúc bảng cho bảng `file`
 --
 
 CREATE TABLE `file` (
@@ -104,7 +105,7 @@ CREATE TABLE `file` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `task`
+-- Cấu trúc bảng cho bảng `task`
 --
 
 CREATE TABLE `task` (
@@ -115,21 +116,43 @@ CREATE TABLE `task` (
   `deadline` datetime NOT NULL,
   `account_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `status` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `tag_file` varchar(100) COLLATE utf8_unicode_ci NOT NULL
+  `tag_file` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `department_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Indexes for dumped tables
+-- Đang đổ dữ liệu cho bảng `task`
+--
+
+INSERT INTO `task` (`id`, `title`, `detail`, `start_day`, `deadline`, `account_id`, `status`, `tag_file`, `department_id`) VALUES
+('61dcff7d3d7ad', '31231', '31231', '0000-00-00 00:00:00', '2022-01-11 11:54:00', '', 'Waiting', 'avt.png', '12345'),
+('61dd0044803ef', '31231', '31231', '0000-00-00 00:00:00', '2022-01-11 11:54:00', '', 'Waiting', 'avt.png', '12345'),
+('61dd0054a1ca4', '312321', '312312', '0000-00-00 00:00:00', '2022-01-11 10:58:00', '', 'Waiting', '', '12345'),
+('61dd0092c7069', '312321', '312312', '0000-00-00 00:00:00', '2022-01-11 10:58:00', '', 'Waiting', '', '12345'),
+('61dd0095bb4ae', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Waiting', '', '12345'),
+('61dd00bbddf67', '', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Waiting', '', '12345'),
+('61dd00cdaa0e9', '32424', '43223', '0000-00-00 00:00:00', '2022-01-11 11:00:00', '', 'Waiting', 'download.png', '12345'),
+('61dd00f5d0c72', '32424', '43223', '0000-00-00 00:00:00', '2022-01-11 11:00:00', '', 'Waiting', 'download.png', '12345'),
+('61dd010a906ef', '32424', '43223', '0000-00-00 00:00:00', '2022-01-11 11:00:00', '', 'Waiting', 'download.png', '12345'),
+('61dd0116030a1', '32424', '43223', '0000-00-00 00:00:00', '2022-01-11 11:00:00', '', 'Waiting', 'download.png', '12345'),
+('61dd0129324f3', '32131', '1231', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Waiting', 'download.png', '12345'),
+('61dd018681c29', '32131', '1231', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 'Waiting', 'download.png', '12345'),
+('61dd0191d396f', '', '312132', '0000-00-00 00:00:00', '2022-01-11 11:03:00', '', 'Waiting', '', '12345'),
+('61dd020d65705', '', '312132', '0000-00-00 00:00:00', '2022-01-11 11:03:00', 'vanA', 'Waiting', '', '12345'),
+('61dd026069d47', '1231', '312313', '0000-00-00 00:00:00', '2022-01-11 11:06:00', 'vanA', 'Waiting', 'avt.png', '12345');
+
+--
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `account`
+-- Chỉ mục cho bảng `account`
 --
 ALTER TABLE `account`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `department`
+-- Chỉ mục cho bảng `department`
 --
 ALTER TABLE `department`
   ADD PRIMARY KEY (`id`);
