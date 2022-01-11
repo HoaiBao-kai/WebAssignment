@@ -22,7 +22,7 @@
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" href="#"><strong><?= $_SESSION['user'] ?></strong></a>
+            <a class="navbar-brand" href="#"><strong><?= $_SESSION['fullname'] ?></strong></a>
         
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -50,7 +50,7 @@
                         <a class="nav-link" href="../views/employee_index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../views/employee_dayoff.php">Nghỉ phép</a>
+                        <a class="nav-link" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../views/employeeprofile.php">Thông tin cá nhân</a>
