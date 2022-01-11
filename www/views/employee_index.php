@@ -96,12 +96,12 @@
                                     <?php 
                                         if ($row['status'] == "Waiting") {
                                             ?>
-                                                <a class="btn btn-primary" href="../views/employeetaskdetail.php">Xem chi tiết</a>
+                                                <a class="btn btn-primary" href="../views/employeetaskdetail.php?id=<?=$row['id']?>">Xem chi tiết</a>
                                             <?php
                                         }
                                         else {
                                             ?>
-                                                <a class="btn btn-primary" href="../views/employeetasksubmit.php">Xem chi tiết</a>
+                                                <a class="btn btn-primary" href="../views/employeetasksubmit.php?id=<?=$row['id']?>">Xem chi tiết</a>
                                             <?php
                                         } 
                                     ?>

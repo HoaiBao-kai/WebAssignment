@@ -1,3 +1,19 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: login.php');
+        exit();
+    }
+
+    require_once('../admin/db.php');
+
+    if (isset($_GET['id']))
+    {
+        $id = $_GET['id'];
+        $data = get_task_id($id);
+    }
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -18,15 +34,15 @@
                 <form action="" method="post" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="form-group">
                         <label for="name">Ngày giao</label>
-                        <input type="text" name="ngaygiao" id="ngaygiao" value="1/1/2021" class="form-control" disabled>
+                        <input type="text" name="ngaygiao" id="ngaygiao" value="<?= $data['start_day'] ?>" class="form-control" disabled>
                     </div>
                     <div class="form-group">
                         <label for="id">Hạn chót</label>
-                        <input type="text" name="hanchot" id="hanchot" value="1/1/2021" class="form-control" disabled>
+                        <input type="text" name="hanchot" id="hanchot" value="<?= $data['deadline'] ?>" class="form-control" disabled>
                     </div>
                     <div class="form-group">
                         <label for="">Trạng thái</label>
-                        <input type="text" name="trạng thái" id="trạng thái" value="Chưa hoàn thành" class="form-control" disabled>
+                        <input type="text" name="trạng thái" id="trạng thái" value="<?= $data['status'] ?>" class="form-control" disabled>
                     </div>
                     <div class="form-group">
                         <label for="user">Thông tin chi tiết:</label>

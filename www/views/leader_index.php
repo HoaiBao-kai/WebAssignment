@@ -47,7 +47,7 @@
                         <a class="nav-link" href="addtask.php">Thêm nhiệm vụ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../views/employeeprofile.php">Thông tin cá nhân</a>
+                        <a class="nav-link" href="../views/employeeprofile.php?username=<?=$user_id?>">Thông tin cá nhân</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../views/resetpassword.php">Đổi mật khẩu</a>

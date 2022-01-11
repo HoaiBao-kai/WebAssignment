@@ -42,7 +42,7 @@
                     </div>
                     <div class="form-group">
                         <label>Mã nhân viên:</label>
-                        <input disabled value="<?= $data['id'] ?>" class ="form-control " name="manhanvien" id="manhanvien" type="text" placeholder="Chưa có mã nhân viên">
+                        <input disabled value="<?= $data['username'] ?>" class ="form-control " name="manhanvien" id="manhanvien" type="text" placeholder="Chưa có mã nhân viên">
                     </div>
                     <div class="form-group">
                         <label>Tên đăng nhập</label>
