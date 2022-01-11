@@ -12,7 +12,6 @@ $error = '';
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 $deadline = '';
 $startDay = date("Y-m-d\TH:i");
-$user_id = $_SESSION['user'];
 
 // addTask($accountID, $deadline, $departmentID, $detail, $id, $startDay, $status, $tagFile, $title)
 if (

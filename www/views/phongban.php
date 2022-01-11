@@ -15,7 +15,6 @@
         $data = get_department($id);
         $data1 = getEmployeebyDepartment($id);
         $data2 = get_department_leader($id);
-        $data3 = get_employee_department_with_leader($id);
     }
 
     if (isset($_POST['update'])) {

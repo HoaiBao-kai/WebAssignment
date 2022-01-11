@@ -450,23 +450,3 @@ function down_manager($id, $departmentID)
     return array('code' => 0, 'error' => 'Update successful');
 }
 
-function get_employee_department_with_leader($departmentID)
-{
-    $sql = 'select * from account where department = ?';
-    $conn = open_database();
-
-    $stm = $conn->prepare($sql);
-    $stm->bind_param('s', $departmentID);
-    if (!$stm->execute()) {
-        return array('code' => 1, 'error' => 'Can not execute command');
-    }
-
-    $result = $stm->get_result();
-    if ($result->num_rows == 0) {
-        return array('code' => 2, 'error' => 'An error occured');
-    }
-
-
-
-    return $result;
-}
