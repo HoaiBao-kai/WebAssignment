@@ -448,3 +448,23 @@ function down_manager($id, $departmentID)
     return array('code' => 0, 'error' => 'Update successful');
 }
 
+function sum_dayoff($id) {
+    $sql = 'select sum(convert(num_day_off, int)) as "sumd" from day_off where employeeId = ?';
+
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('s', $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    
+    return $result->fetch_assoc();
+}

@@ -1,11 +1,14 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: ../views/login.php');
-    exit();
-}
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: ../views/login.php');
+        exit();
+    }
 
-$user_id = $_SESSION['user'];
+    require_once('../admin/db.php');
+    $user_id = $_SESSION['user'];
+    $dayoff = sum_dayoff($user_id);
+    $dayleff = 15 - $dayoff['sumd'];
 ?>
 
 <!doctype html>
@@ -65,8 +68,8 @@ $user_id = $_SESSION['user'];
             ?>
                 <tr>
                     <td>12</td>
-                    <td>12</td>
-                    <td>3</td>
+                    <td><?= $dayoff['sumd'] ?></td>
+                    <td><?= $dayleff ?></td>
                     <td><a href="create_form_dayoff.php" class="btn btn-primary">Tạo đơn mới</a></td>
                 </tr>
             <?php
@@ -74,8 +77,8 @@ $user_id = $_SESSION['user'];
             ?>
                 <tr>
                     <td>15</td>
-                    <td>12</td>
-                    <td>3</td>
+                    <td><?= $dayoff['sumd'] ?></td>
+                    <td><?= $dayleff ?></td>
                     <td><a href="create_form_dayoff.php" class="btn btn-primary">Tạo đơn mới</a></td>
                 </tr>
             <?php
