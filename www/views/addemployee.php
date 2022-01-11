@@ -16,7 +16,7 @@ if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['possition'])) 
 <html lang="en">
 
 <head>
-    <title>New employee</title>
+    <title>Add employee</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

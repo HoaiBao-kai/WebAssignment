@@ -4,6 +4,7 @@ if (!isset($_SESSION['user'])) {
     header('Location: ../views/login.php');
     exit();
 }
+$user_id = $_SESSION['user'];
 require_once('../admin/db.php');
 $department = get_department_user($_SESSION['user']);
 $account = getEmployeebyDepartment($department);
@@ -32,8 +33,6 @@ if (
     if ($re['code'] == 0) {
         header('Location: ../views/leader_index.php');
     }
-} else {
-    $error = "Check your infomation";
 }
 ?>
 <!doctype html>
@@ -44,34 +43,65 @@ if (
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 </head>
 
 <body>
-
+    <div class="w3-bar w3-light-grey w3-border w3-large">
+        <div class="container">
+            <a href="leader_index.php" class="w3-bar-item w3-button"><i class="fas fa-house-user" style="font-size: 30px;"></i></a>
+            <a class="navbar-brand" style="margin-top: 5px;" href="#"><strong><?= $_SESSION['fullname'] ?></strong></a>
+            <div class="w3-dropdown-hover" style="float: right;">
+                <a href="#" class="w3-bar-item w3-button"><i class="fas fa-user-alt" style="font-size: 30px;"></i></a>
+                <!-- <a class="btn btn-default" href="#"><strong><?php echo $_SESSION['fullname'] ?></strong></a> -->
+                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
+                    <a href="../views/employeeprofile.php?username=<?= $user_id ?>" class="w3-bar-item w3-button">Thông tin cá nhân</a>
+                    <a href="../views/resetpassword.php" class="w3-bar-item w3-button">Đổi mật khẩu</a>
+                    <a href="../views/logout.php" class="w3-bar-item w3-button">Đăng xuất</a>
+                </div>
+            </div>
+            <div class="w3-dropdown-hover" style="float: right;">
+                <a href="#" class="w3-bar-item w3-button"><i class="fas fa-address-card" style="font-size: 30px;"></i></a>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
+                    <a class="w3-bar-item w3-button" href="../views/dayoff_management.php">Quản lý ngày nghỉ</a>
+                    <a class="w3-bar-item w3-button" href="addtask.php">Quản lý nhiệm vụ</a>
+                    <a class="w3-bar-item w3-button" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
                 <h3 class="text-center text-secondary mt-5 mb-3">Thêm nhiệm vụ</h3>
                 <form method="post" action="addtask.php" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
-                    <div class="form-group">
-                        <label>Mã nhiệm vụ:</label>
-                        <input disabled value='<?php echo $idtask ?>' class="form-control " name="id" id="id" type="text" placeholder="Chưa có mã nhiệm vụ">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Mã nhiệm vụ:</label>
+                            <input disabled value='<?php echo $idtask ?>' class="form-control " name="id" id="id" type="text" placeholder="Chưa có mã nhiệm vụ">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Mã phòng ban</label>
+                            <input disabled value='<?php echo $department ?>' class="form-control" name="department" id="department" type="text" placeholder="Chưa có phòng ban">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Mã phòng ban</label>
-                        <input disabled value='<?php echo $department ?>' class="form-control" name="department" id="department" type="text" placeholder="Chưa có phòng ban">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Ngày giao</label>
+                            <input disabled value="<?php echo $startDay ?>" class="form-control" name="startDay" id="startDay" type="datetime-local" placeholder="Ngày giao">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Deadline</label>
+                            <input class="form-control" name="deadline" id="deadline" type="datetime-local" placeholder="Ngày giao">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Ngày giao</label>
-                        <input disabled value="<?php echo $startDay ?>" class="form-control" name="startDay" id="startDay" type="datetime-local" placeholder="Ngày giao">
-                    </div>
-                    <div class="form-group">
-                        <label>Deadline</label>
-                        <input class="form-control" name="deadline" id="deadline" type="datetime-local" placeholder="Ngày giao">
-                    </div>
+
                     <div class="form-group">
                         <label>Tiêu đề</label>
                         <input type="hidden" value="Waiting" name="status" id="status">
@@ -83,7 +113,7 @@ if (
                             <?php
                             while ($row = $account->fetch_assoc()) {
                             ?>
-                                <option value='<?php echo $employee = $row["username"] ?>'><?php echo $row['username'] ?></option>
+                                <option value='<?php echo $employee = $row["username"] ?>'><?php echo $row['fullname'] ?></option>
                             <?php
                             }
                             ?>
