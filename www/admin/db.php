@@ -273,7 +273,7 @@ function addTask($accountID, $deadline, $departmentID, $detail, $id, $startDay, 
 
 function getEmployeebyDepartment($departmentID)
 {
-    $sql = 'select * from account where department = ?';
+    $sql = 'select * from account where department = ? and possition <> "leader"';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
@@ -375,11 +375,11 @@ function get_task_id($id)
 
 function update_task_status($id)
 {
-    $sql = 'update task set status = Ready where id = ?';
+    $sql = 'update task set status = "Ready" where id = ?';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
-    $stm->bind_param('ss', $id);
+    $stm->bind_param('s', $id);
 
     if (!$stm->execute()) {
         return array('code' => 1, 'error' => 'Can not execute command');
@@ -390,4 +390,81 @@ function update_task_status($id)
     }
 
     return array('code' => 0, 'error' => 'Update successful');
+}
+
+function get_department_leader($departmentID) {
+    $sql = 'select * from account where department = ? and possition = "leader"';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('s', $departmentID);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return $result->fetch_assoc();
+}
+
+function update_manager($id, $departmentID) {
+    $sql = 'update account set possition = "leader" where username = ? and department = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ss', $id, $departmentID);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    if ($stm->affected_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return array('code' => 0, 'error' => 'Update successful');
+}
+
+function down_manager($id, $departmentID)
+{
+    $sql = 'update account set possition = "employee" where username = ? and department = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ss', $id, $departmentID);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    if ($stm->affected_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return array('code' => 0, 'error' => 'Update successful');
+}
+
+function get_employee_department_with_leader($departmentID)
+{
+    $sql = 'select * from account where department = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('s', $departmentID);
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+
+
+    return $result;
 }
