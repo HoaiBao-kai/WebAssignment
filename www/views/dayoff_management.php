@@ -8,13 +8,13 @@ if (!isset($_SESSION['user'])) {
 require_once('../admin/db.php');
 $user_id = $_SESSION['user'];
 $id = get_department_user($user_id);
-$data = get_task_department($id);
+$data = get_dayoff_department($id);
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Leader management</title>
+    <title>Dayoff Management</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -44,7 +44,7 @@ $data = get_task_department($id);
                         <a class="nav-link" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../views/dayoff_management.php">Quản lý ngày nghỉ</a>
+                        <a class="nav-link" href="../views/employee_dayoff.php">Quản lý ngày nghỉ</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="addtask.php">Thêm nhiệm vụ</a>
@@ -64,13 +64,13 @@ $data = get_task_department($id);
     </nav>
 
     <div class="container">
-        <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách nhiệm vụ</h2>
+        <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách sách yêu cầu</h2>
         <table class="table table-bordered text-center">
             <tr>
                 <th>ID</th>
-                <th>Tên nhiệm vụ</th>
-                <th>Ngày giao</th>
-                <th>Ngày hoàn thành</th>
+                <th>Nhân viên</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
                 <th>Trạng thái</th>
                 <th>Chi tiết</th>
             </tr>
@@ -80,10 +80,10 @@ $data = get_task_department($id);
                 ?>
                     <tr>
                         <td><?= $row['id'] ?></td>
-                        <td><?= $row['title'] ?></td>
-                        <td><?= $row['start_day'] ?></td>
-                        <td><?= $row['deadline'] ?></td>
-                        <td><?= $row['status'] ?></td>
+                        <td><?= $row['employeeId'] ?></td>
+                        <td><?= $row['day_start'] ?></td>
+                        <td><?= $row['day_start'] ?></td>
+                        <td><?= $row['result'] ?></td>
                         <td>
                             <a class="btn btn-primary" href="#">Xem chi tiết</a>
                         </td>
