@@ -4,6 +4,11 @@
         header('Location: login.php');
         exit();
     }
+
+    require_once('../admin/db.php');
+    $user_id = $_SESSION['user'];
+    $id = get_department_user($user_id);
+    $data = get_task_department($id);
 ?>
 <!doctype html>
 <html lang="en">
@@ -36,11 +41,10 @@
                         <a class="nav-link" href="../views/leader_index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-<<<<<<< HEAD
-                        <a class="nav-link" href="addtask.php">Thêm nhiệm vụ</a>
-=======
                         <a class="nav-link" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
->>>>>>> 331e14ddd7d2993d1a8d78f664c7b1c1e6903e88
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="addtask.php">Thêm nhiệm vụ</a>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="../views/employeeprofile.php">Thông tin cá nhân</a>
@@ -68,16 +72,22 @@
                 <th>Chi tiết</th>
             </tr>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Task</td>
-                    <td>24/12/2021</td>
-                    <td>31/12/2021</td>
-                    <td>chưa bắt đầu</td>
-                    <td>
-                        <p>Nhấp vào đây để<a href="#"> xem chi tiết</a></p>
-                    </td>
-                </tr>
+                <?php 
+                    while ($row = $data->fetch_assoc()) {
+                        ?>
+                            <tr>
+                                <td><?= $row['id'] ?></td>
+                                <td><?= $row['title'] ?></td>
+                                <td><?= $row['start_day'] ?></td>
+                                <td><?= $row['deadline'] ?></td>
+                                <td><?= $row['status'] ?></td>
+                                <td>
+                                    <a class="btn btn-primary" href="#">Xem chi tiết</a>
+                                </td>
+                            </tr>
+                        <?php
+                    }
+                ?>
             </tbody>
         </table>
     </div>
