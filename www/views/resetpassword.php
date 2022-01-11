@@ -6,16 +6,19 @@ if (!isset($_SESSION['user'])) {
 }
 require_once('../admin/db.php');
 $error = '';
-if (strlen($_POST['newpass']) < 7) {
-    $error = "Your new password should be more than 6 character";
+if (isset($_POST['newpass']) || isset($_POST['conpass']) || isset($_POST['pass'])) {
+    if (strlen($_POST['newpass']) < 7) {
+        $error = "Your new password should be more than 6 character";
+    }
+    if ($_POST['newpass'] != $_POST['conpass']) {
+        $error = "Password does not match";
+    }
+    $login = login($_SESSION['user'], $_POST['pass']);
+    if ($login['code'] == 3) {
+        $error = "Your current is not correct";
+    }
 }
-if ($_POST['newpass'] != $_POST['conpass']) {
-    $error = "Password does not match";
-}
-$login = login($_SESSION['user'], $_POST['pass']);
-if ($login['code'] == 3) {
-    $error = "Your current is not correct";
-}
+
 
 ?>
 

@@ -11,7 +11,7 @@ if (isset($_POST['password']) && isset($_POST['cfpassword'])) {
         if ($_POST['password'] != $_POST['cfpassword']) {
             $error = 'Password does not match';
         } else {
-            $ft_result = updatePassword($_SESSION['user'], $_POST['cfpassword']);
+            $ft_result = updatePassword($_SESSION['reset'], $_POST['cfpassword']);
             if ($ft_result['code'] == 0) {
                 header('Location: login.php');
             }
