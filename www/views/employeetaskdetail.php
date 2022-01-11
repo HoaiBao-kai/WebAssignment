@@ -12,6 +12,18 @@
         $id = $_GET['id'];
         $data = get_task_id($id);
     }
+
+    if (isset($_POST['update'])) {
+        
+        $id = $_GET['id'];
+    
+        $result = update_task_status($id);
+        
+        if ($_SESSION['possition'] === "leader") {
+            header('Location: ../views/leader_index.php');
+        }
+        header('Location: ../views/employee_index.php');
+    }
 ?>
 
 <!doctype html>
@@ -56,7 +68,7 @@
                         <li><a href="https://google.com">Link tham khảo</a></li>
                     </div>
                     <div class="form-group text-center">
-                        <button class="btn btn-success px-5 h-5">Start</button>
+                        <button class="btn btn-success px-5 h-5" type="submit" name="update">Start</button>
                         <a href="../views/employee_index.php" class="btn btn-danger px-5 h-5">Return</a>
                     </div>
                 </form>

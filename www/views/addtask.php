@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: ../views/login.php');
@@ -34,6 +35,55 @@ if (
         header('Location: ../views/leader_index.php');
     }
 }
+=======
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: ../views/login.php');
+        exit();
+    }
+    require_once('../admin/db.php');
+    $department = get_department_user($_SESSION['user']);
+    $account = getEmployeebyDepartment($department);
+    $idtask = uniqid();
+    $error = '';
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
+    $deadline = '';
+    $startDay = date("Y-m-d\TH:i");
+
+    // addTask($accountID, $deadline, $departmentID, $detail, $id, $startDay, $status, $tagFile, $title)
+    if (
+        isset($_POST['deadline']) && isset($_POST['title']) && isset($_POST['detail'])
+        && isset($_POST['tagFile']) && isset($_POST['deadline']) && $_POST['accountID']) 
+    {
+
+        if (empty($_POST['deadline'])) {
+            $error = 'Hãy nhập mã deadline';
+        }
+        else if (empty( $_POST['title'])) {
+            $error = 'Hãy nhập tiêu đề';
+        }
+        else if (empty($_POST['detail'])) {
+            $error = 'Hãy nhập mô tả';
+        }
+        else {
+            $re = addTask(
+                $_POST['accountID'],
+                $_POST['deadline'],
+                $department,
+                $_POST['detail'],
+                $idtask,
+                $startDay,
+                "Waiting",
+                $_POST['tagFile'],
+                $_POST['title']
+            );
+
+            if ($re['code'] == 0) {
+                header('Location: ../views/leader_index.php');
+            }
+        }
+    } 
+>>>>>>> f8f42342bb9335338fde5d318f63ad3cee557406
 ?>
 <!doctype html>
 <html lang="en">
@@ -130,9 +180,9 @@ if (
                     </div>
                     <div class="form-group text-center">
                         <?php
-                        if (!empty($error)) {
-                            echo "<div class='alert alert-danger'>$error</div>";
-                        }
+                            if (!empty($error)) {
+                                echo "<div class='alert alert-danger'>$error</div>";
+                            }
                         ?>
                         <div class="form-group">
                             <p class="text-center" style="margin:15px">

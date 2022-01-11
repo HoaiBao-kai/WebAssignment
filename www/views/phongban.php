@@ -13,12 +13,16 @@
     {
         $id = $_GET['id'];
         $data = get_department($id);
+        $data1 = getEmployeebyDepartment($id);
+        $data2 = get_department_leader($id);
+        $data3 = get_employee_department_with_leader($id);
     }
 
     if (isset($_POST['update'])) {
-        if (empty($_POST['pb']) || empty($_POST['sophong']) || empty($_POST['comment'])) 
+        if (empty($_POST['pb']) || empty($_POST['sophong']) || empty($_POST['comment']) || empty($_POST['manager']))
         {
             $error = "Invalid input";
+            echo $_POST['manager'];
             echo $error;
         }
         else
@@ -27,8 +31,11 @@
             $sophong = $_POST['sophong'];
             $comment = $_POST['comment'];
             $id = $_GET['id'];
+            $manager = $_POST['manager'];
     
             $result = update_department($id, $pb, $sophong, $comment);
+            $result2 = down_manager($data2['username'], $id);
+            $result1 = update_manager($manager, $id);
             header('Location: ../views/department_management.php');
         }
     }
@@ -64,17 +71,37 @@
                         <label for="sophong">Số phòng</label>
                         <input type="text" value="<?= $data['room'] ?>" name="sophong" id="sophong" class="form-control">
                     </div>
+                    <!-- <div class="form-group">
+                        <label for="">Trưởng phòng</label>
+                        <input type="text" value="<?= $data2['fullname'] ?>" class="form-control" disabled> 
+                    </div> -->
                     <div class="form-group">
                         <label for="comment">Mô tả</label>
                         <textarea name="comment" id="comment" rows="5" class="form-control"><?= $data['detail'] ?></textarea>
                     </div>
                     <div class="form-group">
                         <label for="">Trưởng phòng</label>
-                        <select class="form-control" id="tp">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
+                        <select class="form-control" id="manager" name="manager">
+                            <?php 
+                                if ($data2['code'] != 0) 
+                                {
+                                    while ($row = $data1->fetch_assoc()) {
+                                        ?>
+                                            <option value='<?php echo $employee = $row["username"] ?>'><?= $row['fullname'] ?></option>
+                                        <?php
+                                    }
+                                }
+                                else {
+                                    ?>
+                                        <option value='<?php echo $employee = $data2["username"] ?>'><?= $data2['fullname'] ?></option>
+                                    <?php
+                                        while ($row = $data1->fetch_assoc()) {
+                                            ?>
+                                                <option value='<?php echo $employee = $row["username"] ?>'><?= $row['fullname'] ?></option>
+                                            <?php
+                                        }
+                                }
+                            ?>
                         </select>
                     </div>
                     <div class="form-group text-center">
