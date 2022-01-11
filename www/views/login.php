@@ -27,11 +27,11 @@ if (isset($_POST['user']) && isset($_POST['pass'])) {
         $error = 'Password must have at least 6 characters';
     } else {
         $result = login($user, $pass);
-
+        
         if ($result['code'] == 0) {
             $data = $result['data'];
             $_SESSION['user'] = $user;
-
+            $_SESSION['fullname'] = $data['fullname'];
             $_SESSION['possition'] = $data['possition'];
             if ($_SESSION['possition'] === 'employee') {
                 header('Location: ../views/employee_index.php');

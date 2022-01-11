@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: login.php');
+        exit();
+    }
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -44,10 +52,24 @@
                         <input disabled class ="form-control" name="chucvu" id="chucvu" type="text" placeholder="Chức vụ">
                     </div>
                     <div class="form-group">
-                        <p class="text-center"style="margin:15px">
-                            <a href="resetpassword.php" class="btn btn-success px-5 h-5">Đổi mật khẩu</a></span>
-                            <a href="employee_index.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
-                        </p> 
+                        <?php 
+                            if ($_SESSION['possition'] === "leader") {
+                                ?>
+                                    <p class="text-center"style="margin:15px">
+                                        <a href="resetpassword.php" class="btn btn-success px-5 h-5">Đổi mật khẩu</a></span>
+                                        <a href="leader_index.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
+                                    </p> 
+                                <?php
+                            }
+                            else { 
+                                ?>
+                                <p class="text-center"style="margin:15px">
+                                    <a href="resetpassword.php" class="btn btn-success px-5 h-5">Đổi mật khẩu</a></span>
+                                    <a href="employee_index.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
+                                </p> 
+                                <?php
+                            }      
+                        ?>
                     </div>
                 </form>
             </div>

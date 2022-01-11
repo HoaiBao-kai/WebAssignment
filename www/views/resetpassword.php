@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: login.php');
+        exit();
+    }
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -29,11 +37,24 @@
                         <input name="pass" id="password" type="password" class="form-control" placeholder="Confirm your new password">
                     </div>
                     <div class="form-group">
-                        <p class="text-center">
-                            <button class="btn btn-success px-5 h-5">Change</button></span>
-                            <a href="employee_index.php" class="btn btn-danger px-5 h-5">Cancel</a></span>
-                        </p>
-                        
+                        <?php 
+                            if ($_SESSION['possition'] === "leader") {
+                                ?>
+                                    <p class="text-center">
+                                        <button class="btn btn-success px-5 h-5">Change</button></span>
+                                        <a href="leader_index.php" class="btn btn-danger px-5 h-5">Cancel</a></span>
+                                    </p>
+                                <?php
+                            }
+                            else { 
+                                ?>
+                                <p class="text-center">
+                                    <button class="btn btn-success px-5 h-5">Change</button></span>
+                                    <a href="employee_index.php" class="btn btn-danger px-5 h-5">Cancel</a></span>
+                                </p>
+                                <?php
+                            }      
+                        ?>
                     </div>
                 </form>
             </div>

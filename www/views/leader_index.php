@@ -1,9 +1,9 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: login.php');
-    exit();
-}
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: login.php');
+        exit();
+    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -23,7 +23,7 @@ if (!isset($_SESSION['user'])) {
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand" href="#"><strong><?php echo $_SESSION['user'] ?></strong></a>
+            <a class="navbar-brand" href="#"><strong><?php echo $_SESSION['fullname'] ?></strong></a>
 
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -33,16 +33,23 @@ if (!isset($_SESSION['user'])) {
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Quản lý ngày nghỉ phép</a>
+                        <a class="nav-link" href="../views/leader_index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
+<<<<<<< HEAD
                         <a class="nav-link" href="addtask.php">Thêm nhiệm vụ</a>
+=======
+                        <a class="nav-link" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
+>>>>>>> 331e14ddd7d2993d1a8d78f664c7b1c1e6903e88
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="../views/employeeprofile.php">Thông tin cá nhân</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="../views/resetpassword.php">Đổi mật khẩu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Đổi mật khẩu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Đăng xuất</a>
+                        <a class="nav-link" href="../views/logout.php">Đăng xuất</a>
                     </li>
                 </ul>
             </div>

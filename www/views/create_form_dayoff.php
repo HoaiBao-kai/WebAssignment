@@ -1,3 +1,14 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: ../views/login.php');
+        exit();
+    }
+
+    require_once("../admin/db.php");
+    // $data = get_departments();
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -27,16 +38,6 @@
                             <option>3</option>
                             <option>4</option>
                             <option>5</option>
-                            <!-- <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                            <option>11</option>
-                            <option>12</option>
-                            <option>13</option>
-                            <option>14</option>
-                            <option>15</option> -->
                         </select>
                     </div>
                     <div class="form-group">
@@ -48,10 +49,23 @@
                         <input type='file' name='files[]' multiple />
                     </div>
                     <div class="form-group">
-                        <p class="text-center"style="margin:15px">
-                            <button class="btn btn-success px-5 h-5">Tạo</button></span>
-                            <a href="../views/employee_dayoff.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
-                        </p> 
+                        <?php 
+                            if ($_SESSION['possition'] === "leader") {
+                                ?>
+                                    <p class="text-center"style="margin:15px">
+                                        <button class="btn btn-success px-5 h-5">Tạo</button></span>
+                                        <a href="../views/employee_dayoff.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
+                                    </p>
+                                <?php
+                            }
+                            else { ?>
+                                <p class="text-center"style="margin:15px">
+                                    <button class="btn btn-success px-5 h-5">Tạo</button></span>
+                                    <a href="../views/employee_dayoff.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
+                                </p>
+                                <?php
+                            }      
+                        ?>
                     </div>
                 </form>
             </div>
