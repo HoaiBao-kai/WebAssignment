@@ -175,12 +175,7 @@ function get_departments()
         return array('code' => 2, 'error' => 'An error occured');
     }
 
-    $output = array();
-    while ($row = $result->fetch_assoc()) {
-        $output[] = $row;
-    }
-
-    return $output;
+    return $result;
 }
 
 function get_department($id)
@@ -188,22 +183,12 @@ function get_department($id)
     $sql = 'select * from department where id = ?';
     $conn = open_database();
 
-<<<<<<< HEAD
     $stm = $conn->prepare($sql);
     $stm->bind_param('s', $id);
 
     if (!$stm->execute()) {
         return array('code' => 1, 'error' => 'Can not execute command');
     }
-=======
-    //    $output = array();
-    //    while($row = $result->fetch_assoc()) {
-    //        $output[] = $row;
-    //    }
-
-       return $result;
-	}
->>>>>>> c728606733050922956a0023c32d3d1614884861
 
     $result = $stm->get_result();
     if ($result->num_rows == 0) {

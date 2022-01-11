@@ -15,7 +15,11 @@
             <div class="col-md-6 col-lg-5">
                 <h3 class="text-center text-secondary mt-5 mb-3">Yêu cầu nghỉ phép</h3>
                 <form method="post" action="" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
-                <div class="form-group">
+                    <div class="form-group">
+                        <label for="">Ngày bắt đầu</label>
+                        <input type="date" name="startday" id="startday" class="form-control">
+                    </div>
+                    <div class="form-group">
                         <label for="">Số ngày muốn nghỉ</label>
                         <select class="form-control" id="dayoff">
                             <option>1</option>

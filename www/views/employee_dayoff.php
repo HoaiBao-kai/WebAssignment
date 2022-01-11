@@ -60,12 +60,26 @@
                 <th>Số ngày còn lại</th>
                 <th>Tạo đơn</th>
             </tr>
-            <tr>
-                <td>15</td>
-                <td>12</td>
-                <td>3</td>
-                <td><a href="create_form_dayoff.php" class="btn btn-primary">Tạo đơn mới</a></td>
-            </tr>
+            <?php 
+                if (isset($_SESSION['position']) == "employee") {
+                   ?>
+                    <tr>
+                        <td>12</td>
+                        <td>12</td>
+                        <ttd>3</ttd>
+                        <d><a href="create_form_dayoff.php" class="btn btn-primary">Tạo đơn mới</a></td>
+                    </tr>
+                }
+                else {
+                    <tr>
+                        <td>15</td>
+                        <td>12</td>
+                        <ttd>3</ttd>
+                        <d><a href="create_form_dayoff.php" class="btn btn-primary">Tạo đơn mới</a></td>
+                    </tr>
+                    <?php
+                }
+            ?>
         </table>
         <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách yêu cầu</h2>
         <table class="table table-bordered text-center">
