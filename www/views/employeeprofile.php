@@ -4,6 +4,15 @@
         header('Location: login.php');
         exit();
     }
+
+    require_once('../admin/db.php');
+
+    if (isset($_GET['username']))
+    {
+        $id = $_GET['username'];
+        $data = getEmployeeByID($id);
+        $data1 = get_department($data['department']);
+    }
 ?>
 
 <!doctype html>
@@ -33,23 +42,23 @@
                     </div>
                     <div class="form-group">
                         <label>Mã nhân viên:</label>
-                        <input disabled class ="form-control " name="manhanvien" id="manhanvien" type="text" placeholder="Chưa có mã nhân viên">
+                        <input disabled value="<?= $data['id'] ?>" class ="form-control " name="manhanvien" id="manhanvien" type="text" placeholder="Chưa có mã nhân viên">
                     </div>
                     <div class="form-group">
                         <label>Tên đăng nhập</label>
-                        <input disabled class ="form-control" name="tendangnhap" id="tendangnhap" type="text" placeholder="Nhập tên đăng nhập">
+                        <input disabled value="<?= $data['username'] ?>" class ="form-control" name="tendangnhap" id="tendangnhap" type="text" placeholder="Nhập tên đăng nhập">
                     </div>
                     <div class="form-group">
                         <label>Họ và tên</label>
-                        <input disabled class ="form-control" name="hoten" id="hoten" type="text" placeholder="Nhập họ và tên">
+                        <input disabled value="<?= $data['fullname'] ?>" class ="form-control" name="hoten" id="hoten" type="text" placeholder="Nhập họ và tên">
                     </div>
                     <div class="form-group">
                         <label>Phòng ban</label>
-                        <input disabled class ="form-control" name="phongban" id="phongban" type="text" placeholder="Phòng ban">
+                        <input disabled value="<?= $data1['name'] ?>" class ="form-control" name="phongban" id="phongban" type="text" placeholder="Phòng ban">
                     </div>
                     <div class="form-group">
                         <label>Chức vụ</label>
-                        <input disabled class ="form-control" name="chucvu" id="chucvu" type="text" placeholder="Chức vụ">
+                        <input disabled value="<?= $data['possition'] ?>" class ="form-control" name="chucvu" id="chucvu" type="text" placeholder="Chức vụ">
                     </div>
                     <div class="form-group">
                         <?php 
