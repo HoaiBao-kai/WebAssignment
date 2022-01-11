@@ -175,7 +175,6 @@ function get_departments()
         return array('code' => 2, 'error' => 'An error occured');
     }
 
-
     return $result;
 }
 
@@ -190,12 +189,15 @@ function get_department($id)
     if (!$stm->execute()) {
         return array('code' => 1, 'error' => 'Can not execute command');
     }
+<<<<<<< HEAD
     //    $output = array();
     //    while($row = $result->fetch_assoc()) {
     //        $output[] = $row;
     //    }
 
     //    return $result;
+=======
+>>>>>>> 1f53f59a7a2ba39068f143997b4fd293404ad427
 
     $result = $stm->get_result();
     if ($result->num_rows == 0) {
