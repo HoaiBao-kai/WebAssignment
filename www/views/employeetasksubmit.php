@@ -52,6 +52,7 @@
                     </div>
                     <div class="form-group text-center">
                         <button class="btn btn-success px-5 h-5">Submit</button>
+                        <a href="../views/employee_index.php" class="btn btn-danger px-5 h-5">Return</a>
                     </div>
                 </form>
             </div>

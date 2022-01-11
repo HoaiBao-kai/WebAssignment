@@ -4,6 +4,11 @@
         header('Location: ../views/login.php');
         exit();
     }
+
+    require_once('../admin/db.php');
+    $user_id = $_SESSION['user'];
+    $id = get_department_user($user_id);
+    $data = get_task_department($id);
 ?>
 
 <!doctype html>
@@ -53,7 +58,7 @@
                         <a class="nav-link" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../views/employeeprofile.php">Thông tin cá nhân</a>
+                        <a class="nav-link" href="../views/employeeprofile.php?username=<?=$user_id?>">Thông tin cá nhân</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../views/resetpassword.php">Đổi mật khẩu</a>
@@ -78,16 +83,33 @@
                 <th>Chi tiết</th>
             </tr> 
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Task</td>
-                    <td>24/12/2021</td>
-                    <td>31/12/2021</td>
-                    <td>chưa bắt đầu</td>
-                    <td>
-                        <a href="../views/employeetaskdetail.php" class="btn btn-primary"> xem chi tiết</a>
-                    </td>
-                </tr>  
+                <?php 
+                    while ($row = $data->fetch_assoc()) {
+                        ?>
+                            <tr>
+                                <td><?= $row['id'] ?></td>
+                                <td><?= $row['title'] ?></td>
+                                <td><?= $row['start_day'] ?></td>
+                                <td><?= $row['deadline'] ?></td>
+                                <td><?= $row['status'] ?></td>
+                                <td>
+                                    <?php 
+                                        if ($row['status'] == "Waiting") {
+                                            ?>
+                                                <a class="btn btn-primary" href="../views/employeetaskdetail.php">Xem chi tiết</a>
+                                            <?php
+                                        }
+                                        else {
+                                            ?>
+                                                <a class="btn btn-primary" href="../views/employeetasksubmit.php">Xem chi tiết</a>
+                                            <?php
+                                        } 
+                                    ?>
+                                </td>
+                            </tr>
+                        <?php
+                    }
+                ?>  
             </tbody>        
         </table>
     </div>

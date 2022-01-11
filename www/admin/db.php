@@ -92,14 +92,14 @@ function getEmployee()
     return $output;
 }
 
-function getEmployeeByID()
+function getEmployeeByID($id)
 {
     $sql = 'select * from account where username = ?';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
 
-    $stm->bind_param('s', $_GET['username']);
+    $stm->bind_param('s', $id);
 
     if (!$stm->execute()) {
         return array('code' => 1, 'error' => 'Can not execute command');
@@ -111,12 +111,7 @@ function getEmployeeByID()
         return array('code' => 2, 'error' => 'An error occured');
     }
 
-    $output = array();
-    while ($row = $result->fetch_assoc()) {
-        $output[] = $row;
-    }
-
-    return $output;
+    return $result->fetch_assoc();
 }
 function updatePassword($username, $password)
 {
