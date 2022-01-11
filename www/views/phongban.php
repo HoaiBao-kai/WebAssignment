@@ -1,3 +1,40 @@
+<?php 
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: ../views/login.php');
+        exit();
+    }
+
+    require_once("../admin/db.php");
+    
+    $error = "";
+
+    if (isset($_GET['id']))
+    {
+        $id = $_GET['id'];
+        $data = get_department($id);
+    }
+
+    if (isset($_POST['update'])) {
+        if (empty($_POST['pb']) || empty($_POST['sophong']) || empty($_POST['comment'])) 
+        {
+            $error = "Invalid input";
+            echo $error;
+        }
+        else
+        {
+            $pb = $_POST['pb'];
+            $sophong = $_POST['sophong'];
+            $comment = $_POST['comment'];
+            $id = $_GET['id'];
+    
+            $result = update_department($id, $pb, $sophong, $comment);
+            header('Location: ../views/department_management.php');
+        }
+    }
+    
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -17,19 +54,19 @@
                 <form action="" method="post" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="form-group">
                         <label for="id">Mã phòng ban</label>
-                        <input type="text" name="mpb" id="mpb" value="H120" class="form-control">
+                        <input disabled value="<?= $data['id'] ?>" type="text" name="mpb" id="mpb" class="form-control">
                     </div>    
                     <div class="form-group">
                         <label for="name">Tên phòng ban</label>
-                        <input type="text" name="pb" id="pb" value="Tài chính" class="form-control">
+                        <input type="text" value="<?= $data['name'] ?>" name="pb" id="pb" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="sophong">Số phòng</label>
-                        <input type="text" name="sophong" id="sophong" value="C004" class="form-control">
+                        <input type="text" value="<?= $data['room'] ?>" name="sophong" id="sophong" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="comment">Mô tả</label>
-                        <textarea name="comment" id="comment" rows="5" class="form-control"></textarea>
+                        <textarea name="comment" id="comment" rows="5" class="form-control"><?= $data['detail'] ?></textarea>
                     </div>
                     <div class="form-group">
                         <label for="">Trưởng phòng</label>
@@ -41,8 +78,13 @@
                         </select>
                     </div>
                     <div class="form-group text-center">
-                        <button class="btn btn-success px-5 h-5" >Update</button>
-                        <button class="btn btn-danger px-5 h-5">Cancel</button>
+                        <?php
+                            if (!empty($error)) {
+                                echo "<div class='alert alert-danger'>$error</div>";
+                            }
+                        ?>
+                        <button class="btn btn-success px-5 h-5" type="submit" name="update">Update</button>
+                        <a href="../views/department_management.php" class="btn btn-danger px-5 h-5">Cancel</a>
                     </div>
                 </form>
             </div>

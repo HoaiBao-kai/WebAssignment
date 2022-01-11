@@ -4,6 +4,9 @@
         header('Location: ../views/login.php');
         exit();
     }
+
+    require_once("../admin/db.php");
+    $data = get_departments();
 ?>
 
 <!doctype html>
@@ -16,8 +19,10 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="../main.js"></script>
   </head>
   <body>
+
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <div class="container">
             <!-- Brand -->
@@ -32,13 +37,13 @@
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../views/employee_index.php">Trang chủ</a>
+                        <a class="nav-link" href="../views/admin_index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../views/employee_dayoff.php">Nghỉ phép</a>
+                        <a class="nav-link" href="../views/#">Tài khoản</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../views/employeeprofile.php">Thông tin cá nhân</a>
+                        <a class="nav-link" href="../views/department_management.php">Phòng ban</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../views/resetpassword.php">Đổi mật khẩu</a>
@@ -51,41 +56,37 @@
         </div>
     </nav>
 
-    <div class="container">
-        <h2 class="text-center" style="margin:30px 30px 30px 30px">Thông tin nghỉ phép</h2>
-        <table class="table table-bordered text-center">
-            <tr>
-                <th>Tổng số ngày nghỉ phép</th>
-                <th>Số ngày đã nghỉ</th>
-                <th>Số ngày còn lại</th>
-                <th>Tạo đơn</th>
-            </tr>
-            <tr>
-                <td>15</td>
-                <td>12</td>
-                <td>3</td>
-                <td><a href="create_form_dayoff.php" class="btn btn-primary">Tạo đơn mới</a></td>
-            </tr>
-        </table>
-        <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách yêu cầu</h2>
+  <div class="container">
+        <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách phòng ban</h2>
+        <div class="form-group">
+            <a href="../views/adddepartment.php" class="btn btn-primary">Thêm phòng ban</a>
+        </div>
         <table class="table table-bordered text-center">
             <tr >
                 <th>ID</th>
-                <th>Ngày yêu cầu</th>
-                <th>Ngày phản hồi</th>
-                <th>Trạng thái</th>
+                <th>Tên phòng ban</th>
+                <th>Vị trí</th>
+                <th>Mô tả</th>
+                <th>Chi tiết</th>
             </tr> 
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>24/12/2021</td>
-                    <td>28/12/2021</td>
-                    <td>Hợp lệ</td>
-                </tr>  
+            <tbody id="department-body">
+                <?php
+                    while ($row = $data->fetch_assoc()){
+                        ?>
+                        <tr>
+                            <td><?= $row['id'] ?></td>
+                            <td><?= $row['name'] ?></td>
+                            <td><?= $row['room'] ?></td>
+                            <td><?= $row['detail'] ?></td>
+                            <td><a href="../views/phongban.php?id=<?=$row['id']?>" class="btn btn-primary">Xem chi tiết</a></td>
+                        </tr>
+                        <?php
+                    }
+                ?>
             </tbody>        
         </table>
     </div>
-      
+  
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
