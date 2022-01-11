@@ -372,3 +372,22 @@ function get_task_id($id)
 
     return $result->fetch_assoc();
 }
+
+function update_task_status($id)
+{
+    $sql = 'update task set status = Ready where id = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ss', $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    if ($stm->affected_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return array('code' => 0, 'error' => 'Update successful');
+}
