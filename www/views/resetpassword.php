@@ -4,6 +4,19 @@ if (!isset($_SESSION['user'])) {
     header('Location: login.php');
     exit();
 }
+require_once('../admin/db.php');
+$error = '';
+if (strlen($_POST['newpass']) < 7) {
+    $error = "Your new password should be more than 6 character";
+}
+if ($_POST['newpass'] != $_POST['conpass']) {
+    $error = "Password does not match";
+}
+$login = login($_SESSION['user'], $_POST['pass']);
+if ($login['code'] == 3) {
+    $error = "Your current is not correct";
+}
+
 ?>
 
 <!doctype html>
@@ -51,32 +64,39 @@ if (!isset($_SESSION['user'])) {
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
                 <h3 class="text-center text-secondary mt-5 mb-3">Change Password</h3>
-                <form method="post" action="" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
+                <form method="post" action="resetpassword.php" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
+                    <div class="form-group">
+                        <label for="password">Username</label>
+                        <input disabled class="form-control" value="<?php echo $_SESSION['user'] ?>">
+                    </div>
                     <div class="form-group">
                         <label for="password">Current Password</label>
-                        <input name="pass" id="password" type="password" class="form-control" placeholder="Enter your current password">
+                        <input required name="pass" id="password" type="password" class="form-control" placeholder="Enter your current password">
                     </div>
                     <div class="form-group">
                         <label for="password">New Password</label>
-                        <input name="pass" id="password" type="password" class="form-control" placeholder="Enter your new password">
+                        <input required name="newpass" id="newpass" type="password" class="form-control" placeholder="Enter your new password">
                     </div>
                     <div class="form-group">
                         <label for="password">Confirm Password</label>
-                        <input name="pass" id="password" type="password" class="form-control" placeholder="Confirm your new password">
+                        <input required name="conpass" id="conpass" type="password" class="form-control" placeholder="Confirm your new password">
                     </div>
                     <div class="form-group">
                         <?php
+                        if (!empty($error)) {
+                            echo "<div class='alert alert-danger'>$error</div>";
+                        }
                         if ($_SESSION['possition'] === "leader") {
                         ?>
                             <p class="text-center">
-                                <button class="btn btn-success px-5 h-5">Change</button></span>
+                                <button type="submit" class="btn btn-success px-5 h-5">Change</button></span>
                                 <a href="leader_index.php" class="btn btn-danger px-5 h-5">Cancel</a></span>
                             </p>
                         <?php
                         } else {
                         ?>
                             <p class="text-center">
-                                <button class="btn btn-success px-5 h-5">Change</button></span>
+                                <button type="submit" class="btn btn-success px-5 h-5">Change</button></span>
                                 <a href="employee_index.php" class="btn btn-danger px-5 h-5">Cancel</a></span>
                             </p>
                         <?php

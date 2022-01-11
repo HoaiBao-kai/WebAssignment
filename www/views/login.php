@@ -27,7 +27,7 @@ if (isset($_POST['user']) && isset($_POST['pass'])) {
         $error = 'Password must have at least 6 characters';
     } else {
         $result = login($user, $pass);
-        
+
         if ($result['code'] == 0) {
             $data = $result['data'];
             $_SESSION['user'] = $user;
@@ -40,7 +40,7 @@ if (isset($_POST['user']) && isset($_POST['pass'])) {
             }
             exit();
         } else if ($result['code'] == 100) {
-            $_SESSION['user'] = $user;
+            $_SESSION['reset'] = $user;
             header('Location:ft_resetpass.php');
             exit();
         } else {

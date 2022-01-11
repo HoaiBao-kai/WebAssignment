@@ -6,9 +6,17 @@ if (!isset($_SESSION['user'])) {
 }
 require_once('../admin/db.php');
 $department = get_departments();
+$error = '';
 // addEmployee($username, $fullname, $hashed_password, $possition, $department, $avatar)
 if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['possition'])) {
-    $result = addEmployee($_POST['id'], $_POST['name'], $_POST['id'], $_POST['possition'], $_POST['department'], $_POST['avatar']);
+    $check = getEmployeeByID($_POST['id']);
+    if (isset($check['username'])) {
+        $error = "This username is exist";
+    } else if (strlen($_POST['id']) < 7) {
+        $error = "Your username should be more than 6 character";
+    } else {
+        $result = addEmployee($_POST['id'], $_POST['name'], $_POST['id'], $_POST['possition'], $_POST['department'], $_POST['avatar']);
+    }
 }
 ?>
 
@@ -40,11 +48,11 @@ if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['possition'])) 
                     </div>
                     <div class="form-group">
                         <label>Mã nhân viên:</label>
-                        <input class="form-control " name="id" id="ID" type="text" placeholder="Chưa có mã nhân viên">
+                        <input required class="form-control " name="id" id="ID" type="text" placeholder="Chưa có mã nhân viên">
                     </div>
                     <div class="form-group">
                         <label>Họ và tên</label>
-                        <input class="form-control" name="name" id="name" type="text" placeholder="Nhập họ và tên">
+                        <input required class="form-control" name="name" id="name" type="text" placeholder="Nhập họ và tên">
                     </div>
                     <div class="form-group">
                         <label>Phòng ban</label>
@@ -67,6 +75,11 @@ if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['possition'])) 
                         </select>
                     </div>
                     <div class="form-group">
+                        <?php
+                        if (!empty($error)) {
+                            echo "<div class='alert alert-danger'>$error</div>";
+                        }
+                        ?>
                         <p class="text-center" style="margin:15px">
                             <button type="submit" class="btn btn-success px-5 h-5">Thêm</button></span>
                             <a href="" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>

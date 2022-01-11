@@ -64,12 +64,13 @@ function login($user, $pass)
 
     $hashed_password = $data['hash_password'];
 
-    if (password_verify($user, $hashed_password)) {
-        return array('code' => 100, 'error' => 'reset pass word', 'data' => $data);
-    }
 
     if (!password_verify($pass, $hashed_password)) {
         return array('code' => 3, 'error' => 'invalid password');
+    }
+
+    if (password_verify($user, $hashed_password)) {
+        return array('code' => 100, 'error' => 'reset pass word', 'data' => $data);
     }
 
     return array('code' => 0, 'error' => '', 'data' => $data);
@@ -330,7 +331,6 @@ function get_task_department($id)
     }
 
     return $result;
-
 }
 
 function get_dayoff_department($id)
@@ -353,7 +353,7 @@ function get_dayoff_department($id)
     return $result;
 }
 
-function get_task_id($id) 
+function get_task_id($id)
 {
     $sql = 'select * from task where id = ?';
     $conn = open_database();
@@ -392,7 +392,8 @@ function update_task_status($id)
     return array('code' => 0, 'error' => 'Update successful');
 }
 
-function get_department_leader($departmentID) {
+function get_department_leader($departmentID)
+{
     $sql = 'select * from account where department = ? and possition = "leader"';
     $conn = open_database();
 
@@ -411,7 +412,8 @@ function get_department_leader($departmentID) {
     return $result->fetch_assoc();
 }
 
-function update_manager($id, $departmentID) {
+function update_manager($id, $departmentID)
+{
     $sql = 'update account set possition = "leader" where username = ? and department = ?';
     $conn = open_database();
 
