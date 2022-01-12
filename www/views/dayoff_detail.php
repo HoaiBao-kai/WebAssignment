@@ -1,14 +1,39 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: ../views/login.php');
-    exit();
-}
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: ../views/login.php');
+        exit();
+    }
 
-require_once("../admin/db.php");
+    require_once("../admin/db.php");
 
-$user_id = $_SESSION['user'];
-$dayoff = sum_dayoff($user_id);
+    $user_id = $_SESSION['user'];
+
+    if (isset($_GET['id'])) {
+
+        $id = $_GET['id'];
+        $data = get_detail_dayoff($id);
+    }
+
+    if (isset($_POST['accept'])) {
+
+        $id = $_GET['id'];
+        $date = date('Y-m-d');
+        $result = update_num_dayoff($id, $data['day_off_request']);
+        $result2 = update_status_dayoff("Accept", $id, $date);
+        header('Location: ../views/dayoff_management.php');
+        exit();
+    }
+
+    if (isset($_POST['reject'])) {
+
+        $id = $_GET['id'];
+        $date = date('Y-m-d');
+        $result2 = update_status_dayoff("Reject", $id, $date);
+        header('Location: ../views/dayoff_management.php');
+        exit();
+    }
+
 ?>
 
 <!doctype html>
@@ -80,55 +105,44 @@ $dayoff = sum_dayoff($user_id);
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
                 <h3 class="text-center text-secondary mt-5 mb-3">Yêu cầu nghỉ phép</h3>
-                <form method="post" enctype="multipart/form-data" action="create_form_dayoff.php" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
+                <form method="post" enctype="multipart/form-data" action="" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="">Mã nhân viên</label>
-                            <input disabled class="form-control" type="text" name="" id="">
+                            <input disabled class="form-control" type="text" value="<?= $data['employeeId'] ?>" name="" id="">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Số ngày nghỉ</label>
-                            <input disabled class="form-control" type="text" name="" id="">
+                            <input disabled class="form-control" type="text" value="<?= $data['day_off_request'] ?>" name="" id="">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="">Ngày bắt đầu</label>
-                            <input disabled class="form-control" type="text" name="" id="">
+                            <input disabled class="form-control" type="date" value="<?= $data['day_start'] ?>" name="" id="">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="">Ngày kết thúc</label>
-                            <input disabled class="form-control" type="text" name="" id="">
+                            <label for="">Trạng thái</label>
+                            <input disabled class="form-control" type="text" value="<?= $data['result'] ?>" name="" id="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Lý do</label>
-                        <input disabled class="form-control" name="reason" id="reason" cols="20" rows="10" style="height:100px" placeholder="Lý do xin nghỉ"></input>
+                        <input disabled class="form-control" name="reason" id="reason" cols="20" rows="10" style="height:100px" placeholder="Lý do xin nghỉ" value="<?= $data['reason'] ?>"></input>
                     </div>
                     <div class="form-group">
-                        <label for="">File đính kèm:</label>
-
+                        <label for="">File đính kèm: <a href="../file/<?php echo $data['tag_file'] ?>"><?php echo $data['tag_file'] ?></a></label>
                     </div>
                     <div class="form-group">
                         <?php
-                        if (!empty($error)) {
-                            echo "<div class='alert alert-danger'>$error</div>";
-                        }
-                        if ($_SESSION['possition'] === "leader") {
+                            if (!empty($error)) {
+                                echo "<div class='alert alert-danger'>$error</div>";
+                            }
                         ?>
-                            <p class="text-center" style="margin:15px">
-                                <button type="submit" class="btn btn-success px-5 h-5">Tạo</button></span>
-                                <a href="../views/employee_dayoff.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
-                            </p>
-                        <?php
-                        } else { ?>
-                            <p class="text-center" style="margin:15px">
-                                <button type="submit" class="btn btn-success px-5 h-5">Duyệt</button></span>
-                                <a href="" class="btn btn-danger px-5 h-5">Từ chối</a></span>
-                            </p>
-                        <?php
-                        }
-                        ?>
+                        <p class="text-center" style="margin:15px">
+                            <button name="accept" class="btn btn-success px-5 h-5">Accept</button></span>
+                            <button name="reject" class="btn btn-danger px-5 h-5">Reject</button></span>
+                        </p>
                     </div>
                 </form>
             </div>

@@ -83,7 +83,7 @@ $data = get_dayoff_department($id, $user_id);
                             <td><?= $row['day_start'] ?></td>
                             <td><?= $row['result'] ?></td>
                             <td>
-                                <a class="btn btn-primary" href="#">Xem chi tiết</a>
+                                <a class="btn btn-primary" href="../views/dayoff_detail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
                             </td>
                         </tr>
                 <?php
