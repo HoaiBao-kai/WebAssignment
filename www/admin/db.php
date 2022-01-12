@@ -330,7 +330,7 @@ function get_task_department($id)
         return array('code' => 2, 'error' => 'ID not exist');
     }
 
-    return $result;
+    return array('code' => 3, 'data' => $result);
 }
 
 function get_dayoff_department($id)
@@ -450,7 +450,8 @@ function down_manager($id, $departmentID)
     return array('code' => 0, 'error' => 'Update successful');
 }
 
-function sum_dayoff($id) {
+function sum_dayoff($id)
+{
     $sql = 'select sum(convert(num_day_off, int)) as "sumd" from day_off where employeeId = ?';
 
     $conn = open_database();
@@ -467,6 +468,6 @@ function sum_dayoff($id) {
         return array('code' => 2, 'error' => 'An error occured');
     }
 
-    
+
     return $result->fetch_assoc();
 }

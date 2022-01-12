@@ -4,7 +4,7 @@ if (!isset($_SESSION['user'])) {
     header('Location: login.php');
     exit();
 }
-
+$user_id = $_SESSION['user'];
 require_once('../admin/db.php');
 
 if (isset($_GET['username'])) {
@@ -62,14 +62,21 @@ if (isset($_GET['username'])) {
                 <form method="post" action="" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="text-center">
                         <img class="avatar" src="../images/avt.png" alt="test">
+                        <div style="margin:10px" class="text-center">
+                            <label for="img">Chọn ảnh đại diện:</label>
+                            <input type="file" id="btn-avatar" name="img" accept="image/*">
+                        </div>
                     </div>
-                    <div style="margin:10px" class="text-center">
-                        <label for="img">Chọn ảnh đại diện:</label>
-                        <input type="file" id="btn-avatar" name="img" accept="image/*">
-                    </div>
-                    <div class="form-group">
-                        <label>Mã nhân viên:</label>
-                        <input disabled value="<?= $data['username'] ?>" class="form-control " name="manhanvien" id="manhanvien" type="text" placeholder="Chưa có mã nhân viên">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Mã nhân viên:</label>
+                            <input disabled value="<?= $data['username'] ?>" class="form-control " name="manhanvien" id="manhanvien" type="text" placeholder="Chưa có mã nhân viên">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Chức vụ</label>
+                            <input disabled value="<?= $data['possition'] ?>" class="form-control" name="chucvu" id="chucvu" type="text" placeholder="Chức vụ">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Họ và tên</label>
@@ -79,10 +86,7 @@ if (isset($_GET['username'])) {
                         <label>Phòng ban</label>
                         <input disabled value="<?= $data1['name'] ?>" class="form-control" name="phongban" id="phongban" type="text" placeholder="Phòng ban">
                     </div>
-                    <div class="form-group">
-                        <label>Chức vụ</label>
-                        <input disabled value="<?= $data['possition'] ?>" class="form-control" name="chucvu" id="chucvu" type="text" placeholder="Chức vụ">
-                    </div>
+
                     <div class="form-group">
                         <?php
                         if ($_SESSION['possition'] === "leader") {

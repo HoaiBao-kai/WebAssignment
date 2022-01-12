@@ -68,19 +68,21 @@ $data = get_dayoff_department($id);
             </tr>
             <tbody>
                 <?php
-                while ($row = $data->fetch_assoc()) {
+                if ($data['code'] != 2) {
+                    while ($row = $data->fetch_assoc()) {
                 ?>
-                    <tr>
-                        <td><?= $row['id'] ?></td>
-                        <td><?= $row['employeeId'] ?></td>
-                        <td><?= $row['day_start'] ?></td>
-                        <td><?= $row['day_start'] ?></td>
-                        <td><?= $row['result'] ?></td>
-                        <td>
-                            <a class="btn btn-primary" href="#">Xem chi tiết</a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td><?= $row['id'] ?></td>
+                            <td><?= $row['employeeId'] ?></td>
+                            <td><?= $row['day_start'] ?></td>
+                            <td><?= $row['day_start'] ?></td>
+                            <td><?= $row['result'] ?></td>
+                            <td>
+                                <a class="btn btn-primary" href="#">Xem chi tiết</a>
+                            </td>
+                        </tr>
                 <?php
+                    }
                 }
                 ?>
             </tbody>

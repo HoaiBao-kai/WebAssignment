@@ -4,6 +4,7 @@ if (!isset($_SESSION['user'])) {
     header('Location: ../views/login.php');
     exit();
 }
+$user_id = $_SESSION['user'];
 require_once('../admin/db.php');
 $department = get_department_user($_SESSION['user']);
 $account = getEmployeebyDepartment($department);

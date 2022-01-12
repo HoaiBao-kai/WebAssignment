@@ -65,19 +65,21 @@ $data = get_task_department($id);
             </tr>
             <tbody>
                 <?php
-                while ($row = $data->fetch_assoc()) {
+                if ($data['code'] == 3) {
+                    while ($row = $data['data']->fetch_assoc()) {
                 ?>
-                    <tr>
-                        <td><?= $row['id'] ?></td>
-                        <td><?= $row['title'] ?></td>
-                        <td><?= $row['start_day'] ?></td>
-                        <td><?= $row['deadline'] ?></td>
-                        <td><?= $row['status'] ?></td>
-                        <td>
-                            <a class="btn btn-primary" href="#">Xem chi tiết</a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td><?= $row['id'] ?></td>
+                            <td><?= $row['title'] ?></td>
+                            <td><?= $row['start_day'] ?></td>
+                            <td><?= $row['deadline'] ?></td>
+                            <td><?= $row['status'] ?></td>
+                            <td>
+                                <a class="btn btn-primary" href="#">Xem chi tiết</a>
+                            </td>
+                        </tr>
                 <?php
+                    }
                 }
                 ?>
             </tbody>
