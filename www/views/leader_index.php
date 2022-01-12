@@ -63,8 +63,9 @@ $data = get_task_department($id);
             <tr>
                 <th>ID</th>
                 <th>Tên nhiệm vụ</th>
+                <th>Nhân viên thực hiện</th>
                 <th>Ngày giao</th>
-                <th>Ngày hoàn thành</th>
+                <th>Hạn nộp</th>
                 <th>Trạng thái</th>
                 <th>Chi tiết</th>
             </tr>
@@ -76,11 +77,12 @@ $data = get_task_department($id);
                         <tr>
                             <td><?= $row['id'] ?></td>
                             <td><?= $row['title'] ?></td>
+                            <td><?= $data2 = getEmployeeByID($row['account_id'])['fullname'] ?></td>
                             <td><?= $row['start_day'] ?></td>
                             <td><?= $row['deadline'] ?></td>
                             <td><?= $row['status'] ?></td>
                             <td>
-                                <a class="btn btn-primary" href="../views/leadertaskview.php">Xem chi tiết</a>
+                                <a class="btn btn-primary" href="../views/leadertaskview.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
                             </td>
                         </tr>
                 <?php

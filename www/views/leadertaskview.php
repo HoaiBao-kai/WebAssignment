@@ -1,15 +1,46 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: login.php');
-    exit();
-}
-if ($_SESSION['possition'] != "leader") {
-    header('Location: unknown.php');
-    exit();
-}
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: login.php');
+        exit();
+    }
+    if ($_SESSION['possition'] != "leader") {
+        header('Location: unknown.php');
+        exit();
+    }
 
-require_once('../admin/db.php');
+    require_once('../admin/db.php');
+
+    if (isset($_GET['id']))
+    {
+        $id = $_GET['id'];
+        $data = get_task_id($id);
+        $file=explode("/",$data['tag_file']); 
+        $namefile=$file['2'];
+
+        if ($data['status'] != "In progress" && $data['status'] != "New")
+        {
+            $data1 = get_submit_task($id);
+            $file1=explode("/",$data1['tag_file']); 
+            $namefile1=$file1['2'];
+        }
+    }
+    else {
+        header('Location: unknown.php');
+        exit();
+    }
+
+    if (isset($_POST['accept'])) {
+        
+        $id = $_GET['id'];
+        $submitId = $data1['submit_id'];
+
+        $result = update_task_complete($id, $_POST['review']);
+        $result1 = update_status_submit($submitId, "Completed");
+
+        header('Location: ../views/leader_index.php');
+        exit();
+    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -39,7 +70,7 @@ require_once('../admin/db.php');
                         </div>
                         <div class="form-group col-md-6">
                             <label for="id">Hạn chót</label>
-                            <input type="text" name="hanchot" id="hanchot" value="<?= $data['deadline'] ?>" class="form-control" disabled>
+                            <input type="text" name="hanchot" id="hanchot" value="<?= $data['deadline'] ?>" class="form-control">
                         </div>
                     </div>
                     <div class="form-row">
@@ -53,43 +84,70 @@ require_once('../admin/db.php');
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name">Ngày nộp</label>
-                        <input type="text" name="ngaygiao" id="ngaygiao" value="<?= $data['start_day'] ?>" class="form-control" disabled>
+                        <label for="">File đính kèm: <a href="<?php echo $data['tag_file'] ?>" download><?= $namefile ?></a></label>
                     </div>
-
                     <div class="form-group">
                         <label for="user">Thông tin chi tiết:</label>
                         <br>
                         <p class="text-center"> <textarea wrap="hard" disabled name="" id="" cols="55" rows="5"><?= $data['detail'] ?></textarea></p>
-
                     </div>
-                    <div class="form-group">
-                        <label for="">Mô tả thông tin:</label>
-                        <br>
-                        <p class="text-center"> <textarea disabled name="detail" id="detail" cols="55" rows="5"></textarea></p>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="">Tệp đính kèm:</label>
-                            <br>
-                            <li><a href="../images/avt.png">Hình ảnh</a></li>
-                            <li><a href="https://google.com">Link tham khảo</a></li>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="">Tệp đính kèm(người dùng nộp):</label>
-                            <br>
-                            <li><a href="../images/avt.png">Hình ảnh</a></li>
-                            <li><a href="https://google.com">Link tham khảo</a></li>
-                        </div>
-                    </div>
+                    <?php
+                        if ($data['status'] != "In progress" && $data['status'] != "New") {
+                            ?>
+                                <div class="form-group">
+                                    <label for="name">Ngày nộp</label>
+                                    <input type="text" name="ngaygiao" id="ngaygiao" value="<?= $data1['submit_date'] ?>" class="form-control" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Mô tả thông tin:</label>
+                                    <br>
+                                    <p class="text-center"><textarea disabled name="detail" id="detail" cols="55" rows="5"><?= $data1['deatail'] ?></textarea></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">File đính kèm (Nhân viên nộp): <a href="<?php echo $data1['tag_file'] ?>" download><?= $namefile1 ?></a></label>
+                                </div>
+                                <div class="form-group">
+                                    <label for="id">Gia hạn</label>
+                                    <input type="datetime-local" name="newdeadline" id="newdeadline"  class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Ghi chú:</label>
+                                    <br>
+                                    <p class="text-center"><textarea name="reason" id="reason" cols="55" rows="5"></textarea></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">File đính kèm thêm</label>
+                                    <input type='file' id="file" name="file" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Mức độ hoàn thành</label>
+                                    <select class="form-control" name="review" id="review">
+                                        <option value="good">GOOD</option>
+                                        <option value="ok">OK</option>
+                                        <option value="bad">BAD</option>
+                                    </select>
+                                </div>
+                            <?php
+                        }
+                    ?>
                     <div class="form-group text-center">
                         <?php
-                        if (!empty($error)) {
-                            echo "<div class='alert alert-danger'>$error</div>";
-                        }
+                            if (!empty($error)) {
+                                echo "<div class='alert alert-danger'>$error</div>";
+                            }
+
+                            if ($data['status'] == "In progress" || $data['status'] == "New") {
+                                ?>
+                                    <a href="../views/leader_index.php" class="btn btn-success px-5 h-5">Return</a>
+                                <?php
+                            }
+                            else {
+                                ?>
+                                    <button name="accept" class="btn btn-success px-5 h-5">Accept</button>
+                                    <button name="reject" class="btn btn-danger px-5 h-5">Reject</button>
+                                <?php
+                            }
                         ?>
-                        <button type="submit" class="btn btn-success px-5 h-5">Accept</button>
-                        <a href="../views/employee_index.php" class="btn btn-danger px-5 h-5">Reject</a>
                     </div>
                 </form>
             </div>
