@@ -290,7 +290,7 @@ function getEmployeebyDepartment($departmentID)
 
 
 
-    return $result;
+    return array('code' => 0, 'data' => $result);
 }
 
 function get_department_user($id)
@@ -408,7 +408,7 @@ function get_department_leader($departmentID) {
         return array('code' => 2, 'error' => 'An error occured');
     }
 
-    return $result->fetch_assoc();
+    return array('code' => 0, 'data' => $result);
 }
 
 function update_manager($id, $departmentID) {
@@ -468,4 +468,40 @@ function sum_dayoff($id) {
     return $result->fetch_assoc();
 }
 
+function get_dayoff_request($id) {
+    $sql = 'select * from day_off where employeeId = ?';
+    $conn = open_database();
 
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('s', $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return array('code' => 0, 'data' => $result);
+}
+
+function add_request_dayoff($id, $employeeId, $day_start, $reason, $result, $departId, $day_off_request, $tag_file) {
+    $sql = 'INSERT INTO day_off(id, employeeId, day_start, reason, result, department_id, day_off_request, tag_file) VALUES (?,?,?,?,?,?,?,?)';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ssssssss', $id, $employeeId, $day_start, $reason, $result, $departId, $day_off_request, $tag_file);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    if ($stm->affected_rows == 0) {
+
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return array('code' => 0, 'message' => 'Create successful');
+}

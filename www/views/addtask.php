@@ -127,11 +127,13 @@ if (
                         <label>Nhân viên</label>
                         <select class="form-control" name="accountID" id="accountID">'
                             <?php
-                            while ($row = $account->fetch_assoc()) {
-                            ?>
-                                <option value='<?php echo $employee = $row["username"] ?>'><?php echo $row['fullname'] ?></option>
-                            <?php
-                            }
+                                if ($account['code'] == 0) {
+                                    while ($row = $account['data']->fetch_assoc()) {
+                                        ?>
+                                            <option value='<?php echo $employee = $row["username"] ?>'><?php echo $row['fullname'] ?></option>
+                                        <?php
+                                        }
+                                }
                             ?>
                         </select>
                     </div>

@@ -5,8 +5,8 @@
         exit();
     }
 
-require_once("../admin/db.php");
-// $data = get_departments();
+    require_once("../admin/db.php");
+    // $data = get_departments();
 
     $user_id = $_SESSION['user'];
     $dayoff = sum_dayoff($user_id);
@@ -17,6 +17,9 @@ require_once("../admin/db.php");
     else {
         $dayleff = 12 - $dayoff['sumd'];
     }
+
+    $id = uniqid();
+    
 ?>
 
 <!doctype html>

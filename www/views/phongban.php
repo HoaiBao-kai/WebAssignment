@@ -20,6 +20,19 @@
         $data = get_department($id);
         $data1 = getEmployeebyDepartment($id);
         $data2 = get_department_leader($id);
+
+        $name = '';
+        $userN = '';
+
+        if ($data2['code'] == 0) {
+            $tmp = $data2['data']->fetch_assoc();
+            $name = $tmp['fullname'];
+            $userN = $tmp['username'];
+        }
+        else
+        {
+            $name = "Chưa có trưởng phòng";
+        }
     }
 
     if (isset($_POST['update'])) {
@@ -38,7 +51,7 @@
             $manager = $_POST['manager'];
     
             $result = update_department($id, $pb, $sophong, $comment);
-            $result2 = down_manager($data2['username'], $id);
+            $result2 = down_manager($userN, $id);
             $result1 = update_manager($manager, $id);
             header('Location: ../views/department_management.php');
         }
@@ -77,7 +90,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Trưởng phòng hiện tại</label>
-                        <input type="text" value="<?= $data2['fullname'] ?>" class="form-control" disabled> 
+                        <input type="text" value="<?= $name ?>" class="form-control" disabled> 
                     </div>
                     <div class="form-group">
                         <label for="comment">Mô tả</label>
@@ -86,24 +99,14 @@
                     <div class="form-group">
                         <label for="">Thay trưởng phòng mới (nếu muốn)</label>
                         <select class="form-control" id="manager" name="manager">
+                            <option value='<?php echo $employee = $userN ?>'><?= $name ?></option>
                             <?php 
-                                if ($data2['code'] != 0) 
-                                {
-                                    while ($row = $data1->fetch_assoc()) {
+                                if ($data1['code'] == 0) {
+                                    while ($row = $data1['data']->fetch_assoc()) {
                                         ?>
                                             <option value='<?php echo $employee = $row["username"] ?>'><?= $row['fullname'] ?></option>
                                         <?php
                                     }
-                                }
-                                else {
-                                    ?>
-                                        <option value='<?php echo $employee = $data2["username"] ?>'><?= $data2['fullname'] ?></option>
-                                    <?php
-                                        while ($row = $data1->fetch_assoc()) {
-                                            ?>
-                                                <option value='<?php echo $employee = $row["username"] ?>'><?= $row['fullname'] ?></option>
-                                            <?php
-                                        }
                                 }
                             ?>
                         </select>
