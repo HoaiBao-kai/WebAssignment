@@ -17,44 +17,38 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 $error = '';
 $dateSubmit = date('Y-m-d\TH:i');
 
+if (isset($_POST['detail'])) {
+    $detail = $_POST['detail'];
+    $id = $data;
 
-if (isset($_POST['detail']) && isset($_POST['id'])) {
-
-        $detail = $_POST['detail'];
-        $id = $_POST['id'];
-
-        $file = $_FILES['file'];
-        $fileName = $file["name"];
-        $fileType = $file["type"];
-        $fileTempName = $file["tmp_name"];
-        if ($fileName == null) {
-            $target_file = " ";
-        } else {
-            $file = $fileName;
-            $target_file = '../file/'.$file;
-            move_uploaded_file($fileTempName, $target_file);
-        }
-
-        if (empty($detail)) {
-            $error = "Hãy nhập mô tả";
-        }
-        else if (empty($id)) {
-            $error = "Không lấy được id task";
-        }
-        else if (empty($submitId)) {
-            $error = "Không lấy được id submit";
-        }
-        else {
-            $result = submit_task($submitId, $id, $dateSubmit, $target_file, $detail, "Waiting");
-            $result1 = update_task_status($id, "Waiting");
-
-            if ($result['code'] == 0) {
-                header('Location: ../views/employee_index.php');
-                exit();
-            }
-        }
-        
+    $file = $_FILES['file'];
+    $fileName = $file["name"];
+    $fileType = $file["type"];
+    $fileTempName = $file["tmp_name"];
+    if ($fileName == null) {
+        $target_file = " ";
+    } else {
+        $file = $fileName;
+        $target_file = '../file/' . $file;
+        move_uploaded_file($fileTempName, $target_file);
     }
+
+    if (empty($detail)) {
+        $error = "Hãy nhập mô tả";
+    } else if (empty($id)) {
+        $error = "Không lấy được id task";
+    } else if (empty($submitId)) {
+        $error = "Không lấy được id submit";
+    } else {
+        $result = submit_task($submitId, $id, $dateSubmit, $target_file, $detail, "Waiting");
+        $result1 = update_task_status($id, "Waiting");
+
+        if ($result['code'] == 0) {
+            header('Location: ../views/employee_index.php');
+            exit();
+        }
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -94,7 +88,7 @@ if (isset($_POST['detail']) && isset($_POST['id'])) {
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Task ID</label>
-                            <input type="text" name="id" id="id" value="<?= $data['id'] ?>" class="form-control" disabled>
+                            <input type="text" name="id" id="id" value="<?php echo $data['id'] ?>" class="form-control" disabled>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -121,9 +115,9 @@ if (isset($_POST['detail']) && isset($_POST['id'])) {
                     </div>
                     <div class="form-group text-center">
                         <?php
-                            if (!empty($error)) {
-                                echo "<div class='alert alert-danger'>$error</div>";
-                            }
+                        if (!empty($error)) {
+                            echo "<div class='alert alert-danger'>$error</div>";
+                        }
                         ?>
                         <button type="submit" class="btn btn-success px-5 h-5">Submit</button>
                         <a href="../views/employee_index.php" class="btn btn-danger px-5 h-5">Return</a>
