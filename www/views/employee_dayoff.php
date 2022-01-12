@@ -17,7 +17,6 @@ if ($_SESSION['possition'] === "leader") {
 
 $data = get_dayoff_request($user_id);
 
-
 $current_request = get_current_dayoff($user_id);
 $current_date = date('Y-m-d');
 $date =  (strtotime($current_date) - strtotime($current_request['day_off_response'])) / (60 * 60 * 24);
