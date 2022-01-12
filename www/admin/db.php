@@ -514,7 +514,7 @@ function add_request_dayoff($id, $employeeId, $day_start, $reason, $result, $dep
 
 function submit_task($id, $taskid, $date, $file, $detail, $status)
 {
-    $sql = 'INSERT INTO day_off(submit_id, task_id, submit_date, tag_file, deatail, status) VALUES (?,?,?,?,?,?)';
+    $sql = 'INSERT INTO submit(submit_id, task_id, submit_date, tag_file, deatail, status) VALUES (?,?,?,?,?,?)';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);

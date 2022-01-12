@@ -20,14 +20,40 @@
 
     if (isset($_POST['detail']) && isset($_POST['id'])) {
 
+        echo "haha";
+
         $detail = $_POST['detail'];
-        $id = $_POST['id']
+        $id = $_POST['id'];
+
+        $file = $_FILES['file'];
+        $fileName = $file["name"];
+        $fileType = $file["type"];
+        $fileTempName = $file["tmp_name"];
+        if ($fileName == null) {
+            $target_file = " ";
+        } else {
+            $file = $fileName;
+            $target_file = '../file/'.$file;
+            move_uploaded_file($fileTempName, $target_file);
+        }
 
         if (empty($detail)) {
             $error = "Hãy nhập mô tả";
         }
         else if (empty($id)) {
-            
+            $error = "Không lấy được id task";
+        }
+        else if (empty($submitId)) {
+            $error = "Không lấy được id submit";
+        }
+        else {
+            $result = submit_task($submitId, $id, $dateSubmit, $target_file, $detail, "Waiting");
+            $result1 = update_task_status($id, "Waiting");
+
+            if ($result['code'] == 0) {
+                header('Location: ../views/employee_index.php');
+                exit();
+            }
         }
         
     }
@@ -52,7 +78,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8">
                 <h2 class="text-center text-dark mt-2 mb-3">Nhiệm vụ</h2>
-                <form action="employeetasksubmit.php" method="post" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
+                <form action="" enctype="multipart/form-data" method="post" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="name">Ngày giao</label>
@@ -96,6 +122,11 @@
                         <input required type='file' id="tagFile" name="tagFile" />
                     </div>
                     <div class="form-group text-center">
+                        <?php
+                            if (!empty($error)) {
+                                echo "<div class='alert alert-danger'>$error</div>";
+                            }
+                        ?>
                         <button type="submit" class="btn btn-success px-5 h-5">Submit</button>
                         <a href="../views/employee_index.php" class="btn btn-danger px-5 h-5">Return</a>
                     </div>
