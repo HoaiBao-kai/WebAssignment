@@ -23,7 +23,7 @@ if (!isset($_SESSION['user'])) {
     <div class="container">
         <div class="row">
             <div class="col-md-6 mt-5 mx-auto p-3 border rounded">
-                <h4>Bạn không có quyền truy cập vào trang này</h4>
+                <h4>Địa chỉ truy cập không hợp lệ</h4>
                 <p>Nhấn <a href="../views/employee_index.php">vào đây</a> để trở về trang chủ, hoặc trang web sẽ tự động chuyển hướng sau <span id="counter" class="text-danger">5</span> giây nữa.</p>
                 <a class="btn btn-success px-5" href="logout.php">Logout</a>
             </div>

@@ -1,40 +1,43 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['user'])) {
-        header('Location: ../views/login.php');
-        exit();
-    }
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: ../views/login.php');
+    exit();
+}
 
-    require_once("../admin/db.php");
+require_once("../admin/db.php");
 
-    $user_id = $_SESSION['user'];
+$user_id = $_SESSION['user'];
 
-    if (isset($_GET['id'])) {
+if (isset($_GET['id'])) {
 
-        $id = $_GET['id'];
-        $data = get_detail_dayoff($id);
-        $file=explode("/",$data['tag_file']); 
-        $namefile=$file['2'];
-    }
+    $id = $_GET['id'];
+    $data = get_detail_dayoff($id);
+    $file = explode("/", $data['tag_file']);
+    $namefile = $file['2'];
+} else {
+    header('Location: ../views/unknown.php');
+    exit();
+}
 
-    if (isset($_POST['accept'])) {
+if (isset($_POST['accept'])) {
 
-        $id = $_GET['id'];
-        $date = date('Y-m-d');
-        $result = update_num_dayoff($id, $data['day_off_request']);
-        $result2 = update_status_dayoff("Accept", $id, $date);
-        header('Location: ../views/dayoff_management.php');
-        exit();
-    }
+    $id = $_GET['id'];
+    $date = date('Y-m-d');
+    $result = update_num_dayoff($id, $data['day_off_request']);
+    $result2 = update_status_dayoff("Accept", $id, $date);
+    header('Location: ../views/dayoff_management.php');
+    exit();
+}
 
-    if (isset($_POST['reject'])) {
+if (isset($_POST['reject'])) {
 
-        $id = $_GET['id'];
-        $date = date('Y-m-d');
-        $result2 = update_status_dayoff("Reject", $id, $date);
-        header('Location: ../views/dayoff_management.php');
-        exit();
-    }
+    $id = $_GET['id'];
+    $date = date('Y-m-d');
+    $result2 = update_status_dayoff("Reject", $id, $date);
+    header('Location: ../views/dayoff_management.php');
+    exit();
+}
 
 ?>
 
@@ -137,9 +140,9 @@
                     </div>
                     <div class="form-group">
                         <?php
-                            if (!empty($error)) {
-                                echo "<div class='alert alert-danger'>$error</div>";
-                            }
+                        if (!empty($error)) {
+                            echo "<div class='alert alert-danger'>$error</div>";
+                        }
                         ?>
                         <p class="text-center" style="margin:15px">
                             <button name="accept" class="btn btn-success px-5 h-5">Accept</button></span>

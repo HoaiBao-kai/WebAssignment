@@ -1,7 +1,10 @@
 <?php
 session_start();
 if (isset($_SESSION['user'])) {
-    header('Location: ../index.php');
+    if (isset($_SESSION['possition']) == 'leader') {
+        header('leader_index.php');
+    }
+    header('Location: ../views/employee_index.php');
     exit();
 }
 

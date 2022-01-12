@@ -6,7 +6,7 @@
     }
 
     if ($_SESSION['possition'] != "admin") {
-        header('Location: unknow.php');
+        header('Location: unknown.php');
         exit();
     }
 

@@ -4,6 +4,10 @@ if (!isset($_SESSION['user'])) {
     header('Location: login.php');
     exit();
 }
+if ($_SESSION['possition'] != "leader") {
+    header('Location: unknown.php');
+    exit();
+}
 
 require_once('../admin/db.php');
 ?>

@@ -12,6 +12,9 @@ if (isset($_GET['id'])) {
     $data = get_task_id($id);
     $file=explode("/",$data['tag_file']); 
     $namefile=$file['2'];
+} else {
+    header('Location: unknown.php');
+    exit();
 }
 
 $submitId = uniqid();
