@@ -10,6 +10,9 @@ require_once('../admin/db.php');
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $data = get_task_id($id);
+} else {
+    header('Location: unknown.php');
+    exit();
 }
 
 $submitId = uniqid();
