@@ -46,6 +46,8 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
     $starday = $_POST['startday'];
     $detail = $_POST['reason'];
 
+    $now = new DateTime();
+
     $file = $_FILES['file'];
     $fileName = $file["name"];
     $fileType = $file["type"];
@@ -64,7 +66,10 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
         $error = 'Nhập ngày muốn xin nghỉ';
     } else if (empty($detail)) {
         $error = 'Nhập lý do xin nghỉ';
-    } else {
+    } else if($starday < $now) {
+        $error = 'Ngày bạn chọn không hợp lệ';
+    } 
+    else {
         $result = add_request_dayoff($id, $user_id, date('Y-m-d\TH:i'), $starday, $detail, "Waiting", $departId, $dayrequest, $file);
         if ($result['code'] == 0) {
             header('Location: ../views/employee_dayoff.php');
