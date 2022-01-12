@@ -1,5 +1,5 @@
 <?php
-echo "Today is " . date("d/m/Y") . "<br>";
-echo "Today is " . date("Y.m.d") . "<br>";
-echo "Today is " . date("Y-m-d") . "<br>";
-echo "Today is " . date("l");
+require_once('../admin/db.php');
+$a = add_request_dayoff('$id', '$employeeId', '$day_start', '$reason', '$result', '$departId', '$day_off_request', '$tag_file');
+
+print_r($a);

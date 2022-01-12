@@ -6,7 +6,6 @@ if (!isset($_SESSION['user'])) {
 }
 
 require_once("../admin/db.php");
-// $data = get_departments();
 
 $user_id = $_SESSION['user'];
 $dayoff = sum_dayoff($user_id);
@@ -22,10 +21,12 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 $departId = get_department_user($user_id);
 $error = '';
 
-if (isset($_POST['starday']) && isset($_POST['detail'])) {
+echo isset($_POST['startday']);
+echo isset($_POST['reason']);
+if (isset($_POST['startday']) && isset($_POST['reason'])) {
     $dayrequest = $_POST['dayoff'];
     $starday = $_POST['startday'];
-    $detail = $_POST['detail'];
+    $detail = $_POST['reason'];
 
     $file = $_FILES['file'];
     $fileName = $file["name"];
@@ -39,7 +40,7 @@ if (isset($_POST['starday']) && isset($_POST['detail'])) {
         move_uploaded_file($fileTempName, $target_file);
     }
 
-    if ($dayrequest == 0 || $dayrequest > $dayleff) {
+    if ($dayrequest == 0 || ($dayrequest > $dayleff)) {
         $error = 'Số ngày nghỉ không hợp lệ';
     } else if (empty($starday)) {
         $error = 'Nhập ngày muốn xin nghỉ';
@@ -54,7 +55,6 @@ if (isset($_POST['starday']) && isset($_POST['detail'])) {
         }
     }
 }
-
 
 ?>
 
@@ -127,7 +127,7 @@ if (isset($_POST['starday']) && isset($_POST['detail'])) {
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
                 <h3 class="text-center text-secondary mt-5 mb-3">Yêu cầu nghỉ phép</h3>
-                <form method="post" action="" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
+                <form method="post" action="create_form_dayoff.php" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="form-group">
                         <label for="">Ngày bắt đầu</label>
                         <input type="date" name="startday" id="startday" class="form-control">
@@ -146,7 +146,7 @@ if (isset($_POST['starday']) && isset($_POST['detail'])) {
                     </div>
                     <div class="form-group">
                         <label>Lý do</label>
-                        <textarea class="form-control" name="detail" id="detail" cols="20" rows="10" style="height:100px" placeholder="Lý do xin nghỉ"></textarea>
+                        <input class="form-control" name="reason" id="reason" cols="20" rows="10" style="height:100px" placeholder="Lý do xin nghỉ"></input>
                     </div>
                     <div class="form-group">
                         <label for="">File đính kèm (nếu có)</label>
