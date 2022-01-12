@@ -525,21 +525,76 @@ function submit_task($id, $taskid, $date, $file, $detail, $status) {
     return array('code' => 0, 'message' => 'Create successful');
 }
 
-// function get_employee_request($id) {
-//     $sql = 'select * from day_off where department_id = ?';
-//     $conn = open_database();
+function get_user_task($id, $user) {
+    $sql = "select * from task where department_id = ? and account_id = ?";
+    $conn = open_database();
 
-//     $stm = $conn->prepare($sql);
-//     $stm->bind_param('s', $id);
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ss', $id, $user);
 
-//     if (!$stm->execute()) {
-//         return array('code' => 1, 'error' => 'Can not execute command');
-//     }
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
 
-//     $result = $stm->get_result();
-//     if ($result->num_rows == 0) {
-//         return array('code' => 2, 'error' => 'An error occured');
-//     }
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'ID not exist');
+    }
 
-//     return array('code' => 0, 'data' => $result);
-// }
+    return array('code' => 3, 'data' => $result);
+}
+
+function update_status_dayoff($status, $id) {
+    $sql = 'update day_off set result = ? where id = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ss', $status, $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    if ($stm->affected_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return array('code' => 0, 'error' => 'Update successful');
+}
+
+function update_num_dayoff($id, $num) {
+    $sql = 'update day_off set num_day_off = ? where id = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ss', $num, $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    if ($stm->affected_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return array('code' => 0, 'error' => 'Update successful');
+}
+
+function get_detail_dayoff($id) {
+    $sql = 'select * from day_off where id = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('s', $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return $result->fetch_assoc();
+}
