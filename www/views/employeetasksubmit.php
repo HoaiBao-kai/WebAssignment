@@ -1,26 +1,24 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['user'])) {
-        header('Location: login.php');
-        exit();
-    }
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit();
+}
 
-    require_once('../admin/db.php');
+require_once('../admin/db.php');
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $data = get_task_id($id);
-    }
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $data = get_task_id($id);
+}
 
-    $submitId = uniqid();
-    date_default_timezone_set('Asia/Ho_Chi_Minh');
-    $error = '';
-    $dateSubmit = date('Y-m-d\TH:i');
-    
+$submitId = uniqid();
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+$error = '';
+$dateSubmit = date('Y-m-d\TH:i');
 
-    if (isset($_POST['detail']) && isset($_POST['id'])) {
 
-        echo "haha";
+if (isset($_POST['detail']) && isset($_POST['id'])) {
 
         $detail = $_POST['detail'];
         $id = $_POST['id'];
@@ -58,12 +56,12 @@
         
     }
 ?>
-
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Thông tin nhiệm vụ</title>
+    <title>Submit Task</title>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
