@@ -65,7 +65,7 @@ if (isset($_POST['user']) && isset($_POST['pass'])) {
 <body>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
+            <div class="col-md-6 col-lg-4">
                 <h3 class="text-center text-secondary mt-5 mb-3">User Login</h3>
                 <form method="post" action="" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="form-group">

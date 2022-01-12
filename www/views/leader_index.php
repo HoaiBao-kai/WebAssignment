@@ -6,7 +6,7 @@ if (!isset($_SESSION['user'])) {
 }
 
 if ($_SESSION['possition'] != "leader") {
-    header('Location: unknow.php');
+    header('Location: ../views/unknown.php');
     exit();
 }
 

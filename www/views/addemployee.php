@@ -75,7 +75,6 @@ if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['possition'])) 
                     <div class="form-group">
                         <label>Chức vụ</label>
                         <select class="form-control" name="possition" id="possition">
-                            <option value="admin">Giám đốc</option>
                             <option value="leader">Trưởng phòng</option>
                             <option value="employee">Nhân viên</option>
                         </select>

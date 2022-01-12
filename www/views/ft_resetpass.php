@@ -57,9 +57,8 @@ if (isset($_POST['password']) && isset($_POST['cfpassword'])) {
                         <div class="form-group">
                             <p class="text-center">
                                 <button class="btn btn-success px-5 h-5">Change</button>
-                                <button class="btn btn-danger px-5 h-5">Cancel</button>
+                                <a href="logout.php" class="btn btn-danger px-5 h-5">Logout</a>
                             </p>
-
                         </div>
                 </form>
             </div>
