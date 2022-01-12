@@ -16,6 +16,7 @@ if ($_SESSION['possition'] === "leader") {
     $dayleff = 12 - $dayoff['sumd'];
 }
 
+
 $id = uniqid();
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 $departId = get_department_user($user_id);
