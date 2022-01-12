@@ -10,6 +10,10 @@ require_once("../admin/db.php");
 $user_id = $_SESSION['user'];
 $dayoff = sum_dayoff($user_id);
 
+$current_request = get_current_dayoff($user_id);
+$current_date = date('Y-m-d');
+$check = 1;
+
 if ($_SESSION['possition'] === "leader") {
     $dayleff = 15 - $dayoff['sumd'];
 } else {
@@ -17,11 +21,25 @@ if ($_SESSION['possition'] === "leader") {
 }
 
 
+
 $id = uniqid();
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 $departId = get_department_user($user_id);
 $error = '';
 $startday = '';
+if (isset($current_request['day_off_response'])) {
+    $date =  (strtotime($current_date) - strtotime($current_request['day_off_response'])) / (60 * 60 * 24);
+    if ($date < 8) {
+        $check = 0;
+        $error = "Bạn vừa gửi yêu cầu gần đây, không thể tạo thêm";
+    }
+}
+if (isset($current_request['result'])) {
+    if ($current_request['result'] == "Waiting") {
+        $check = 0;
+        $error = "Yêu cầu của bạn đang xử lý, bạn không thể tạo thêm";
+    }
+}
 
 if (isset($_POST['startday']) && isset($_POST['reason'])) {
     $dayrequest = $_POST['dayoff'];
@@ -47,8 +65,7 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
     } else if (empty($detail)) {
         $error = 'Nhập lý do xin nghỉ';
     } else {
-        $result = add_request_dayoff($id, $user_id, $starday, $detail, "Waiting", $departId, $dayrequest, $file);
-        print_r($result);
+        $result = add_request_dayoff($id, $user_id, date('Y-m-d\TH:i'), $starday, $detail, "Waiting", $departId, $dayrequest, $file);
         if ($result['code'] == 0) {
             header('Location: ../views/employee_dayoff.php');
             exit();
@@ -150,7 +167,7 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
                     </div>
                     <div class="form-group">
                         <label for="">File đính kèm (nếu có)</label>
-                        <input type='file' name='file'/>
+                        <input type='file' name='file' />
                     </div>
                     <div class="form-group">
                         <?php
@@ -161,13 +178,17 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
                         if ($_SESSION['possition'] === "leader") {
                         ?>
                             <p class="text-center" style="margin:15px">
-                                <button type="submit" class="btn btn-success px-5 h-5">Tạo</button></span>
+                                <button <?php if ($check == 0) {
+                                            echo 'disabled';
+                                        } ?> type="submit" class="btn btn-success px-5 h-5">Tạo</button></span>
                                 <a href="../views/employee_dayoff.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
                             </p>
                         <?php
                         } else { ?>
                             <p class="text-center" style="margin:15px">
-                                <button type="submit" class="btn btn-success px-5 h-5">Tạo</button></span>
+                                <button <?php if ($check == 0) {
+                                            echo 'disabled';
+                                        } ?> type="submit" class="btn btn-success px-5 h-5">Tạo</button></span>
                                 <a href="../views/employee_dayoff.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
                             </p>
                         <?php

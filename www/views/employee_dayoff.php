@@ -17,10 +17,6 @@ if ($_SESSION['possition'] === "leader") {
 
 $data = get_dayoff_request($user_id);
 
-$current_request = get_current_dayoff($user_id);
-$current_date = date('Y-m-d');
-$date =  (strtotime($current_date) - strtotime($current_request['day_off_response'])) / (60 * 60 * 24);
-echo $date;
 
 
 ?>
@@ -109,13 +105,7 @@ echo $date;
                     <td>12</td>
                     <td><?= $dayoff['sumd'] ?></td>
                     <td><?= $dayleff ?></td>
-                    <?php
-                    if ($date > 7) {
-                        echo '<td><a href="create_form_dayoff.php" class="btn btn-primary">Tạo đơn mới</a></td>';
-                    } else {
-                        echo '<td><a class="btn btn-primary">Chưa thể tạo</a></td>';
-                    }
-                    ?>
+                    <td><a href="create_form_dayoff.php" class="btn btn-primary">Tạo đơn mới</a></td>
                 </tr>
             <?php
             } else {
@@ -124,17 +114,10 @@ echo $date;
                     <td>15</td>
                     <td><?= $dayoff['sumd'] ?></td>
                     <td><?= $dayleff ?></td>
-                    <?php
-                    if ($date > 7) {
-                        echo '<td><a href="create_form_dayoff.php" class="btn btn-primary">Tạo đơn mới</a></td>';
-                    } else {
-                        echo '<td><a class="btn btn-primary">Chưa thể tạo</a></td>';
-                    }
-                    ?>
-                </tr>
-            <?php
+                    <td><a href="create_form_dayoff.php" class="btn btn-primary">Tạo đơn mới</a></td>
+                <?php
             }
-            ?>
+                ?>
         </table>
         <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách yêu cầu</h2>
         <table class="table table-bordered text-center">
