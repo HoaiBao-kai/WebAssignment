@@ -22,8 +22,7 @@ $startDay = date("Y-m-d\TH:i");
 
 // addTask($accountID, $deadline, $departmentID, $detail, $id, $startDay, $status, $tagFile, $title)
 if (
-    isset($_POST['deadline']) && isset($_POST['title']) && isset($_POST['detail'])
-    && isset($_POST['tagFile']) && isset($_POST['deadline']) && $_POST['accountID']
+    isset($_POST['deadline']) && isset($_POST['title']) && isset($_POST['detail']) && isset($_POST['deadline']) && $_POST['accountID']
 ) {
     $file = $_FILES['file'];
     $fileName = $file["name"];
@@ -110,7 +109,7 @@ if (
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
                 <h3 class="text-center text-secondary mt-5 mb-3">Thêm nhiệm vụ</h3>
-                <form method="post" action="addtask.php" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
+                <form method="post" action="" enctype="multipart/form-data" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Mã nhiệm vụ:</label>

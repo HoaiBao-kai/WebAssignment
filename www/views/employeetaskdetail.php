@@ -11,6 +11,8 @@
     {
         $id = $_GET['id'];
         $data = get_task_id($id);
+        $file=explode("/",$data['tag_file']); 
+        $namefile=$file['2'];
     }
 
     if (isset($_POST['update'])) {
@@ -58,14 +60,10 @@
                     </div>
                     <div class="form-group">
                         <label for="user">Thông tin chi tiết:</label>
-                        <br> 
-                        <p style="background-color: white;">Hoàn thành đúng thời hạn</p>
+                        <textarea name="comment" id="comment" rows="5" class="form-control" disabled><?= $data['detail'] ?></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="">Tệp đính kèm:</label>
-                        <br>
-                        <li><a href="../images/avt.png">Hình ảnh</a></li>
-                        <li><a href="https://google.com">Link tham khảo</a></li>
+                        <label for="">Tệp đính kèm: <a href="<?php echo $data['tag_file'] ?>" download><?= $namefile ?></a></label>
                     </div>
                     <div class="form-group text-center">
                         <button class="btn btn-success px-5 h-5" type="submit" name="update">Start</button>

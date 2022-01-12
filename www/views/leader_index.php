@@ -80,7 +80,7 @@ $data = get_task_department($id);
                             <td><?= $row['deadline'] ?></td>
                             <td><?= $row['status'] ?></td>
                             <td>
-                                <a class="btn btn-primary" href="#">Xem chi tiết</a>
+                                <a class="btn btn-primary" href="../views/leadertaskview.php">Xem chi tiết</a>
                             </td>
                         </tr>
                 <?php

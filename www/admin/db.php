@@ -315,7 +315,7 @@ function get_department_user($id)
 
 function get_task_department($id)
 {
-    $sql = "select * from task where department_id = ?";
+    $sql = "select * from task where department_id = ?  ORDER BY start_day DESC";
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
