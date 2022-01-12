@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 12, 2022 lúc 07:18 AM
+-- Thời gian đã tạo: Th1 12, 2022 lúc 10:04 AM
 -- Phiên bản máy phục vụ: 10.4.22-MariaDB
 -- Phiên bản PHP: 8.1.1
 
@@ -66,16 +66,19 @@ CREATE TABLE `day_off` (
   `department_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `num_day_off` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `day_off_request` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `tag_file` varchar(100) COLLATE utf8_unicode_ci NOT NULL
+  `tag_file` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `day_off_response` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `day_off`
 --
 
-INSERT INTO `day_off` (`id`, `employeeId`, `day_start`, `reason`, `result`, `reason_result`, `department_id`, `num_day_off`, `day_off_request`, `tag_file`) VALUES
-('12345', 'hungnguyen', '2022-01-01', '[value-5]', 'Waiting', '[value-7]', '123', '5', '5', ''),
-('12346', 'hungnguyen', '0000-00-00', 'Đau đầu', 'Đang xử lý', '[value-7]', '115', '5', '5', '');
+INSERT INTO `day_off` (`id`, `employeeId`, `day_start`, `reason`, `result`, `reason_result`, `department_id`, `num_day_off`, `day_off_request`, `tag_file`, `day_off_response`) VALUES
+('$id', '$employeeId', '2022-01-02', '$reason', '$result', NULL, '$departId', '', '$day_off_request', '$tag_file', '2022-01-02'),
+('12345', 'hungnguyen', '2022-01-01', '[value-5]', 'Waiting', '[value-7]', '123', '5', '5', '', '2022-01-03'),
+('12346', 'vanA', '2022-01-05', 'Đau đầu', 'Đang xử lý', '[value-7]', '115', '5', '5', '', '2022-01-06'),
+('61de89abbcaa5', 'vanA', '2022-01-13', 'dsadasdabdahsdbhhdhadhashdahdhahsdjasd', 'Đang xử lý', NULL, '115', '', '3', 'Array', '2022-01-05');
 
 -- --------------------------------------------------------
 
