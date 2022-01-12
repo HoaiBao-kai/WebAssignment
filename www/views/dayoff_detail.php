@@ -9,59 +9,13 @@ require_once("../admin/db.php");
 
 $user_id = $_SESSION['user'];
 $dayoff = sum_dayoff($user_id);
-
-if ($_SESSION['possition'] === "leader") {
-    $dayleff = 15 - $dayoff['sumd'];
-} else {
-    $dayleff = 12 - $dayoff['sumd'];
-}
-
-$id = uniqid();
-date_default_timezone_set('Asia/Ho_Chi_Minh');
-$departId = get_department_user($user_id);
-$error = '';
-$startday = '';
-
-if (isset($_POST['startday']) && isset($_POST['reason'])) {
-    $dayrequest = $_POST['dayoff'];
-    $starday = $_POST['startday'];
-    $detail = $_POST['reason'];
-
-    $file = $_FILES['file'];
-    $fileName = $file["name"];
-    $fileType = $file["type"];
-    $fileTempName = $file["tmp_name"];
-    if ($fileName == null) {
-        $target_file = "0";
-    } else {
-        $file = $fileName;
-        $target_file = '../file/' . $file;
-        move_uploaded_file($fileTempName, $target_file);
-    }
-
-    if ($dayrequest == 0 || ($dayrequest > $dayleff)) {
-        $error = 'Số ngày nghỉ không hợp lệ';
-    } else if (empty($starday)) {
-        $error = 'Nhập ngày muốn xin nghỉ';
-    } else if (empty($detail)) {
-        $error = 'Nhập lý do xin nghỉ';
-    } else {
-        $result = add_request_dayoff($id, $user_id, $starday, $detail, "Waiting", $departId, $dayrequest, $file);
-        print_r($result);
-        if ($result['code'] == 0) {
-            header('Location: ../views/employee_dayoff.php');
-            exit();
-        }
-    }
-}
-
 ?>
 
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Add Dayoff</title>
+    <title>Detail Dayoff</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -127,36 +81,39 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
             <div class="col-md-6 col-lg-5">
                 <h3 class="text-center text-secondary mt-5 mb-3">Yêu cầu nghỉ phép</h3>
                 <form method="post" enctype="multipart/form-data" action="create_form_dayoff.php" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
-                    <div class="form-group">
-                        <label for="">Ngày bắt đầu</label>
-                        <input type="date" name="startday" id="startday" class="form-control">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="">Mã nhân viên</label>
+                            <input disabled class="form-control" type="text" name="" id="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Số ngày nghỉ</label>
+                            <input disabled class="form-control" type="text" name="" id="">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="">Số ngày muốn nghỉ</label>
-                        <select class="form-control" id="dayoff" name="dayoff">
-                            <?php
-                            for ($i = 0; $i <= $dayleff; $i++) {
-                            ?>
-                                <option value="<?= $i ?>"><?= $i ?></option>
-                            <?php
-                            }
-                            ?>
-                        </select>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="">Ngày bắt đầu</label>
+                            <input disabled class="form-control" type="text" name="" id="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="">Ngày kết thúc</label>
+                            <input disabled class="form-control" type="text" name="" id="">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Lý do</label>
-                        <input class="form-control" name="reason" id="reason" cols="20" rows="10" style="height:100px" placeholder="Lý do xin nghỉ"></input>
+                        <input disabled class="form-control" name="reason" id="reason" cols="20" rows="10" style="height:100px" placeholder="Lý do xin nghỉ"></input>
                     </div>
                     <div class="form-group">
-                        <label for="">File đính kèm (nếu có)</label>
-                        <input type='file' name='file' multiple />
+                        <label for="">File đính kèm:</label>
+
                     </div>
                     <div class="form-group">
                         <?php
                         if (!empty($error)) {
                             echo "<div class='alert alert-danger'>$error</div>";
                         }
-
                         if ($_SESSION['possition'] === "leader") {
                         ?>
                             <p class="text-center" style="margin:15px">
@@ -166,8 +123,8 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
                         <?php
                         } else { ?>
                             <p class="text-center" style="margin:15px">
-                                <button type="submit" class="btn btn-success px-5 h-5">Tạo</button></span>
-                                <a href="../views/employee_dayoff.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
+                                <button type="submit" class="btn btn-success px-5 h-5">Duyệt</button></span>
+                                <a href="" class="btn btn-danger px-5 h-5">Từ chối</a></span>
                             </p>
                         <?php
                         }
