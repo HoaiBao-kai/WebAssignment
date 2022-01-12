@@ -19,7 +19,49 @@
     }
 
     $id = uniqid();
-    
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
+    $departId = get_department_user($user_id);
+    $error = '';
+
+    if (isset($_POST['starday']) && isset($_POST['detail']))
+    {
+        $dayrequest = $_POST['dayoff'];
+        $starday = $_POST['startday'];
+        $detail = $_POST['detail'];
+
+        $file = $_FILES['file'];
+        $fileName=$file["name"];
+        $fileType=$file["type"];
+        $fileTempName=$file["tmp_name"];
+        if($fileName==null){
+            $target_file="0";
+        }else{
+            $file=$idtask.$fileName;
+            $target_file = 'file/' . $file;
+            move_uploaded_file(  $fileTempName,$target_file);
+        }
+
+        if ($dayrequest == 0 || $dayrequest > $dayleff) {
+            $error = 'Số ngày nghỉ không hợp lệ';
+        }
+        else if (empty($starday)) {
+            $error = 'Nhập ngày muốn xin nghỉ';
+        }
+        else if (empty($detail)) {
+            $error = 'Nhập lý do xin nghỉ';
+        }
+        else {
+            $result = add_request_dayoff($id, $user_id, $starday, $detail, "Đang xử lý", $departId, $dayrequest, $file);
+            if ($result['code'] == 0)
+            {
+                header('Location: ../views/employee_dayoff.php');
+                exit();
+            }
+        }
+
+    }
+
+
 ?>
 
 <!doctype html>
@@ -103,7 +145,7 @@
                             <?php 
                                 for ($i = 0; $i <= $dayleff; $i++) {
                                     ?>
-                                        <option value="num_day_off"><?= $i ?></option>
+                                        <option value="<?= $i ?>"><?= $i ?></option>
                                     <?php
                                 }
                             ?>
@@ -111,28 +153,32 @@
                     </div>
                     <div class="form-group">
                         <label>Lý do</label>
-                        <textarea class="form-control" name="" id="" cols="20" rows="10" style="height:100px" placeholder="Lý do xin nghỉ"></textarea>
+                        <textarea class="form-control" name="detail" id="detail" cols="20" rows="10" style="height:100px" placeholder="Lý do xin nghỉ"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="">File đính kèm (nếu có)</label>
-                        <input type='file' name='files[]' multiple />
+                        <input type='file' name='file' multiple />
                     </div>
                     <div class="form-group">
                         <?php
-                        if ($_SESSION['possition'] === "leader") {
-                        ?>
-                            <p class="text-center" style="margin:15px">
-                                <button class="btn btn-success px-5 h-5">Tạo</button></span>
-                                <a href="../views/employee_dayoff.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
-                            </p>
-                        <?php
-                        } else { ?>
-                            <p class="text-center" style="margin:15px">
-                                <button class="btn btn-success px-5 h-5">Tạo</button></span>
-                                <a href="../views/employee_dayoff.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
-                            </p>
-                        <?php
-                        }
+                            if (!empty($error)) {
+                                echo "<div class='alert alert-danger'>$error</div>";
+                            }
+                        
+                            if ($_SESSION['possition'] === "leader") {
+                            ?>
+                                <p class="text-center" style="margin:15px">
+                                    <button type="submit" class="btn btn-success px-5 h-5">Tạo</button></span>
+                                    <a href="../views/employee_dayoff.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
+                                </p>
+                            <?php
+                            } else { ?>
+                                <p class="text-center" style="margin:15px">
+                                    <button type="submit" class="btn btn-success px-5 h-5">Tạo</button></span>
+                                    <a href="../views/employee_dayoff.php" class="btn btn-danger px-5 h-5">Huỷ bỏ</a></span>
+                                </p>
+                            <?php
+                            }
                         ?>
                     </div>
                 </form>
