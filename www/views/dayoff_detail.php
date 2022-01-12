@@ -18,8 +18,9 @@
     if (isset($_POST['accept'])) {
 
         $id = $_GET['id'];
+        $date = date('Y-m-d');
         $result = update_num_dayoff($id, $data['day_off_request']);
-        $result2 = update_status_dayoff("Accept", $id);
+        $result2 = update_status_dayoff("Accept", $id, $date);
         header('Location: ../views/dayoff_management.php');
         exit();
     }
@@ -27,7 +28,8 @@
     if (isset($_POST['reject'])) {
 
         $id = $_GET['id'];
-        $result2 = update_status_dayoff("Reject", $id);
+        $date = date('Y-m-d');
+        $result2 = update_status_dayoff("Reject", $id, $date);
         header('Location: ../views/dayoff_management.php');
         exit();
     }

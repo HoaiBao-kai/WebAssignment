@@ -392,7 +392,8 @@ function update_task_status($id, $status)
     return array('code' => 0, 'error' => 'Update successful');
 }
 
-function get_department_leader($departmentID) {
+function get_department_leader($departmentID)
+{
     $sql = 'select * from account where department = ? and possition = "leader"';
     $conn = open_database();
 
@@ -411,7 +412,8 @@ function get_department_leader($departmentID) {
     return array('code' => 0, 'data' => $result);
 }
 
-function update_manager($id, $departmentID) {
+function update_manager($id, $departmentID)
+{
     $sql = 'update account set possition = "leader" where username = ? and department = ?';
     $conn = open_database();
 
@@ -429,7 +431,8 @@ function update_manager($id, $departmentID) {
     return array('code' => 0, 'error' => 'Update successful');
 }
 
-function down_manager($id, $departmentID) {
+function down_manager($id, $departmentID)
+{
     $sql = 'update account set possition = "employee" where username = ? and department = ?';
     $conn = open_database();
 
@@ -447,7 +450,8 @@ function down_manager($id, $departmentID) {
     return array('code' => 0, 'error' => 'Update successful');
 }
 
-function sum_dayoff($id) {
+function sum_dayoff($id)
+{
     $sql = 'select sum(convert(num_day_off, int)) as "sumd" from day_off where employeeId = ?';
 
     $conn = open_database();
@@ -468,7 +472,8 @@ function sum_dayoff($id) {
     return $result->fetch_assoc();
 }
 
-function get_dayoff_request($id) {
+function get_dayoff_request($id)
+{
     $sql = 'select * from day_off where employeeId = ?';
     $conn = open_database();
 
@@ -487,7 +492,8 @@ function get_dayoff_request($id) {
     return array('code' => 0, 'data' => $result);
 }
 
-function add_request_dayoff($id, $employeeId, $day_start, $reason, $result, $departId, $day_off_request, $tag_file) {
+function add_request_dayoff($id, $employeeId, $day_start, $reason, $result, $departId, $day_off_request, $tag_file)
+{
     $sql = 'INSERT INTO day_off(id, employeeId, day_start, reason, result, department_id, day_off_request, tag_file) VALUES (?,?,?,?,?,?,?,?)';
     $conn = open_database();
 
@@ -506,7 +512,8 @@ function add_request_dayoff($id, $employeeId, $day_start, $reason, $result, $dep
     return array('code' => 0, 'message' => 'Create successful');
 }
 
-function submit_task($id, $taskid, $date, $file, $detail, $status) {
+function submit_task($id, $taskid, $date, $file, $detail, $status)
+{
     $sql = 'INSERT INTO day_off(submit_id, task_id, submit_date, tag_file, deatail, status) VALUES (?,?,?,?,?,?)';
     $conn = open_database();
 
@@ -544,22 +551,62 @@ function get_user_task($id, $user) {
     return array('code' => 3, 'data' => $result);
 }
 
-function update_status_dayoff($status, $id) {
-    $sql = 'update day_off set result = ? where id = ?';
+function update_status_dayoff($status, $id, $date) {
+    $sql = 'update day_off set result = ?, day_off_response = ? where id = ?';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
-    $stm->bind_param('ss', $status, $id);
+    $stm->bind_param('sss', $status, $date, $id);
 
     if (!$stm->execute()) {
         return array('code' => 1, 'error' => 'Can not execute command');
     }
 
-    if ($stm->affected_rows == 0) {
-        return array('code' => 2, 'error' => 'An error occured');
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'ID not exist');
     }
 
-    return array('code' => 0, 'error' => 'Update successful');
+    return array('code' => 0, 'data' => $result);
+ }
+
+function get_current_dayoff($id)
+{
+    $sql = 'SELECT * FROM `day_off` where employeeId = ? ORDER BY day_off_response DESC';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('s', $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'ID not exist');
+    }
+
+    return $result->fetch_assoc();
+}
+
+function get_detail_dayoff($id) {
+    $sql = 'SELECT * FROM `day_off` where id = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('s', $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'ID not exist');
+    }
+
+    return $result->fetch_assoc();
 }
 
 function update_num_dayoff($id, $num) {
@@ -573,28 +620,10 @@ function update_num_dayoff($id, $num) {
         return array('code' => 1, 'error' => 'Can not execute command');
     }
 
-    if ($stm->affected_rows == 0) {
-        return array('code' => 2, 'error' => 'An error occured');
-    }
-
-    return array('code' => 0, 'error' => 'Update successful');
-}
-
-function get_detail_dayoff($id) {
-    $sql = 'select * from day_off where id = ?';
-    $conn = open_database();
-
-    $stm = $conn->prepare($sql);
-    $stm->bind_param('s', $id);
-
-    if (!$stm->execute()) {
-        return array('code' => 1, 'error' => 'Can not execute command');
-    }
-
     $result = $stm->get_result();
     if ($result->num_rows == 0) {
-        return array('code' => 2, 'error' => 'An error occured');
+        return array('code' => 2, 'error' => 'ID not exist');
     }
 
-    return $result->fetch_assoc();
-}
+    return array('code' => 0, 'data' => $result);
+ }

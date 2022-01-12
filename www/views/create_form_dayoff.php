@@ -16,6 +16,7 @@ if ($_SESSION['possition'] === "leader") {
     $dayleff = 12 - $dayoff['sumd'];
 }
 
+
 $id = uniqid();
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 $departId = get_department_user($user_id);
@@ -126,7 +127,7 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
                 <h3 class="text-center text-secondary mt-5 mb-3">Yêu cầu nghỉ phép</h3>
-                <form method="post" enctype="multipart/form-data" action="create_form_dayoff.php" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
+                <form method="post" enctype="multipart/form-data" action="" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="form-group">
                         <label for="">Ngày bắt đầu</label>
                         <input type="date" name="startday" id="startday" class="form-control">
@@ -149,7 +150,7 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
                     </div>
                     <div class="form-group">
                         <label for="">File đính kèm (nếu có)</label>
-                        <input type='file' name='file' multiple />
+                        <input type='file' name='file'/>
                     </div>
                     <div class="form-group">
                         <?php
