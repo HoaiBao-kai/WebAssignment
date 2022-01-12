@@ -5,6 +5,11 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+if ($_SESSION['possition'] != "leader") {
+    header('Location: unknow.php');
+    exit();
+}
+
 $user_id = $_SESSION['user'];
 
 require_once('../admin/db.php');
@@ -68,8 +73,8 @@ $data = get_dayoff_department($id);
             </tr>
             <tbody>
                 <?php
-                if ($data['code'] != 2) {
-                    while ($row = $data->fetch_assoc()) {
+                if ($data['code'] == 0) {
+                    while ($row = $data['data']->fetch_assoc()) {
                 ?>
                         <tr>
                             <td><?= $row['id'] ?></td>

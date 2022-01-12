@@ -8,7 +8,14 @@
     require_once('../admin/db.php');
     $user_id = $_SESSION['user'];
     $dayoff = sum_dayoff($user_id);
-    $dayleff = 15 - $dayoff['sumd'];
+
+    if ($_SESSION['possition'] === "leader"){
+        $dayleff = 15 - $dayoff['sumd'];
+    }
+    else {
+        $dayleff = 12 - $dayoff['sumd'];
+    }
+    
 ?>
 
 <!doctype html>
@@ -31,25 +38,51 @@
 <body>
     <div class="w3-bar w3-light-grey w3-border w3-large">
         <div class="container">
-            <a href="leader_index.php" class="w3-bar-item w3-button"><i class="fas fa-house-user" style="font-size: 30px;"></i></a>
-            <a class="navbar-brand" style="margin-top: 5px;" href="#"><strong><?= $_SESSION['fullname'] ?></strong></a>
-            <div class="w3-dropdown-hover" style="float: right;">
-                <a href="#" class="w3-bar-item w3-button"><i class="fas fa-user-alt" style="font-size: 30px;"></i></a>
-                <!-- <a class="btn btn-default" href="#"><strong><?php echo $_SESSION['fullname'] ?></strong></a> -->
-                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
-                    <a href="../views/employeeprofile.php?username=<?= $user_id ?>" class="w3-bar-item w3-button">Thông tin cá nhân</a>
-                    <a href="../views/resetpassword.php" class="w3-bar-item w3-button">Đổi mật khẩu</a>
-                    <a href="../views/logout.php" class="w3-bar-item w3-button">Đăng xuất</a>
-                </div>
-            </div>
-            <div class="w3-dropdown-hover" style="float: right;">
-                <a href="#" class="w3-bar-item w3-button"><i class="fas fa-address-card" style="font-size: 30px;"></i></a>
-                <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
-                    <a class="w3-bar-item w3-button" href="../views/dayoff_management.php">Quản lý ngày nghỉ</a>
-                    <a class="w3-bar-item w3-button" href="addtask.php">Quản lý nhiệm vụ</a>
-                    <a class="w3-bar-item w3-button" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
-                </div>
-            </div>
+            <?php 
+                if ($_SESSION['possition'] === "leader"){
+                    ?>
+                        <a href="leader_index.php" class="w3-bar-item w3-button"><i class="fas fa-house-user" style="font-size: 30px;"></i></a>
+                        <a class="navbar-brand" style="margin-top: 5px;" href="#"><strong><?= $_SESSION['fullname'] ?></strong></a>
+                        <div class="w3-dropdown-hover" style="float: right;">
+                            <a href="#" class="w3-bar-item w3-button"><i class="fas fa-user-alt" style="font-size: 30px;"></i></a>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
+                                <a href="../views/employeeprofile.php?username=<?= $user_id ?>" class="w3-bar-item w3-button">Thông tin cá nhân</a>
+                                <a href="../views/resetpassword.php" class="w3-bar-item w3-button">Đổi mật khẩu</a>
+                                <a href="../views/logout.php" class="w3-bar-item w3-button">Đăng xuất</a>
+                            </div>
+                        </div>
+                        <div class="w3-dropdown-hover" style="float: right;">
+                            <a href="#" class="w3-bar-item w3-button"><i class="fas fa-address-card" style="font-size: 30px;"></i></a>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
+                                <a class="w3-bar-item w3-button" href="../views/dayoff_management.php">Quản lý ngày nghỉ</a>
+                                <a class="w3-bar-item w3-button" href="addtask.php">Quản lý nhiệm vụ</a>
+                                <a class="w3-bar-item w3-button" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
+                            </div>
+                        </div>
+                    <?php
+                }
+                else {
+                    ?>
+                        <a href="employee_index.php" class="w3-bar-item w3-button"><i class="fas fa-house-user" style="font-size: 30px;"></i></a>
+                        <a class="navbar-brand" style="margin-top: 5px;" href="#"><strong><?= $_SESSION['fullname'] ?></strong></a>
+                        <div class="w3-dropdown-hover" style="float: right;">
+                            <a href="#" class="w3-bar-item w3-button"><i class="fas fa-user-alt" style="font-size: 30px;"></i></a>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
+                                <a href="../views/employeeprofile.php?username=<?= $user_id ?>" class="w3-bar-item w3-button">Thông tin cá nhân</a>
+                                <a href="../views/resetpassword.php" class="w3-bar-item w3-button">Đổi mật khẩu</a>
+                                <a href="../views/logout.php" class="w3-bar-item w3-button">Đăng xuất</a>
+                            </div>
+                        </div>
+                        <div class="w3-dropdown-hover" style="float: right;">
+                            <a href="#" class="w3-bar-item w3-button"><i class="fas fa-address-card" style="font-size: 30px;"></i></a>
+                            <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
+                                <a class="w3-bar-item w3-button" href="../views/employee_index.php">Nhiệm vụ</a>
+                                <a class="w3-bar-item w3-button" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
+                            </div>
+                        </div>
+                    <?php
+                }
+            ?>
         </div>
     </div>
 

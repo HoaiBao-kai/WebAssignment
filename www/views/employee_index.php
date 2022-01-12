@@ -31,7 +31,7 @@ $data = get_task_department($id);
 <body>
     <div class="w3-bar w3-light-grey w3-border w3-large">
         <div class="container">
-            <a href="leader_index.php" class="w3-bar-item w3-button"><i class="fas fa-house-user" style="font-size: 30px;"></i></a>
+            <a href="employee_index.php" class="w3-bar-item w3-button"><i class="fas fa-house-user" style="font-size: 30px;"></i></a>
             <a class="navbar-brand" style="margin-top: 5px;" href="#"><strong><?= $_SESSION['fullname'] ?></strong></a>
             <div class="w3-dropdown-hover" style="float: right;">
                 <a href="#" class="w3-bar-item w3-button"><i class="fas fa-user-alt" style="font-size: 30px;"></i></a>
@@ -44,8 +44,7 @@ $data = get_task_department($id);
             <div class="w3-dropdown-hover" style="float: right;">
                 <a href="#" class="w3-bar-item w3-button"><i class="fas fa-address-card" style="font-size: 30px;"></i></a>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
-                    <a class="w3-bar-item w3-button" href="../views/dayoff_management.php">Quản lý ngày nghỉ</a>
-                    <a class="w3-bar-item w3-button" href="addtask.php">Quản lý nhiệm vụ</a>
+                    <a class="w3-bar-item w3-button" href="../views/employee_index.php">Nhiệm vụ</a>
                     <a class="w3-bar-item w3-button" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
                 </div>
             </div>
@@ -65,30 +64,32 @@ $data = get_task_department($id);
             </tr>
             <tbody>
                 <?php
-                while ($row = $data['data']->fetch_assoc()) {
-                ?>
-                    <tr>
-                        <td><?= $row['id'] ?></td>
-                        <td><?= $row['title'] ?></td>
-                        <td><?= $row['start_day'] ?></td>
-                        <td><?= $row['deadline'] ?></td>
-                        <td><?= $row['status'] ?></td>
-                        <td>
-                            <?php
-                            if ($row['status'] == "Waiting") {
-                            ?>
-                                <a class="btn btn-primary" href="../views/employeetaskdetail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
-                            <?php
-                            } else {
-                            ?>
-                                <a class="btn btn-primary" href="../views/employeetasksubmit.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
-                            <?php
-                            }
-                            ?>
-                        </td>
-                    </tr>
-                <?php
-                }
+                    if ($data['code'] == 3) {
+                        while ($row = $data['data']->fetch_assoc()) {
+                        ?>
+                            <tr>
+                                <td><?= $row['id'] ?></td>
+                                <td><?= $row['title'] ?></td>
+                                <td><?= $row['start_day'] ?></td>
+                                <td><?= $row['deadline'] ?></td>
+                                <td><?= $row['status'] ?></td>
+                                <td>
+                                    <?php
+                                    if ($row['status'] == "Waiting") {
+                                    ?>
+                                        <a class="btn btn-primary" href="../views/employeetaskdetail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <a class="btn btn-primary" href="../views/employeetasksubmit.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                    <?php
+                                    }
+                                    ?>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                    }
                 ?>
             </tbody>
         </table>

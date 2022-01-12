@@ -4,6 +4,12 @@ if (!isset($_SESSION['user'])) {
     header('Location: ../views/login.php');
     exit();
 }
+
+if ($_SESSION['possition'] != "leader") {
+    header('Location: unknow.php');
+    exit();
+}
+
 $user_id = $_SESSION['user'];
 require_once('../admin/db.php');
 $department = get_department_user($_SESSION['user']);

@@ -350,7 +350,7 @@ function get_dayoff_department($id)
         return array('code' => 2, 'error' => 'ID not exist');
     }
 
-    return $result;
+    return array('code' => 0, 'data' => $result);
 }
 
 function get_task_id($id)

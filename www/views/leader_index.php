@@ -5,6 +5,11 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+if ($_SESSION['possition'] != "leader") {
+    header('Location: unknow.php');
+    exit();
+}
+
 require_once('../admin/db.php');
 $user_id = $_SESSION['user'];
 $id = get_department_user($user_id);
