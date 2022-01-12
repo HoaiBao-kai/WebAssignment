@@ -114,7 +114,7 @@ if (isset($_POST['detail'])) {
                     <div class="form-group">
                         <label for="">Thêm tệp đính kèm</label>
                         <br>
-                        <input required type='file' id="tagFile" name="tagFile" />
+                        <input required type='file' id="file" name="file" />
                     </div>
                     <div class="form-group text-center">
                         <?php

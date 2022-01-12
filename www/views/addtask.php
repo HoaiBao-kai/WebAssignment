@@ -25,13 +25,27 @@ if (
     isset($_POST['deadline']) && isset($_POST['title']) && isset($_POST['detail'])
     && isset($_POST['tagFile']) && isset($_POST['deadline']) && $_POST['accountID']
 ) {
+    $file = $_FILES['file'];
+    $fileName = $file["name"];
+    $fileType = $file["type"];
+    $fileTempName = $file["tmp_name"];
+    if ($fileName == null) {
+        $target_file = " ";
+    } else {
+        $file = $fileName;
+        $target_file = '../file/'.$file;
+        move_uploaded_file($fileTempName, $target_file);
+    }
 
     if (empty($_POST['deadline'])) {
-        $error = 'Hãy nhập mã deadline';
+        $error = 'Hãy chọn deadline';
     } else if (empty($_POST['title'])) {
         $error = 'Hãy nhập tiêu đề';
     } else if (empty($_POST['detail'])) {
         $error = 'Hãy nhập mô tả';
+    } 
+    else if($_POST['deadline'] < $startDay) {
+        $error = 'Hạn nộp không được bé hơn ngày giao';
     } else {
         $re = addTask(
             $_POST['accountID'],
@@ -41,7 +55,7 @@ if (
             $idtask,
             $startDay,
             "New",
-            $_POST['tagFile'],
+            $target_file,
             $_POST['title']
         );
 
@@ -107,17 +121,14 @@ if (
                             <input disabled value='<?php echo $department ?>' class="form-control" name="department" id="department" type="text" placeholder="Chưa có phòng ban">
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label>Ngày giao</label>
-                            <input disabled value="<?php echo $startDay ?>" class="form-control" name="startDay" id="startDay" type="datetime-local" placeholder="Ngày giao">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Deadline</label>
-                            <input class="form-control" name="deadline" id="deadline" type="datetime-local" placeholder="Ngày giao">
-                        </div>
+                    <div class="form-group">
+                        <label>Ngày giao</label>
+                        <input disabled value="<?php echo $startDay ?>" class="form-control" name="startDay" id="startDay" type="datetime-local" placeholder="Ngày giao">
                     </div>
-
+                    <div class="form-group">
+                        <label>Deadline</label>
+                        <input class="form-control" name="deadline" id="deadline" type="datetime-local" placeholder="Ngày giao">
+                    </div>
                     <div class="form-group">
                         <label>Tiêu đề</label>
                         <input type="hidden" value="Waiting" name="status" id="status">
@@ -144,7 +155,7 @@ if (
 
                     <div class="form-group">
                         <label for="">File đính kèm (nếu có)</label>
-                        <input type='file' id="tagFile" name="tagFile" />
+                        <input type='file' id="file" name="file" />
                     </div>
                     <div class="form-group text-center">
                         <?php

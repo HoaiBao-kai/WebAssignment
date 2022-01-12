@@ -474,7 +474,7 @@ function sum_dayoff($id)
 
 function get_dayoff_request($id)
 {
-    $sql = 'select * from day_off where employeeId = ?';
+    $sql = 'select * from day_off where employeeId = ? ORDER BY date_request DESC';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
@@ -534,7 +534,7 @@ function submit_task($id, $taskid, $date, $file, $detail, $status)
 
 function get_user_task($id, $user)
 {
-    $sql = "select * from task where department_id = ? and account_id = ?";
+    $sql = "select * from task where department_id = ? and account_id = ? ORDER BY start_day DESC";
     $conn = open_database();
 
     $stm = $conn->prepare($sql);

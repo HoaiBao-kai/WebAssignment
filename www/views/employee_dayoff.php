@@ -122,7 +122,7 @@ $data = get_dayoff_request($user_id);
         <table class="table table-bordered text-center">
             <tr>
                 <th>ID</th>
-                <th>Ngày yêu cầu</th>
+                <th>Ngày bắt đầu nghỉ</th>
                 <th>Số ngày muốn nghỉ</th>
                 <th>Trạng thái</th>
             </tr>
