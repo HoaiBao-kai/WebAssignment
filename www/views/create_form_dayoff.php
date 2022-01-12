@@ -20,9 +20,8 @@ $id = uniqid();
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 $departId = get_department_user($user_id);
 $error = '';
+$startday = '';
 
-echo isset($_POST['startday']);
-echo isset($_POST['reason']);
 if (isset($_POST['startday']) && isset($_POST['reason'])) {
     $dayrequest = $_POST['dayoff'];
     $starday = $_POST['startday'];
@@ -35,8 +34,8 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
     if ($fileName == null) {
         $target_file = "0";
     } else {
-        $file = $idtask . $fileName;
-        $target_file = 'file/' . $file;
+        $file = $fileName;
+        $target_file = '../file/' . $file;
         move_uploaded_file($fileTempName, $target_file);
     }
 
@@ -127,7 +126,7 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
                 <h3 class="text-center text-secondary mt-5 mb-3">Yêu cầu nghỉ phép</h3>
-                <form method="post" action="create_form_dayoff.php" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
+                <form method="post" enctype="multipart/form-data" action="create_form_dayoff.php" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="form-group">
                         <label for="">Ngày bắt đầu</label>
                         <input type="date" name="startday" id="startday" class="form-control">
@@ -150,7 +149,7 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
                     </div>
                     <div class="form-group">
                         <label for="">File đính kèm (nếu có)</label>
-                        <input type='file' name='file' multiple />
+                        <input type='file' name='file'  multiple />
                     </div>
                     <div class="form-group">
                         <?php

@@ -15,7 +15,7 @@ $user_id = $_SESSION['user'];
 require_once('../admin/db.php');
 $user_id = $_SESSION['user'];
 $id = get_department_user($user_id);
-$data = get_dayoff_department($id);
+$data = get_dayoff_department($id, $user_id);
 ?>
 <!doctype html>
 <html lang="en">

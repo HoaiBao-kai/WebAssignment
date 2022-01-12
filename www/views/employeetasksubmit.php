@@ -1,20 +1,22 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: login.php');
-    exit();
-}
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: login.php');
+        exit();
+    }
 
-require_once('../admin/db.php');
+    require_once('../admin/db.php');
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $data = get_task_id($id);
-}
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $data = get_task_id($id);
+    }
 
-if (isset($_POST['detail'])) {
-    echo $_POST['detail'];
-}
+    $submitId = uniqid();
+
+    if (isset($_POST['detail']) ) {
+        echo $_POST['detail'];
+    }
 ?>
 
 <!doctype html>
@@ -50,16 +52,19 @@ if (isset($_POST['detail'])) {
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="">Trạng thái</label>
-                            <input type="text" name="trạng thái" id="trạng thái" value="<?= $data['status'] ?>" class="form-control" disabled>
+                            <input type="text" name="status" id="status" value="<?= $data['status'] ?>" class="form-control" disabled>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="">Tệp đính kèm:</label>
-                            <br>
-                            <li><a href="../images/avt.png">Hình ảnh</a></li>
-                            <li><a href="https://google.com">Link tham khảo</a></li>
+                            <label for="">Task ID</label>
+                            <input type="text" name="id" id="id" value="<?= $data['id'] ?>" class="form-control" disabled>
                         </div>
                     </div>
-
+                    <div class="form-group col-md-6">
+                        <label for="">Tệp đính kèm:</label>
+                        <br>
+                        <li><a href="../images/avt.png">Hình ảnh</a></li>
+                        <li><a href="https://google.com">Link tham khảo</a></li>
+                    </div>
                     <div class="form-group">
                         <label for="user">Thông tin chi tiết:</label>
                         <br>
@@ -69,7 +74,7 @@ if (isset($_POST['detail'])) {
                     <div class="form-group">
                         <label for="">Mô tả thông tin:</label>
                         <br>
-                        <p class="text-center"> <textarea name="" id="" cols="55" rows="5"></textarea></p>
+                        <p class="text-center"> <textarea name="detail" id="detail" cols="55" rows="5"></textarea></p>
                     </div>
                     <div class="form-group">
                         <label for="">Thêm tệp đính kèm</label>

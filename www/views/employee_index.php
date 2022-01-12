@@ -75,7 +75,7 @@ $data = get_task_department($id);
                                 <td><?= $row['status'] ?></td>
                                 <td>
                                     <?php
-                                    if ($row['status'] == "Waiting") {
+                                    if ($row['status'] == "New") {
                                     ?>
                                         <a class="btn btn-primary" href="../views/employeetaskdetail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
                                     <?php

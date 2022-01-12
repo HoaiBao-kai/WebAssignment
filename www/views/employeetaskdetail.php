@@ -17,7 +17,7 @@
         
         $id = $_GET['id'];
     
-        $result = update_task_status($id);
+        $result = update_task_status($id, "In progress");
         
         if ($_SESSION['possition'] === "leader") {
             header('Location: ../views/leader_index.php');

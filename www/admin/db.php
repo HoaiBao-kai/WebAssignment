@@ -333,13 +333,13 @@ function get_task_department($id)
     return array('code' => 3, 'data' => $result);
 }
 
-function get_dayoff_department($id)
+function get_dayoff_department($id, $user)
 {
-    $sql = "select * from day_off where department_id = ?";
+    $sql = "select * from day_off where department_id = ? and employeeId <> ?";
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
-    $stm->bind_param('s', $id);
+    $stm->bind_param('ss', $id, $user);
 
     if (!$stm->execute()) {
         return array('code' => 1, 'error' => 'Can not execute command');
@@ -373,13 +373,13 @@ function get_task_id($id)
     return $result->fetch_assoc();
 }
 
-function update_task_status($id)
+function update_task_status($id, $status)
 {
-    $sql = 'update task set status = "Ready" where id = ?';
+    $sql = 'update task set status = ? where id = ?';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
-    $stm->bind_param('s', $id);
+    $stm->bind_param('ss', $status, $id);
 
     if (!$stm->execute()) {
         return array('code' => 1, 'error' => 'Can not execute command');
@@ -505,3 +505,41 @@ function add_request_dayoff($id, $employeeId, $day_start, $reason, $result, $dep
 
     return array('code' => 0, 'message' => 'Create successful');
 }
+
+function submit_task($id, $taskid, $date, $file, $detail, $status) {
+    $sql = 'INSERT INTO day_off(submit_id, task_id, submit_date, tag_file, deatail, status) VALUES (?,?,?,?,?,?)';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ssssss', $id, $taskid, $date, $file, $detail, $status);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    if ($stm->affected_rows == 0) {
+
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return array('code' => 0, 'message' => 'Create successful');
+}
+
+// function get_employee_request($id) {
+//     $sql = 'select * from day_off where department_id = ?';
+//     $conn = open_database();
+
+//     $stm = $conn->prepare($sql);
+//     $stm->bind_param('s', $id);
+
+//     if (!$stm->execute()) {
+//         return array('code' => 1, 'error' => 'Can not execute command');
+//     }
+
+//     $result = $stm->get_result();
+//     if ($result->num_rows == 0) {
+//         return array('code' => 2, 'error' => 'An error occured');
+//     }
+
+//     return array('code' => 0, 'data' => $result);
+// }
