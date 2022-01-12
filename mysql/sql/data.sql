@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 12, 2022 lúc 10:04 AM
+-- Thời gian đã tạo: Th1 12, 2022 lúc 02:57 PM
 -- Phiên bản máy phục vụ: 10.4.22-MariaDB
 -- Phiên bản PHP: 8.1.1
 
@@ -67,18 +67,16 @@ CREATE TABLE `day_off` (
   `num_day_off` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `day_off_request` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `tag_file` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `day_off_response` date DEFAULT NULL
+  `day_off_response` date DEFAULT NULL,
+  `date_request` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `day_off`
 --
 
-INSERT INTO `day_off` (`id`, `employeeId`, `day_start`, `reason`, `result`, `reason_result`, `department_id`, `num_day_off`, `day_off_request`, `tag_file`, `day_off_response`) VALUES
-('$id', '$employeeId', '2022-01-02', '$reason', '$result', NULL, '$departId', '', '$day_off_request', '$tag_file', '2022-01-02'),
-('12345', 'hungnguyen', '2022-01-01', '[value-5]', 'Waiting', '[value-7]', '123', '5', '5', '', '2022-01-03'),
-('12346', 'vanA', '2022-01-05', 'Đau đầu', 'Đang xử lý', '[value-7]', '115', '5', '5', '', '2022-01-06'),
-('61de89abbcaa5', 'vanA', '2022-01-13', 'dsadasdabdahsdbhhdhadhashdahdhahsdjasd', 'Đang xử lý', NULL, '115', '', '3', 'Array', '2022-01-05');
+INSERT INTO `day_off` (`id`, `employeeId`, `day_start`, `reason`, `result`, `reason_result`, `department_id`, `num_day_off`, `day_off_request`, `tag_file`, `day_off_response`, `date_request`) VALUES
+('61ded6c82e060', 'vanB', '2022-01-13', '3123123', 'Accept', NULL, '115', '3', '3', 'Array', '2022-01-12', '2022-01-12');
 
 -- --------------------------------------------------------
 
@@ -128,6 +126,14 @@ CREATE TABLE `submit` (
   `deatail` varchar(5000) COLLATE utf8_unicode_ci NOT NULL,
   `status` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `submit`
+--
+
+INSERT INTO `submit` (`submit_id`, `task_id`, `submit_date`, `tag_file`, `deatail`, `status`) VALUES
+('61dedada7560d', 'Array', '2022-01-12 20:42:00', ' ', '32423423423', 'Waiting'),
+('61dedae21ebe6', 'Array', '2022-01-12 20:42:00', ' ', '13212', 'Waiting');
 
 -- --------------------------------------------------------
 
