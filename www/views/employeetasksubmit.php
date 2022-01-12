@@ -1,22 +1,33 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['user'])) {
-        header('Location: login.php');
-        exit();
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit();
+}
+
+require_once('../admin/db.php');
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $data = get_task_id($id);
+}
+
+$submitId = uniqid();
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+$error = '';
+$dateSubmit = date('Y-m-d\TH:i');
+
+
+if (isset($_POST['detail']) && isset($_POST['id'])) {
+
+    $detail = $_POST['detail'];
+    $id = $_POST['id'];
+
+    if (empty($detail)) {
+        $error = "Hãy nhập mô tả";
+    } else if (empty($id)) {
     }
-
-    require_once('../admin/db.php');
-
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $data = get_task_id($id);
-    }
-
-    $submitId = uniqid();
-
-    if (isset($_POST['detail']) ) {
-        echo $_POST['detail'];
-    }
+}
 ?>
 
 <!doctype html>
@@ -79,7 +90,7 @@
                     <div class="form-group">
                         <label for="">Thêm tệp đính kèm</label>
                         <br>
-                        <input type='file' id="tagFile" name="tagFile" />
+                        <input required type='file' id="tagFile" name="tagFile" />
                     </div>
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-success px-5 h-5">Submit</button>

@@ -67,7 +67,7 @@ $data = get_dayoff_department($id, $user_id);
                 <th>ID</th>
                 <th>Nhân viên</th>
                 <th>Ngày bắt đầu</th>
-                <th>Ngày kết thúc</th>
+                <th>Số ngày muốn nghỉ</th>
                 <th>Trạng thái</th>
                 <th>Chi tiết</th>
             </tr>
@@ -80,10 +80,21 @@ $data = get_dayoff_department($id, $user_id);
                             <td><?= $row['id'] ?></td>
                             <td><?= $row['employeeId'] ?></td>
                             <td><?= $row['day_start'] ?></td>
-                            <td><?= $row['day_start'] ?></td>
+                            <td><?= $row['day_off_request'] ?></td>
                             <td><?= $row['result'] ?></td>
                             <td>
-                                <a class="btn btn-primary" href="../views/dayoff_detail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                <?php 
+                                    if ($row['result'] == "Waiting") {
+                                        ?>
+                                        <a class="btn btn-primary" href="../views/dayoff_detail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                        <?php
+                                    }
+                                    else {
+                                        ?>
+                                        <button disabled class="btn btn-primary" href="">Xem chi tiết</button>
+                                        <?php
+                                    }
+                                ?>
                             </td>
                         </tr>
                 <?php

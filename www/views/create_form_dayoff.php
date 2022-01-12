@@ -51,10 +51,10 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
     $fileType = $file["type"];
     $fileTempName = $file["tmp_name"];
     if ($fileName == null) {
-        $target_file = "0";
+        $target_file = " ";
     } else {
         $file = $fileName;
-        $target_file = '../file/' . $file;
+        $target_file = '../file/'.$file;
         move_uploaded_file($fileTempName, $target_file);
     }
 

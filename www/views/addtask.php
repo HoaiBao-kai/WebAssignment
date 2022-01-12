@@ -40,7 +40,7 @@ if (
             $_POST['detail'],
             $idtask,
             $startDay,
-            "Waiting",
+            "New",
             $_POST['tagFile'],
             $_POST['title']
         );

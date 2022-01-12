@@ -18,7 +18,6 @@ if ($_SESSION['possition'] === "leader") {
 $data = get_dayoff_request($user_id);
 
 
-
 ?>
 
 <!doctype html>
