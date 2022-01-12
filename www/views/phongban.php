@@ -5,6 +5,11 @@
         exit();
     }
 
+    if ($_SESSION['possition'] != "admin") {
+        header('Location: unknow.php');
+        exit();
+    }
+
     require_once("../admin/db.php");
     
     $error = "";
@@ -70,16 +75,16 @@
                         <label for="sophong">Số phòng</label>
                         <input type="text" value="<?= $data['room'] ?>" name="sophong" id="sophong" class="form-control">
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="">Trưởng phòng</label>
+                    <div class="form-group">
+                        <label for="">Trưởng phòng hiện tại</label>
                         <input type="text" value="<?= $data2['fullname'] ?>" class="form-control" disabled> 
-                    </div> -->
+                    </div>
                     <div class="form-group">
                         <label for="comment">Mô tả</label>
                         <textarea name="comment" id="comment" rows="5" class="form-control"><?= $data['detail'] ?></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="">Trưởng phòng</label>
+                        <label for="">Thay trưởng phòng mới (nếu muốn)</label>
                         <select class="form-control" id="manager" name="manager">
                             <?php 
                                 if ($data2['code'] != 0) 

@@ -4,6 +4,12 @@ if (!isset($_SESSION['user'])) {
     header('Location: ../views/login.php');
     exit();
 }
+
+if ($_SESSION['possition'] != "admin") {
+    header('Location: unknow.php');
+    exit();
+}
+
 require_once('../admin/db.php');
 $department = get_departments();
 $error = '';

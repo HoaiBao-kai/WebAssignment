@@ -392,8 +392,7 @@ function update_task_status($id)
     return array('code' => 0, 'error' => 'Update successful');
 }
 
-function get_department_leader($departmentID)
-{
+function get_department_leader($departmentID) {
     $sql = 'select * from account where department = ? and possition = "leader"';
     $conn = open_database();
 
@@ -412,8 +411,7 @@ function get_department_leader($departmentID)
     return $result->fetch_assoc();
 }
 
-function update_manager($id, $departmentID)
-{
+function update_manager($id, $departmentID) {
     $sql = 'update account set possition = "leader" where username = ? and department = ?';
     $conn = open_database();
 
@@ -431,8 +429,7 @@ function update_manager($id, $departmentID)
     return array('code' => 0, 'error' => 'Update successful');
 }
 
-function down_manager($id, $departmentID)
-{
+function down_manager($id, $departmentID) {
     $sql = 'update account set possition = "employee" where username = ? and department = ?';
     $conn = open_database();
 
@@ -450,8 +447,7 @@ function down_manager($id, $departmentID)
     return array('code' => 0, 'error' => 'Update successful');
 }
 
-function sum_dayoff($id)
-{
+function sum_dayoff($id) {
     $sql = 'select sum(convert(num_day_off, int)) as "sumd" from day_off where employeeId = ?';
 
     $conn = open_database();
@@ -471,3 +467,5 @@ function sum_dayoff($id)
 
     return $result->fetch_assoc();
 }
+
+
