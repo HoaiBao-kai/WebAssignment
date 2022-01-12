@@ -13,6 +13,8 @@
 
         $id = $_GET['id'];
         $data = get_detail_dayoff($id);
+        $file=explode("/",$data['tag_file']); 
+        $namefile=$file['2'];
     }
 
     if (isset($_POST['accept'])) {
@@ -131,7 +133,7 @@
                         <input disabled class="form-control" name="reason" id="reason" cols="20" rows="10" style="height:100px" placeholder="Lý do xin nghỉ" value="<?= $data['reason'] ?>"></input>
                     </div>
                     <div class="form-group">
-                        <label for="">File đính kèm: <a href="../file/<?php echo $data['tag_file'] ?>"><?php echo $data['tag_file'] ?></a></label>
+                        <label for="">File đính kèm: <a href="<?php echo $data['tag_file'] ?>" download><?= $namefile ?></a></label>
                     </div>
                     <div class="form-group">
                         <?php
