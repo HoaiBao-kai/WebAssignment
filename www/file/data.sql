@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2022 at 05:34 AM
+-- Generation Time: Jan 13, 2022 at 02:19 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -44,6 +44,7 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`username`, `fullname`, `hash_password`, `possition`, `department`, `avatar`, `id`) VALUES
+('51900620', 'Hoài Bảo', '$2y$10$kmEyWOb2VMhLJfbGxpiYJepElXtDu1lfDN956wa.KcjZ8fgiHyoWW', 'employee', '117', '', ''),
 ('admin', 'Phan Van An', '$2a$12$lr8oMIsU4nghqgAyv6BB0uAGi.noUlMB64P530.gAgdVnIqoq3Ecu', 'admin', '', '', 'admin'),
 ('hungnguyen', 'Nguyen Phuoc Hung', '$2y$10$REAanlDYTJGZBgPHQ7PYluCHXlpvYPx89tjlwdkGecgp9TMsNThV6', 'employee', '115', '', ''),
 ('vanA', 'Nguyen Van A', '$2a$12$lr8oMIsU4nghqgAyv6BB0uAGi.noUlMB64P530.gAgdVnIqoq3Ecu', 'leader', '115', '', ''),
@@ -123,17 +124,10 @@ CREATE TABLE `submit` (
   `submit_date` datetime NOT NULL,
   `tag_file` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `deatail` varchar(5000) COLLATE utf8_unicode_ci NOT NULL,
-  `status` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+  `status` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `detail_response` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `tag_file_response` varchar(500) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `submit`
---
-
-INSERT INTO `submit` (`submit_id`, `task_id`, `submit_date`, `tag_file`, `deatail`, `status`) VALUES
-('61def88b57e53', '61def6b08ba21', '2022-01-12 22:49:00', '../file/google_api_key.txt', 'Trâm Võ', 'Completed'),
-('61dfa18b63846', '61df9e356b7d9', '2022-01-13 10:50:00', '../file/Huong dan.txt', 'Kiểm tra', 'Waiting'),
-('61dfa1e24a470', '61df9363a132a', '2022-01-13 10:52:00', '../file/Huong dan.txt', 'Tính toán', 'Completed');
 
 -- --------------------------------------------------------
 
@@ -154,15 +148,6 @@ CREATE TABLE `task` (
   `review` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `process` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `task`
---
-
-INSERT INTO `task` (`id`, `title`, `detail`, `start_day`, `deadline`, `account_id`, `status`, `tag_file`, `department_id`, `review`, `process`) VALUES
-('61def6b08ba21', 'Bảo Bảo', 'Trâm Võ', '2022-01-12 22:41:00', '2022-01-15 00:45:00', 'vanB', 'Completed', '../file/Huong dan.txt', '115', 'ok', 'Hoàn thành đúng hạn'),
-('61df9363a132a', 'Tính toán sổ sách', 'Tính toán sổ sách', '2022-01-13 09:50:00', '2022-01-15 09:49:00', 'vanB', 'Completed', '../file/Huong dan.txt', '115', 'GOOD', 'Hoàn thành trễ hạn'),
-('61df9e356b7d9', 'Kiểm tra', 'Kiểm tra', '2022-01-13 10:36:00', '2022-01-13 10:36:00', 'vanB', 'Waiting', ' ', '115', '', 'Hoàn thành trễ hạn');
 
 --
 -- Indexes for dumped tables
