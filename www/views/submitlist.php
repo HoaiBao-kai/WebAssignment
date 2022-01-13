@@ -8,7 +8,12 @@ if (!isset($_SESSION['user'])) {
 require_once('../admin/db.php');
 $user_id = $_SESSION['user'];
 $id = $_GET['id'];
-$data = get_submit_list('123');
+$data = get_submit_task($id);
+// print_r($data['code']);
+// while ($row = $data['data']->fetch_assoc()) {
+//     echo '<br>';
+//     print_r($row['task_id']);
+// }
 ?>
 
 <!doctype html>
@@ -53,35 +58,36 @@ $data = get_submit_list('123');
 
     <div class="container">
         <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách phản hồi</h2>
+        <a href="../views//employeetasksubmit.php?id=<?php echo $id ?>" class="w3-button w3-blue" style="margin: 10px;">Create Submit</a>
         <table class="table table-bordered text-center">
             <tr>
                 <th>ID</th>
                 <th>Tên nhiệm vụ</th>
                 <th>Ngày nộp</th>
-                <th>Ngày phản hồi</th>
                 <th>Trạng thái</th>
                 <th>Chi tiết</th>
             </tr>
             <tbody>
                 <?php
-                if ($data['code'] == 3) {
+                if ($data['code'] == 0) {
                     while ($row = $data['data']->fetch_assoc()) {
+                        $task = get_task_id($row['task_id']);
                 ?>
+
                         <tr>
                             <td><?= $row['task_id'] ?></td>
-                            <td><?= $row['submit_id'] ?></td>
+                            <td><?= $task['title'] ?></td>
                             <td><?= $row['submit_date'] ?></td>
-                            <td><?= $row['deatail'] ?></td>
                             <td><?= $row['status'] ?></td>
                             <td>
                                 <?php
                                 if ($row['status'] == "New") {
                                 ?>
-                                    <a class="btn btn-primary" href="../views/employeetaskdetail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                    <a class="btn btn-primary" href="../views/employeetaskdetail.php?id=<?= $row['submit_id'] ?>">Xem chi tiết</a>
                                 <?php
                                 } else {
                                 ?>
-                                    <a class="btn btn-primary" href="../views/employeetasksubmit.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                    <a class="btn btn-primary" href="../views/employeetasksubmit.php?id=<?= $row['submit_id'] ?>">Xem chi tiết</a>
                                 <?php
                                 }
                                 ?>
