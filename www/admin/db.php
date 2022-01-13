@@ -315,7 +315,7 @@ function get_department_user($id)
 
 function get_task_department($id)
 {
-    $sql = "select * from task where department_id = ?";
+    $sql = "select * from task where department_id = ?  ORDER BY start_day DESC";
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
@@ -534,7 +534,7 @@ function submit_task($id, $taskid, $date, $file, $detail, $status)
 
 function get_user_task($id, $user)
 {
-    $sql = "select * from task where department_id = ? and account_id = ? ORDER BY start_day DESC";
+    $sql = 'select * from task where department_id = ? and account_id = ? and status <> "Canceled" ORDER BY start_day DESC';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
@@ -649,5 +649,86 @@ function get_submit_list($id)
         return array('code' => 2, 'error' => 'ID not exist');
     }
 
-    return array('code'=>3,'data'=>$result);
+    return array('code' => 3, 'data' => $result);
+}
+
+
+function update_task_complete($id, $review)
+{
+    $sql = 'update task set review = ?, status = "Completed" where id = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ss', $review, $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'ID not exist');
+    }
+
+    return array('code' => 0, 'data' => $result);
+}
+
+function update_status_submit($id, $status)
+{
+    $sql = 'update submit set status = ? where submit_id = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ss', $status, $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'ID not exist');
+    }
+
+    return array('code' => 0, 'data' => $result);
+}
+
+function update_task_process($id, $proc)
+{
+    $sql = 'update task set process = ? where id = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ss', $proc, $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'ID not exist');
+    }
+
+    return array('code' => 0, 'data' => $result);
+}
+
+function update_deadline($id, $date)
+{
+    $sql = 'update task set process = ? where id = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ss', $proc, $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'ID not exist');
+    }
+
+    return array('code' => 0, 'data' => $result);
 }

@@ -10,6 +10,15 @@ require_once('../admin/db.php');
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $data = get_task_id($id);
+    
+    if ($data['tag_file'] == " ") 
+        {
+            $namefile='';
+        }
+        else {
+            $file=explode("/",$data['tag_file']); 
+            $namefile=$file['2'];
+        }
 } else {
     header('Location: unknown.php');
     exit();
@@ -19,10 +28,11 @@ $submitId = uniqid();
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 $error = '';
 $dateSubmit = date('Y-m-d\TH:i');
+$proc = '';
 
 if (isset($_POST['detail'])) {
     $detail = $_POST['detail'];
-    $id = $data;
+    $id = $data['id'];
 
     $file = $_FILES['file'];
     $fileName = $file["name"];
@@ -36,6 +46,13 @@ if (isset($_POST['detail'])) {
         move_uploaded_file($fileTempName, $target_file);
     }
 
+    if ($dateSubmit > $data['deadline']) {
+        $proc = "Hoàn thành trễ hạn";
+    }
+    else {
+        $proc = "Hoàn thành đúng hạn";
+    }
+
     if (empty($detail)) {
         $error = "Hãy nhập mô tả";
     } else if (empty($id)) {
@@ -45,8 +62,9 @@ if (isset($_POST['detail'])) {
     } else {
         $result = submit_task($submitId, $id, $dateSubmit, $target_file, $detail, "Waiting");
         $result1 = update_task_status($id, "Waiting");
+        $result2 = update_task_process($id, $proc);
 
-        if ($result['code'] == 0) {
+        if ($result['code'] == 0 && $result1['code'] == 0) {
             header('Location: ../views/employee_index.php');
             exit();
         }
@@ -94,11 +112,8 @@ if (isset($_POST['detail'])) {
                             <input type="text" name="id" id="id" value="<?php echo $data['id'] ?>" class="form-control" disabled>
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="">Tệp đính kèm:</label>
-                        <br>
-                        <li><a href="../images/avt.png">Hình ảnh</a></li>
-                        <li><a href="https://google.com">Link tham khảo</a></li>
+                    <div class="form-group">
+                        <label for="">Tệp mô tả đính kèm: <br><a href="<?php echo $data['tag_file'] ?>" download><?= $namefile ?></a></label>
                     </div>
                     <div class="form-group">
                         <label for="user">Thông tin chi tiết:</label>

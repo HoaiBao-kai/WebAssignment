@@ -7,19 +7,31 @@ if (!isset($_SESSION['user'])) {
 
 require_once('../admin/db.php');
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $data = get_task_id($id);
-} else {
-    header('Location: unknown.php');
-    exit();
-}
+    if (isset($_GET['id']))
+    {
+        $id = $_GET['id'];
+        $data = get_task_id($id);
+        
+        if ($data['tag_file'] == " ") 
+        {
+            $namefile='';
+        }
+        else {
+            $file=explode("/",$data['tag_file']); 
+            $namefile=$file['2'];
+        }
+    }
+    else {
+        header('Location: unknown.php');
+        exit();
+    }
 
 if (isset($_POST['update'])) {
 
     $id = $_GET['id'];
 
     $result = update_task_status($id, "In progress");
+    $p = update_task_process($id, "Chưa hoàn thành");
 
     if ($_SESSION['possition'] === "leader") {
         header('Location: ../views/leader_index.php');
@@ -62,14 +74,10 @@ if (isset($_POST['update'])) {
                     </div>
                     <div class="form-group">
                         <label for="user">Thông tin chi tiết:</label>
-                        <br>
-                        <p style="background-color: white;">Hoàn thành đúng thời hạn</p>
+                        <textarea name="comment" id="comment" rows="5" class="form-control" disabled><?= $data['detail'] ?></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="">Tệp đính kèm:</label>
-                        <br>
-                        <li><a href="../images/avt.png">Hình ảnh</a></li>
-                        <li><a href="https://google.com">Link tham khảo</a></li>
+                        <label for="">Tệp đính kèm: <a href="<?php echo $data['tag_file'] ?>" download><?= $namefile ?></a></label>
                     </div>
                     <div class="form-group text-center">
                         <button class="btn btn-success px-5 h-5" type="submit" name="update">Start</button>

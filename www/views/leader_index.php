@@ -1,19 +1,19 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: login.php');
-    exit();
-}
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: login.php');
+        exit();
+    }
 
-if ($_SESSION['possition'] != "leader") {
-    header('Location: ../views/unknown.php');
-    exit();
-}
+    if ($_SESSION['possition'] != "leader") {
+        header('Location: ../views/unknown.php');
+        exit();
+    }
 
-require_once('../admin/db.php');
-$user_id = $_SESSION['user'];
-$id = get_department_user($user_id);
-$data = get_task_department($id);
+    require_once('../admin/db.php');
+    $user_id = $_SESSION['user'];
+    $id = get_department_user($user_id);
+    $data = get_task_department($id);
 ?>
 <!doctype html>
 <html lang="en">
@@ -63,8 +63,9 @@ $data = get_task_department($id);
             <tr>
                 <th>ID</th>
                 <th>Tên nhiệm vụ</th>
+                <th>Nhân viên thực hiện</th>
                 <th>Ngày giao</th>
-                <th>Ngày hoàn thành</th>
+                <th>Hạn nộp</th>
                 <th>Trạng thái</th>
                 <th>Chi tiết</th>
             </tr>
@@ -76,11 +77,23 @@ $data = get_task_department($id);
                         <tr>
                             <td><?= $row['id'] ?></td>
                             <td><?= $row['title'] ?></td>
+                            <td><?= $data2 = getEmployeeByID($row['account_id'])['fullname'] ?></td>
                             <td><?= $row['start_day'] ?></td>
                             <td><?= $row['deadline'] ?></td>
                             <td><?= $row['status'] ?></td>
                             <td>
-                                <a class="btn btn-primary" href="#">Xem chi tiết</a>
+                                <?php
+                                    if ($row['status'] == "Canceled") {
+                                        ?>
+                                            <a class="btn btn-danger" href="../views/leadertaskview.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                        <?php
+                                    } 
+                                    else {
+                                        ?>
+                                            <a class="btn btn-primary" href="../views/leadertaskview.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                        <?php
+                                    }
+                                ?>
                             </td>
                         </tr>
                 <?php
