@@ -88,8 +88,7 @@ if (isset($_POST['reject'])) {
         if (empty($detail)) {
             $error = "Nhập ghi chú";
         }
-
-        if (isset($_POST['newdeadline'])) {
+        else if (isset($_POST['newdeadline'])) {
 
             if ($_POST['newdeadline'] > $data['deadline']) {
                 update_deadline($_GET['id'], $_POST['newdeadline']);
@@ -98,11 +97,13 @@ if (isset($_POST['reject'])) {
                 $error = "Ngày gia hạn không hợp lệ";
             }
         }
-
-        update_status_submit($id, "Rejected");
-        update_task_status($_GET['id'], "Rejected");
-        update_response_submit($target_file, $detail, $id);
-        header("Location: ../views/leader_index.php");
+        else {
+            update_status_submit($id, "Rejected");
+            update_task_status($_GET['id'], "Rejected");
+            update_response_submit($target_file, $detail, $id);
+            header("Location: ../views/leader_index.php");
+            exit();
+        }
     }
 }
 

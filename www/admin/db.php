@@ -733,26 +733,6 @@ function update_deadline($id, $date)
     return array('code' => 0, 'error' => 'Update successful');
 }
 
-function add_file($id, $taskid, $file)
-{
-    $sql = 'insert into file(id, tag_file, task_id) values(?,?,?)';
-    $conn = open_database();
-
-    $stm = $conn->prepare($sql);
-    $stm->bind_param('sss', $id, $file, $taskid);
-
-    if (!$stm->execute()) {
-        return array('code' => 1, 'error' => 'Can not execute command');
-    }
-
-    if ($stm->affected_rows == 0) {
-        return array('code' => 2, 'error' => 'An error occured');
-    }
-
-    return array('code' => 0, 'error' => 'Create successful');
-}
-
-
 function update_response_submit($tag_file, $detail, $id)
 {
     $sql = 'update submit set tag_file_response = ?, detail_response = ? where submit_id = ?';
