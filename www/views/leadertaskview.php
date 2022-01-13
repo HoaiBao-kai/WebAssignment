@@ -81,6 +81,7 @@ if (isset($_POST['reject'])) {
         move_uploaded_file($fileTempName, $target_file);
     }
 
+    
     if (isset($_POST['reason'])) {
 
         $detail = $_POST['reason'];
@@ -88,16 +89,11 @@ if (isset($_POST['reject'])) {
         if (empty($detail)) {
             $error = "Nhập ghi chú";
         }
-        else if (isset($_POST['newdeadline'])) {
-
-            if ($_POST['newdeadline'] > $data['deadline']) {
-                update_deadline($_GET['id'], $_POST['newdeadline']);
-            }
-            else {
-                $error = "Ngày gia hạn không hợp lệ";
-            }
+        else if ($_POST['newdeadline'] < $data['deadline']) {
+            $error = "Ngày gia hạn không hợp lệ";
         }
         else {
+            update_deadline($_GET['id'], $_POST['newdeadline']);
             update_status_submit($id, "Rejected");
             update_task_status($_GET['id'], "Rejected");
             update_response_submit($target_file, $detail, $id);
@@ -162,7 +158,7 @@ if (isset($_POST['reject'])) {
                         <a href="../views/submitlist.php?id=<?= $data['id'] ?>"><p>Lịch sử phản hồi nhiệm vụ</p></a>
                     </div>
                     <?php
-                    if ($data['status'] != "In progress" && $data['status'] != "New" && $data['status'] != "Completed" && $data['status'] != "Canceled") {
+                    if ($data['status'] === "Waiting") {
                     ?>
                         <div class="form-group">
                             <label for="id">Gia hạn</label>
@@ -253,7 +249,7 @@ if (isset($_POST['reject'])) {
                         ?>
                             <a href="../views/leader_index.php" class="btn btn-success px-5 h-5">Return</a>
                         <?php
-                        } else if ($data['status'] == "Canceled") {
+                        } else if ($data['status'] == "Canceled" || $data['status'] == "Rejected") {
                         ?>
                             <a href="../views/leader_index.php" class="btn btn-success px-5 h-5">Return</a>
                         <?php
