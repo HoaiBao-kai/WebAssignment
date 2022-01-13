@@ -1,4 +1,7 @@
 <?php
 require_once('../admin/db.php');
-$a = get_current_dayoff('vanA');
-print_r($a['day_off_response']);
+$a = get_submit_list('123');
+while ($row = $a->fetch_assoc()) {
+    print_r($row);
+    echo '<br>';
+}

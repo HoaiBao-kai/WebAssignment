@@ -631,3 +631,23 @@ function update_num_dayoff($id, $num)
 
     return array('code' => 0, 'data' => $result);
 }
+
+function get_submit_list($id)
+{
+    $sql = 'SELECT * FROM `submit` where task_id = ? ORDER BY submit_date DESC';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('s', $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'ID not exist');
+    }
+
+    return array('code'=>3,'data'=>$result);
+}
