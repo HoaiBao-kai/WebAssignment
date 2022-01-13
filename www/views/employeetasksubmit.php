@@ -137,27 +137,6 @@ if (isset($_POST['detail'])) {
                             ?>
                         </div>
 
-<<<<<<< HEAD
-                    </div>
-                    <div class="form-group">
-                        <label for="">Mô tả thông tin:</label>
-                        <br>
-                        <p class="text-center"> <textarea name="detail" id="detail" cols="55" rows="5"></textarea></p>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Thêm tệp đính kèm</label>
-                        <br>
-                        <input required type='file' id="file" name="file" />
-                    </div>
-                    <div class="form-group text-center">
-                        <?php
-                        if (!empty($error)) {
-                            echo "<div class='alert alert-danger'>$error</div>";
-                        }
-                        ?>
-                        <button type="submit" class="btn btn-success px-5 h-5">Submit</button>
-                        <a href="../employee_index.php" class="btn btn-danger px-5 h-5">Return</a>
-=======
                         <div class="col-lg-6 col-md-8">
                             <h2 class="text-center text-dark mt-2 mb-3">Thông tin submit</h2>
                             <?php 
@@ -211,7 +190,6 @@ if (isset($_POST['detail'])) {
                                 ?>
                             </div>
                         </div>
->>>>>>> 5c6363177871c45fc1c97daf3695185d9afbdff3
                     </div>
                 </form>
             <!-- </div>
