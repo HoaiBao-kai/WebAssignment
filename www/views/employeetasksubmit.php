@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $data = get_task_id($id);
 
-    if ($data['tag_file'] == " ") {
+    if ($data['tag_file'] == " " || is_null($data['tag_file'])) {
         $namefile = '';
     } else {
         $file = explode("/", $data['tag_file']);
@@ -174,7 +174,18 @@ if (isset($_POST['detail'])) {
                             <div class="form-group">
                                 <label for="">Mô tả thông tin:</label>
                                 <br>
-                                <p class="text-center"> <textarea name="detail" id="detail" cols="55" rows="5"></textarea></p>
+                                <?php 
+                                    if ($data['status'] != "In progress") {
+                                        ?>
+                                        <p class="text-center"> <textarea name="detail" id="detail" cols="55" rows="5"><?= $data1['deatail'] ?></textarea></p>
+                                        <?php
+                                    }
+                                    else {
+                                        ?>
+                                        <p class="text-center"> <textarea name="detail" id="detail" cols="55" rows="5"></textarea></p>
+                                        <?php
+                                    }
+                                ?>
                             </div>
                             <?php 
                                 if ($data['status'] != "In progress") {

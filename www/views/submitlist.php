@@ -1,19 +1,22 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: ../views/login.php');
-    exit();
-}
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: ../views/login.php');
+        exit();
+    }
 
-require_once('../admin/db.php');
-$user_id = $_SESSION['user'];
-$id = $_GET['id'];
-$data = get_submit_task($id);
-// print_r($data['code']);
-// while ($row = $data['data']->fetch_assoc()) {
-//     echo '<br>';
-//     print_r($row['task_id']);
-// }
+    require_once('../admin/db.php');
+    $user_id = $_SESSION['user'];
+
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $data = get_submit_task($id);
+    }
+    else {
+        header('Location: ../views/unknown.php');
+        exit();
+    }
+
 ?>
 
 <!doctype html>
@@ -64,7 +67,7 @@ $data = get_submit_task($id);
                 <th>Tên nhiệm vụ</th>
                 <th>Ngày nộp</th>
                 <th>Trạng thái</th>
-                <th>Chi tiết</th>
+                <th>Ghi chú</th>
             </tr>
             <tbody>
                 <?php
@@ -79,7 +82,8 @@ $data = get_submit_task($id);
                             <td><?= $row['submit_date'] ?></td>
                             <td><?= $row['status'] ?></td>
                             <td>
-                                <?php
+                                <?= $row['detail_response'] ?>
+                                <!-- <?php
                                 if ($_SESSION['possition'] == "leader") {
                                 ?>
                                     <a class="btn btn-primary" href="../views/leadertaskview.php?id=<?= $id ?>">Xem chi tiết</a>
@@ -89,11 +93,18 @@ $data = get_submit_task($id);
                                     <a class="btn btn-primary" href="../views/employeetasksubmit.php?id=<?= $id ?>">Xem chi tiết</a>
                                 <?php
                                 }
-                                ?>
+                                ?> -->
                             </td>
                         </tr>
                 <?php
                     }
+                }
+                else {
+                    ?>
+                    <tr>
+                        <td colspan="5" class="text-center">Chưa có dữ liệu</td>
+                    </tr>
+                    <?php
                 }
                 ?>
             </tbody>
