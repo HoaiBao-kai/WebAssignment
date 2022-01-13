@@ -11,9 +11,6 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $data = get_task_id($id);
 
-    $dataTmp = get_submit_task($id);
-    $data1 = $dataTmp['data']->fetch_assoc();
-
     if ($data['tag_file'] == " ") {
         $namefile = '';
     } else {
@@ -21,20 +18,25 @@ if (isset($_GET['id'])) {
         $namefile = $file['2'];
     }
 
-    if ($data1['tag_file_response'] == " " || is_null($data1['tag_file_response'])) {
-        $namefile1 = '';
-    } else {
-        $file1 = explode("/", $data1['tag_file_response']);
-        $namefile1 = $file1['2'];
-    }
+    if ($data['status'] != "In progress")
+    {
+        $dataTmp = get_submit_task($id);
+        $data1 = $dataTmp['data']->fetch_assoc();
 
-    if ($data1['tag_file'] == " ") {
-        $namefile2 = '';
-    } else {
-        $file2 = explode("/", $data1['tag_file']);
-        $namefile2 = $file2['2'];
-    }
+        if ($data1['tag_file_response'] == " " || is_null($data1['tag_file_response'])) {
+            $namefile1 = '';
+        } else {
+            $file1 = explode("/", $data1['tag_file_response']);
+            $namefile1 = $file1['2'];
+        }
 
+        if ($data1['tag_file'] == " " || is_null($data1['tag_file'])) {
+            $namefile2 = '';
+        } else {
+            $file2 = explode("/", $data1['tag_file']);
+            $namefile2 = $file2['2'];
+        }
+    }
 } else {
     header('Location: unknown.php');
     exit();
@@ -172,7 +174,7 @@ if (isset($_POST['detail'])) {
                             <div class="form-group">
                                 <label for="">Mô tả thông tin:</label>
                                 <br>
-                                <p class="text-center"> <textarea name="detail" id="detail" cols="55" rows="5"><?= $data1['deatail'] ?></textarea></p>
+                                <p class="text-center"> <textarea name="detail" id="detail" cols="55" rows="5"></textarea></p>
                             </div>
                             <?php 
                                 if ($data['status'] != "In progress") {

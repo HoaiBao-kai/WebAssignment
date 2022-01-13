@@ -13,8 +13,14 @@ if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
     $data = get_detail_dayoff($id);
-    $file = explode("/", $data['tag_file']);
-    $namefile = $file['2'];
+    
+    if ($data['tag_file'] == " " || is_null($data['tag_file'])) {
+        $namefile = '';
+    } else {
+        $file = explode("/", $data['tag_file']);
+        $namefile = $file['2'];
+    }
+    
 } else {
     header('Location: ../views/unknown.php');
     exit();

@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $data = get_task_id($id);
 
-    if ($data['tag_file'] == " ") {
+    if ($data['tag_file'] == " " || is_null($data['tag_file'])) {
         $namefile = '';
     } else {
         $file = explode("/", $data['tag_file']);
@@ -29,7 +29,7 @@ if (isset($_GET['id'])) {
         $dataTmp = get_submit_task($id);
         $data1 = $dataTmp['data']->fetch_assoc();
 
-        if ($data1['tag_file'] == " ") {
+        if ($data1['tag_file'] == " " || is_null($data1['tag_file'])) {
             $namefile1 = '';
         } else {
             $file1 = explode("/", $data1['tag_file']);
