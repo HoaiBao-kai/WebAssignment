@@ -77,11 +77,11 @@ $data = get_user_task($id, $user_id);
                                 <?php
                                 if ($row['status'] == "New") {
                                 ?>
-                                    <a class="btn btn-primary" href="../views/submitlist.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                    <a class="btn btn-primary" href="../views/employeetaskdetail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
                                 <?php
                                 } else {
                                 ?>
-                                    <a class="btn btn-primary" href="../views/submitlist.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                    <a class="btn btn-primary" href="../views/employeetasksubmit.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
                                 <?php
                                 }
                                 ?>

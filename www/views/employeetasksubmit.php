@@ -150,6 +150,9 @@ if (isset($_POST['detail'])) {
                                 }
                             ?>
                             <div class="form-group">
+                                <a href="../views/submitlist.php?id=<?= $data['id'] ?>"><p>Lịch sử phản hồi nhiệm vụ</p></a>
+                            </div>
+                            <div class="form-group">
                                 <label for="">Mô tả thông tin:</label>
                                 <br>
                                 <p class="text-center"> <textarea name="detail" id="detail" cols="55" rows="5"></textarea></p>

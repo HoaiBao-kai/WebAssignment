@@ -218,7 +218,7 @@ if (isset($_POST['canceled'])) {
                         } else {
                         ?>
                             <button name="accept" class="btn btn-success px-5 h-5">Accept</button>
-                            <input name="reject" value="reject" class="btn btn-danger px-5 h-5">Reject</input>
+                            <button name="reject" value="reject" class="btn btn-danger px-5 h-5">Reject</button>
                             <a href="../views/leader_index.php" class="btn btn-primary px-5 h-5">Return</a>
                         <?php
                         }
