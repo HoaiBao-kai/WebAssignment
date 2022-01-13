@@ -1,6 +1,9 @@
 <?php
     session_start();
     session_destroy();
+
+    header('Location: ../views/login.php');
+    exit();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,31 +26,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 mt-5 mx-auto p-3 border rounded">
-            <h4>Đăng xuất thành công</h4>
-            <p>Tài khoản của bạn đã được đăng xuất khỏi hệ thống.</p>
-            <p>Nhấn <a href="../views/login.php">vào đây</a> để trở về trang đăng nhập, hoặc trang web sẽ tự động chuyển hướng sau <span id="counter" class="text-danger">5</span> giây nữa.</p>
-            <a class="btn btn-success px-5" href="login.php">Đăng nhập</a>
-        </div>
-      </div>
-    </div>
-  <script>
-      let duration = 5;
-      let countDown = 5;
-      let id = setInterval(() => {
-
-          countDown --;
-          if (countDown >= 0) {
-              $('#counter').html(countDown);
-          }
-          if (countDown == -1) {
-              clearInterval(id);
-              window.location.href = 'login.php';
-          }
-
-      }, 1000);
-  </script>
+    
   </body>
 </html>

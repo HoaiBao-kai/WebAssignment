@@ -24,26 +24,23 @@ if (!isset($_SESSION['user'])) {
         <div class="row">
             <div class="col-md-6 mt-5 mx-auto p-3 border rounded">
                 <h4>Địa chỉ truy cập không hợp lệ</h4>
-                <p>Nhấn <a href="../views/employee_index.php">vào đây</a> để trở về trang chủ, hoặc trang web sẽ tự động chuyển hướng sau <span id="counter" class="text-danger">5</span> giây nữa.</p>
+                <p><?php
+                    if ($_SESSION['possition'] === "leader") {
+                        ?>
+                        Nhấn <a href="../views/leader_index.php">vào đây</a> để trở về trang chủ
+                        <?php
+                    }
+                    else {
+                        ?>
+                        Nhấn <a href="../views/employee_index.php">vào đây</a> để trở về trang chủ
+                        <?php
+                    }
+                ?>
+                </p>
                 <a class="btn btn-success px-5" href="logout.php">Logout</a>
             </div>
         </div>
     </div>
-    <script>
-        let duration = 5;
-        let countDown = 5;
-        let id = setInterval(() => {
-            countDown--;
-            if (countDown >= 0) {
-                $('#counter').html(countDown);
-            }
-            if (countDown == -1) {
-                clearInterval(id);
-                window.location.href = 'employee_index.php';
-            }
-
-        }, 1000);
-    </script>
 </body>
 
 </html>
