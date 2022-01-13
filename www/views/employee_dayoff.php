@@ -57,7 +57,7 @@ $data = get_dayoff_request($user_id);
                     <a href="#" class="w3-bar-item w3-button"><i class="fas fa-address-card" style="font-size: 30px;"></i></a>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
                         <a class="w3-bar-item w3-button" href="../views/dayoff_management.php">Quản lý ngày nghỉ</a>
-                        <a class="w3-bar-item w3-button" href="addtask.php">Quản lý nhiệm vụ</a>
+                        <a class="w3-bar-item w3-button" href="../views/leader_index.php">Quản lý nhiệm vụ</a>
                         <a class="w3-bar-item w3-button" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
                     </div>
                 </div>

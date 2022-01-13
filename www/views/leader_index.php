@@ -49,7 +49,7 @@ $data = get_task_department($id);
                 <a href="#" class="w3-bar-item w3-button"><i class="fas fa-address-card" style="font-size: 30px;"></i></a>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
                     <a class="w3-bar-item w3-button" href="../views/dayoff_management.php">Quản lý ngày nghỉ</a>
-                    <a class="w3-bar-item w3-button" href="addtask.php">Quản lý nhiệm vụ</a>
+                    <a class="w3-bar-item w3-button" href="../views/leader_index.php">Quản lý nhiệm vụ</a>
                     <a class="w3-bar-item w3-button" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
                 </div>
             </div>
@@ -59,6 +59,9 @@ $data = get_task_department($id);
 
     <div class="container">
         <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách nhiệm vụ</h2>
+        <div class="form-group">
+            <a href="../views/addtask.php" class="btn btn-primary">Tạo nhiệm vụ mới</a>
+        </div>
         <table class="table table-bordered text-center">
             <tr>
                 <th>ID</th>

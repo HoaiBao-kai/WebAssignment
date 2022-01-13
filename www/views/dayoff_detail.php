@@ -8,11 +8,14 @@ if (!isset($_SESSION['user'])) {
 require_once("../admin/db.php");
 
 $user_id = $_SESSION['user'];
+$employeeName = $_SESSION['fullname'];
 
 if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
     $data = get_detail_dayoff($id);
+
+    // $namefile = ' ';
     
     if ($data['tag_file'] == " " || is_null($data['tag_file'])) {
         $namefile = '';
@@ -85,7 +88,7 @@ if (isset($_POST['reject'])) {
                     <a href="#" class="w3-bar-item w3-button"><i class="fas fa-address-card" style="font-size: 30px;"></i></a>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
                         <a class="w3-bar-item w3-button" href="../views/dayoff_management.php">Quản lý ngày nghỉ</a>
-                        <a class="w3-bar-item w3-button" href="addtask.php">Quản lý nhiệm vụ</a>
+                        <a class="w3-bar-item w3-button" href="../views/leader_index.php">Quản lý nhiệm vụ</a>
                         <a class="w3-bar-item w3-button" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
                     </div>
                 </div>
@@ -138,6 +141,10 @@ if (isset($_POST['reject'])) {
                             <label for="">Trạng thái</label>
                             <input disabled class="form-control" type="text" value="<?= $data['result'] ?>" name="" id="">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Họ tên nhân viên</label>
+                        <input disabled class="form-control" type="tex" value="<?= $employeeName ?>" name="" id="">
                     </div>
                     <div class="form-group">
                         <label>Lý do</label>

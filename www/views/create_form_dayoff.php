@@ -46,7 +46,6 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
     $starday = $_POST['startday'];
     $detail = $_POST['reason'];
 
-    $now = new DateTime();
 
     $file = $_FILES['file'];
     $fileName = $file["name"];
@@ -66,11 +65,11 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
         $error = 'Nhập ngày muốn xin nghỉ';
     } else if (empty($detail)) {
         $error = 'Nhập lý do xin nghỉ';
-    } else if($starday < $now) {
+    } else if($starday < $current_date) {
         $error = 'Ngày bạn chọn không hợp lệ';
     } 
     else {
-        $result = add_request_dayoff($id, $user_id, date('Y-m-d\TH:i'), $starday, $detail, "Waiting", $departId, $dayrequest, $file);
+        $result = add_request_dayoff($id, $user_id, date('Y-m-d\TH:i'), $starday, $detail, "Waiting", $departId, $dayrequest, $target_file);
         if ($result['code'] == 0) {
             header('Location: ../views/employee_dayoff.php');
             exit();
@@ -116,7 +115,7 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
                     <a href="#" class="w3-bar-item w3-button"><i class="fas fa-address-card" style="font-size: 30px;"></i></a>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
                         <a class="w3-bar-item w3-button" href="../views/dayoff_management.php">Quản lý ngày nghỉ</a>
-                        <a class="w3-bar-item w3-button" href="addtask.php">Quản lý nhiệm vụ</a>
+                        <a class="w3-bar-item w3-button" href="../views/leader_index.php">Quản lý nhiệm vụ</a>
                         <a class="w3-bar-item w3-button" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
                     </div>
                 </div>

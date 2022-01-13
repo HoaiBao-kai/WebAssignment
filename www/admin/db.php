@@ -335,7 +335,7 @@ function get_task_department($id)
 
 function get_dayoff_department($id, $user)
 {
-    $sql = "select * from day_off where department_id = ? and employeeId <> ?";
+    $sql = "select * from day_off where department_id = ? and employeeId <> ? ORDER BY date_request DESC";
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
