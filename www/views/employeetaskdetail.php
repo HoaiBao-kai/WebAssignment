@@ -18,7 +18,9 @@ require_once('../admin/db.php');
         }
         else {
             $file=explode("/",$data['tag_file']); 
-            $namefile=$file['2'];
+            if (isset($file['2'])) {
+                $namefile = $file['2'];
+            }
         }
     }
     else {

@@ -19,7 +19,9 @@ if (isset($_GET['id'])) {
         $namefile = '';
     } else {
         $file = explode("/", $data['tag_file']);
-        $namefile = $file['2'];
+        if (isset($file['2'])) {
+            $namefile = $file['2'];
+        }
     }
 
     $name = getEmployeeByID($data['account_id'])['fullname'];
@@ -33,7 +35,9 @@ if (isset($_GET['id'])) {
             $namefile1 = '';
         } else {
             $file1 = explode("/", $data1['tag_file']);
-            $namefile1 = $file1['2'];
+            if (isset($file1['2'])) {
+                $namefile1 = $file1['2'];
+            }
         }
     }
 } else {
@@ -77,20 +81,23 @@ if (isset($_POST['reject'])) {
         move_uploaded_file($fileTempName, $target_file);
     }
 
-
-    if (isset($_POST['newdeadline'])) {
-
-        if ($_POST['newdeadline'] > $data['deadline']) {
-            update_deadline($_GET['id'], $_POST['newdeadline']);
-        }
-        else {
-            $error = "Ngày gia hạn không hợp lệ";
-        }
-    }
-
     if (isset($_POST['reason'])) {
 
         $detail = $_POST['reason'];
+
+        if (empty($detail)) {
+            $error = "Nhập ghi chú";
+        }
+
+        if (isset($_POST['newdeadline'])) {
+
+            if ($_POST['newdeadline'] > $data['deadline']) {
+                update_deadline($_GET['id'], $_POST['newdeadline']);
+            }
+            else {
+                $error = "Ngày gia hạn không hợp lệ";
+            }
+        }
 
         update_status_submit($id, "Rejected");
         update_task_status($_GET['id'], "Rejected");

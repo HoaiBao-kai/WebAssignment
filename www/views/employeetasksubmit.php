@@ -17,7 +17,9 @@ if (isset($_GET['id'])) {
         $namefile = '';
     } else {
         $file = explode("/", $data['tag_file']);
-        $namefile = $file['2'];
+        if (isset($file['2'])) {
+            $namefile = $file['2'];
+        }
     }
 
     if ($data['status'] != "In progress") {
@@ -37,7 +39,9 @@ if (isset($_GET['id'])) {
             $namefile2 = '';
         } else {
             $file2 = explode("/", $data1['tag_file']);
-            $namefile2 = $file2['2'];
+            if (isset($file2['2'])) {
+                $namefile2 = $file2['2'];
+            }
         }
     }
 } else {
@@ -201,7 +205,7 @@ if (isset($_POST['detail'])) {
                     }
                     ?>
                     <?php
-                    if ($data['status'] != "Completed") {
+                    if ($data['status'] != "Completed" && $data['status'] != "Waiting") {
                     ?>
                         <div class="form-group">
                             <label for="">Thêm tệp đính kèm</label>
