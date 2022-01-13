@@ -58,11 +58,6 @@ $data = get_submit_task($id);
 
     <div class="container">
         <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách phản hồi</h2>
-        <?php
-        if ($_SESSION['possition'] == "employee") {
-            echo '<a href="../views//employeetasksubmit.php?id=<?php echo $id ?>" class="w3-button w3-blue" style="margin: 10px;">Create Submit</a>';
-        }
-        ?>
         <table class="table table-bordered text-center">
             <tr>
                 <th>ID</th>
@@ -85,9 +80,9 @@ $data = get_submit_task($id);
                             <td><?= $row['status'] ?></td>
                             <td>
                                 <?php
-                                if ($row['status'] == "New") {
+                                if ($_SESSION['possition'] == "leader") {
                                 ?>
-                                    <a class="btn btn-primary" href="../views/employeetaskdetail.php?id=<?= $id ?>">Xem chi tiết</a>
+                                    <a class="btn btn-primary" href="../views/leadertaskview.php?id=<?= $id ?>">Xem chi tiết</a>
                                 <?php
                                 } else {
                                 ?>

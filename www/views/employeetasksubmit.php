@@ -11,12 +11,30 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $data = get_task_id($id);
 
+    $dataTmp = get_submit_task($id);
+    $data1 = $dataTmp['data']->fetch_assoc();
+
     if ($data['tag_file'] == " ") {
         $namefile = '';
     } else {
         $file = explode("/", $data['tag_file']);
         $namefile = $file['2'];
     }
+
+    if ($data1['tag_file_response'] == " " || is_null($data1['tag_file_response'])) {
+        $namefile1 = '';
+    } else {
+        $file1 = explode("/", $data1['tag_file_response']);
+        $namefile1 = $file1['2'];
+    }
+
+    if ($data1['tag_file'] == " ") {
+        $namefile2 = '';
+    } else {
+        $file2 = explode("/", $data1['tag_file']);
+        $namefile2 = $file2['2'];
+    }
+
 } else {
     header('Location: unknown.php');
     exit();
@@ -62,7 +80,7 @@ if (isset($_POST['detail'])) {
         $result2 = update_task_process($id, $proc);
 
         if ($result['code'] == 0 && $result1['code'] == 0) {
-            header('Location: ../employee_index.php');
+            header('Location: ../views/employee_index.php');
             exit();
         }
     }
@@ -126,11 +144,10 @@ if (isset($_POST['detail'])) {
                                         <div class="form-group">
                                             <label for="">Ghi chú của trưởng phòng</label>
                                             <br>
-                                            <p class="text-center"><textarea name="reason" id="reason" cols="55" rows="5"></textarea></p>
+                                            <p class="text-center"><textarea name="reason" id="reason" cols="55" rows="5"><?= $data1['detail_response'] ?></textarea></p>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">File đính kèm thêm</label>
-                                            <input type='file' id="file" name="file" />
+                                            <label for="">File đính kèm thêm: <a href="../file/<?= $data1['tag_file_response'] ?>" download><?= $namefile1 ?></a></label>
                                         </div>
                                     <?php
                                 }
@@ -155,22 +172,28 @@ if (isset($_POST['detail'])) {
                             <div class="form-group">
                                 <label for="">Mô tả thông tin:</label>
                                 <br>
-                                <p class="text-center"> <textarea name="detail" id="detail" cols="55" rows="5"></textarea></p>
+                                <p class="text-center"> <textarea name="detail" id="detail" cols="55" rows="5"><?= $data1['deatail'] ?></textarea></p>
                             </div>
                             <?php 
                                 if ($data['status'] != "In progress") {
                                     ?>
                                         <div class="form-group">
-                                            <label for="">File đã nộp trước đó: <a href="" download></a></label>
+                                            <label for="">File đã nộp trước đó: <a href="../file/<?= $data1['tag_file'] ?>" download><?= $namefile2 ?></a></label>
                                         </div>
                                     <?php
                                 }
                             ?>
-                            <div class="form-group">
-                                <label for="">Thêm tệp đính kèm</label>
-                                <br>
-                                <input required type='file' id="file" name="file" />
-                            </div>
+                            <?php 
+                                if ($data['status'] != "Completed") {
+                                    ?>
+                                        <div class="form-group">
+                                            <label for="">Thêm tệp đính kèm</label>
+                                            <br>
+                                            <input required type='file' id="file" name="file" />
+                                        </div>
+                                    <?php
+                                }
+                            ?>
                             <div class="form-group text-center">
                                 <?php
                                 if (!empty($error)) {

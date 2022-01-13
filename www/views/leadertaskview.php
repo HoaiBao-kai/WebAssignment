@@ -64,11 +64,38 @@ if (isset($_POST['canceled'])) {
 
 if (isset($_POST['reject'])) {
     $id = $data1['submit_id'];
-    if (isset($_POST['newdeadline']) && isset($_POST['reason'])) {
-        echo $id;
-        update_status_submit($id, "Reject");
-        update_response_submit($tag_file, $detail);
-        header("location:");
+
+    $file = $_FILES['file'];
+    $fileName = $file["name"];
+    $fileType = $file["type"];
+    $fileTempName = $file["tmp_name"];
+    if ($fileName == null) {
+        $target_file = " ";
+    } else {
+        $file = $fileName;
+        $target_file = '../file/'.$file;
+        move_uploaded_file($fileTempName, $target_file);
+    }
+
+
+    if (isset($_POST['newdeadline'])) {
+
+        if ($_POST['newdeadline'] > $data['deadline']) {
+            update_deadline($_GET['id'], $_POST['newdeadline']);
+        }
+        else {
+            $error = "Ngày gia hạn không hợp lệ";
+        }
+    }
+
+    if (isset($_POST['reason'])) {
+
+        $detail = $_POST['reason'];
+
+        update_status_submit($id, "Rejected");
+        update_task_status($_GET['id'], "Rejected");
+        update_response_submit($target_file, $detail, $id);
+        header("Location: ../views/leader_index.php");
     }
 }
 
@@ -122,6 +149,9 @@ if (isset($_POST['reject'])) {
                         <label for="user">Thông tin chi tiết:</label>
                         <br>
                         <p class="text-center"> <textarea wrap="hard" disabled name="" id="" cols="55" rows="5"><?= $data['detail'] ?></textarea></p>
+                    </div>
+                    <div class="form-group">
+                        <a href="../views/submitlist.php?id=<?= $data['id'] ?>"><p>Lịch sử phản hồi nhiệm vụ</p></a>
                     </div>
                     <?php
                     if ($data['status'] != "In progress" && $data['status'] != "New" && $data['status'] != "Completed" && $data['status'] != "Canceled") {

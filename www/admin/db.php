@@ -730,7 +730,7 @@ function update_deadline($id, $date)
         return array('code' => 2, 'error' => 'ID not exist');
     }
 
-    return array('code' => 0, 'data' => $result);
+    return array('code' => 0, 'error' => 'Update successful');
 }
 
 function add_file($id, $taskid, $file)
@@ -753,13 +753,13 @@ function add_file($id, $taskid, $file)
 }
 
 
-function update_response_submit($tag_file, $detail)
+function update_response_submit($tag_file, $detail, $id)
 {
-    $sql = 'update submit set tag_file_response = ?, $detail_response = ?';
+    $sql = 'update submit set tag_file_response = ?, detail_response = ? where submit_id = ?';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
-    $stm->bind_param('ss', $tag_file, $detail);
+    $stm->bind_param('sss', $tag_file, $detail, $id);
 
     if (!$stm->execute()) {
         return array('code' => 1, 'error' => 'Can not execute command');
@@ -770,5 +770,5 @@ function update_response_submit($tag_file, $detail)
         return array('code' => 2, 'error' => 'ID not exist');
     }
 
-    return array('code' => 0, 'data' => $result);
+    return array('code' => 0, 'error' => 'Update successful');
 }
