@@ -648,7 +648,7 @@ function get_submit_task($id) {
         return array('code' => 2, 'error' => 'ID not exist');
     }
 
-    return $result->fetch_assoc();
+    return array('code' => 0, 'data' => $result);;
 }
 
 function update_task_complete($id, $review) {

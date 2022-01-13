@@ -29,7 +29,8 @@
 
         if ($data['status'] != "In progress" && $data['status'] != "New")
         {
-            $data1 = get_submit_task($id);
+            $dataTmp = get_submit_task($id);
+            $data1 = $dataTmp['data']->fetch_assoc();
 
             if ($data1['tag_file'] == " ") 
             {
