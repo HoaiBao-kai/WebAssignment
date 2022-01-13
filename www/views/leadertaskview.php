@@ -24,8 +24,10 @@ if (isset($_GET['id'])) {
 
     $name = getEmployeeByID($data['account_id'])['fullname'];
 
-    if ($data['status'] != "In progress" && $data['status'] != "New" &&     $data['status'] != "Canceled") {
-        $data1 = get_submit_task($id);
+    if ($data['status'] != "In progress" && $data['status'] != "New" && $data['status'] != "Canceled") {
+
+        $dataTmp = get_submit_task($id);
+        $data1 = $dataTmp['data']->fetch_assoc();
 
         if ($data1['tag_file'] == " ") {
             $namefile1 = '';
@@ -113,7 +115,7 @@ if (isset($_POST['canceled'])) {
                         <p class="text-center"> <textarea wrap="hard" disabled name="" id="" cols="55" rows="5"><?= $data['detail'] ?></textarea></p>
                     </div>
                     <?php
-                    if ($data['status'] != "In progress" && $data['status'] != "New" && $data['status'] != "Completed") {
+                    if ($data['status'] != "In progress" && $data['status'] != "New" && $data['status'] != "Completed" && $data['status'] != "Canceled") {
                     ?>
                         <div class="form-group">
                             <label for="id">Gia hạn</label>
@@ -146,7 +148,7 @@ if (isset($_POST['canceled'])) {
                         </div>
                     </div>
                     <?php
-                    if ($data['status'] != "In progress" && $data['status'] != "New") {
+                    if ($data['status'] != "In progress" && $data['status'] != "New" && $data['status'] != "Canceled") {
                     ?>
                         <div class="form-group">
                             <label for="name">Ngày nộp</label>

@@ -83,11 +83,11 @@ $data = get_submit_task($id);
                                 <?php
                                 if ($row['status'] == "New") {
                                 ?>
-                                    <a class="btn btn-primary" href="../views/employeetaskdetail.php?id=<?= $row['submit_id'] ?>">Xem chi tiết</a>
+                                    <a class="btn btn-primary" href="../views/employeetaskdetail.php?id=<?= $id ?>">Xem chi tiết</a>
                                 <?php
                                 } else {
                                 ?>
-                                    <a class="btn btn-primary" href="../views/employeetasksubmit.php?id=<?= $row['submit_id'] ?>">Xem chi tiết</a>
+                                    <a class="btn btn-primary" href="../views/employeetasksubmit.php?id=<?= $id ?>">Xem chi tiết</a>
                                 <?php
                                 }
                                 ?>
