@@ -90,7 +90,7 @@ if (isset($_POST['detail'])) {
     <div class="container">
         <!-- <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8"> -->
-                <h2 class="text-center text-dark mt-2 mb-3">Nhiệm vụ</h2>
+                <!-- <h2 class="text-center text-dark mt-2 mb-3">Nhiệm vụ</h2> -->
                 <form action="" enctype="multipart/form-data" method="post" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="row justify-content-center">
                         <div class="col-lg-6 col-md-8">
