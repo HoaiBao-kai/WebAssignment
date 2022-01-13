@@ -66,6 +66,16 @@ if (isset($_POST['canceled'])) {
     exit();
 }
 
+if (isset($_POST['giahan'])) {
+    if ($_POST['newdeadline'] < $data['deadline']) {
+        $error = "Ngày gia hạn không hợp lệ";
+    }
+    else {
+        update_deadline($_GET['id'], $_POST['newdeadline']);
+        $error = "Đã gia hạn thành công";
+    }
+}
+
 if (isset($_POST['reject'])) {
     $id = $data1['submit_id'];
 
@@ -80,7 +90,6 @@ if (isset($_POST['reject'])) {
         $target_file = '../file/'.$file;
         move_uploaded_file($fileTempName, $target_file);
     }
-
     
     if (isset($_POST['reason'])) {
 
@@ -89,11 +98,7 @@ if (isset($_POST['reject'])) {
         if (empty($detail)) {
             $error = "Nhập ghi chú";
         }
-        else if ($_POST['newdeadline'] < $data['deadline']) {
-            $error = "Ngày gia hạn không hợp lệ";
-        }
         else {
-            update_deadline($_GET['id'], $_POST['newdeadline']);
             update_status_submit($id, "Rejected");
             update_task_status($_GET['id'], "Rejected");
             update_response_submit($target_file, $detail, $id);
@@ -163,6 +168,9 @@ if (isset($_POST['reject'])) {
                         <div class="form-group">
                             <label for="id">Gia hạn</label>
                             <input type="datetime-local" name="newdeadline" id="newdeadline" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <button name="giahan" value="giahan" class="btn btn-primary px-5 h-5">Extend Deadline</button>
                         </div>
                         <div class="form-group">
                             <label for="">Ghi chú:</label>

@@ -153,7 +153,7 @@ if (isset($_POST['detail'])) {
                         <div class="form-group">
                             <label for="">Ghi chú của trưởng phòng</label>
                             <br>
-                            <p class="text-center"><textarea name="reason" id="reason" cols="55" rows="5"><?= $data1['detail_response'] ?></textarea></p>
+                            <p class="text-center"><textarea name="reason" id="reason" cols="55" rows="5" disabled><?= $data1['detail_response'] ?></textarea></p>
                         </div>
                         <div class="form-group">
                             <label for="">File đính kèm thêm: <a href="../file/<?= $data1['tag_file_response'] ?>" download><?= $namefile1 ?></a></label>
@@ -180,6 +180,16 @@ if (isset($_POST['detail'])) {
                             <p>Lịch sử phản hồi nhiệm vụ</p>
                         </a>
                     </div>
+                    <?php 
+                        if ($data['status'] == "Completed") {
+                            ?>
+                                <div class="form-group">
+                                    <label for="">Mức độ hoàn thành</label>
+                                    <input type="text" name="" id="" value="<?= $data['review'] ?>" class="form-control" disabled>
+                                </div>
+                            <?php
+                        }
+                    ?>
                     <div class="form-group">
                         <label for="">Mô tả thông tin:</label>
                         <br>
