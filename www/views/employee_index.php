@@ -64,32 +64,32 @@ $data = get_user_task($id, $user_id);
             </tr>
             <tbody>
                 <?php
-                    if ($data['code'] == 3) {
-                        while ($row = $data['data']->fetch_assoc()) {
-                        ?>
-                            <tr>
-                                <td><?= $row['id'] ?></td>
-                                <td><?= $row['title'] ?></td>
-                                <td><?= $row['start_day'] ?></td>
-                                <td><?= $row['deadline'] ?></td>
-                                <td><?= $row['status'] ?></td>
-                                <td>
-                                    <?php
-                                    if ($row['status'] == "New") {
-                                    ?>
-                                        <a class="btn btn-primary" href="../views/employeetaskdetail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <a class="btn btn-primary" href="../views/employeetasksubmit.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
-                                    <?php
-                                    }
-                                    ?>
-                                </td>
-                            </tr>
-                        <?php
-                        }
+                if ($data['code'] == 3) {
+                    while ($row = $data['data']->fetch_assoc()) {
+                ?>
+                        <tr>
+                            <td><?= $row['id'] ?></td>
+                            <td><?= $row['title'] ?></td>
+                            <td><?= $row['start_day'] ?></td>
+                            <td><?= $row['deadline'] ?></td>
+                            <td><?= $row['status'] ?></td>
+                            <td>
+                                <?php
+                                if ($row['status'] == "New") {
+                                ?>
+                                    <a class="btn btn-primary" href="../views/submitlist.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                <?php
+                                } else {
+                                ?>
+                                    <a class="btn btn-primary" href="../views/submitlist.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                <?php
+                                }
+                                ?>
+                            </td>
+                        </tr>
+                <?php
                     }
+                }
                 ?>
             </tbody>
         </table>

@@ -10,15 +10,13 @@ require_once('../admin/db.php');
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $data = get_task_id($id);
-    
-    if ($data['tag_file'] == " ") 
-        {
-            $namefile='';
-        }
-        else {
-            $file=explode("/",$data['tag_file']); 
-            $namefile=$file['2'];
-        }
+
+    if ($data['tag_file'] == " ") {
+        $namefile = '';
+    } else {
+        $file = explode("/", $data['tag_file']);
+        $namefile = $file['2'];
+    }
 } else {
     header('Location: unknown.php');
     exit();
@@ -48,8 +46,7 @@ if (isset($_POST['detail'])) {
 
     if ($dateSubmit > $data['deadline']) {
         $proc = "Hoàn thành trễ hạn";
-    }
-    else {
+    } else {
         $proc = "Hoàn thành đúng hạn";
     }
 
@@ -65,7 +62,7 @@ if (isset($_POST['detail'])) {
         $result2 = update_task_process($id, $proc);
 
         if ($result['code'] == 0 && $result1['code'] == 0) {
-            header('Location: ../views/employee_index.php');
+            header('Location: ../employee_index.php');
             exit();
         }
     }
@@ -138,7 +135,7 @@ if (isset($_POST['detail'])) {
                         }
                         ?>
                         <button type="submit" class="btn btn-success px-5 h-5">Submit</button>
-                        <a href="../views/employee_index.php" class="btn btn-danger px-5 h-5">Return</a>
+                        <a href="../employee_index.php" class="btn btn-danger px-5 h-5">Return</a>
                     </div>
                 </form>
             </div>

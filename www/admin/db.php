@@ -632,9 +632,9 @@ function update_num_dayoff($id, $num)
     return array('code' => 0, 'data' => $result);
 }
 
-function get_submit_list($id)
+function get_submit_task($id)
 {
-    $sql = 'SELECT * FROM `submit` where task_id = ? ORDER BY submit_date DESC';
+    $sql = 'select * from submit where task_id = ? ORDER BY submit_date DESC';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
@@ -649,7 +649,7 @@ function get_submit_list($id)
         return array('code' => 2, 'error' => 'ID not exist');
     }
 
-    return array('code' => 3, 'data' => $result);
+    return array('code' => 0, 'data' => $result);
 }
 
 
@@ -713,7 +713,8 @@ function update_task_process($id, $proc)
     return array('code' => 0, 'data' => $result);
 }
 
-function update_deadline($id, $date) {
+function update_deadline($id, $date)
+{
     $sql = 'update task set deadline = ? where id = ?';
     $conn = open_database();
 
@@ -732,7 +733,8 @@ function update_deadline($id, $date) {
     return array('code' => 0, 'data' => $result);
 }
 
-function add_file($id, $taskid, $file) {
+function add_file($id, $taskid, $file)
+{
     $sql = 'insert into file(id, tag_file, task_id) values(?,?,?)';
     $conn = open_database();
 
