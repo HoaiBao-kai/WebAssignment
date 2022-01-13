@@ -710,11 +710,11 @@ function update_task_process($id, $proc) {
 }
 
 function update_deadline($id, $date) {
-    $sql = 'update task set process = ? where id = ?';
+    $sql = 'update task set deadline = ? where id = ?';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
-    $stm->bind_param('ss', $proc, $id);
+    $stm->bind_param('ss', $date, $id);
 
     if (!$stm->execute()) {
         return array('code' => 1, 'error' => 'Can not execute command');
@@ -726,4 +726,22 @@ function update_deadline($id, $date) {
     }
 
     return array('code' => 0, 'data' => $result);
+}
+
+function add_file($id, $taskid, $file) {
+    $sql = 'insert into file(id, tag_file, task_id) values(?,?,?)';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('sss', $id, $file, $taskid);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    if ($stm->affected_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return array('code' => 0, 'error' => 'Create successful');
 }

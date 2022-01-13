@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 12, 2022 lúc 02:57 PM
--- Phiên bản máy phục vụ: 10.4.22-MariaDB
--- Phiên bản PHP: 8.1.1
+-- Host: 127.0.0.1
+-- Generation Time: Jan 13, 2022 at 05:34 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `dbagm`
+-- Database: `dbagm`
 --
 CREATE DATABASE IF NOT EXISTS `dbagm` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `dbagm`;
@@ -26,7 +26,7 @@ USE `dbagm`;
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `account`
+-- Table structure for table `account`
 --
 
 CREATE TABLE `account` (
@@ -40,7 +40,7 @@ CREATE TABLE `account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `account`
+-- Dumping data for table `account`
 --
 
 INSERT INTO `account` (`username`, `fullname`, `hash_password`, `possition`, `department`, `avatar`, `id`) VALUES
@@ -53,7 +53,7 @@ INSERT INTO `account` (`username`, `fullname`, `hash_password`, `possition`, `de
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `day_off`
+-- Table structure for table `day_off`
 --
 
 CREATE TABLE `day_off` (
@@ -72,16 +72,16 @@ CREATE TABLE `day_off` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `day_off`
+-- Dumping data for table `day_off`
 --
 
 INSERT INTO `day_off` (`id`, `employeeId`, `day_start`, `reason`, `result`, `reason_result`, `department_id`, `num_day_off`, `day_off_request`, `tag_file`, `day_off_response`, `date_request`) VALUES
-('61ded6c82e060', 'vanB', '2022-01-13', '3123123', 'Accept', NULL, '115', '3', '3', 'Array', '2022-01-12', '2022-01-12');
+('61ded6c82e060', 'vanB', '2022-01-13', '3123123', 'Accept', NULL, '115', '3', '3', '', '2022-01-12', '2022-01-12');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `department`
+-- Table structure for table `department`
 --
 
 CREATE TABLE `department` (
@@ -92,7 +92,7 @@ CREATE TABLE `department` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `department`
+-- Dumping data for table `department`
 --
 
 INSERT INTO `department` (`id`, `name`, `room`, `detail`) VALUES
@@ -102,20 +102,19 @@ INSERT INTO `department` (`id`, `name`, `room`, `detail`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `file`
+-- Table structure for table `file`
 --
 
 CREATE TABLE `file` (
   `file_tag` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `link` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
-  `detail` varchar(5000) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `id` varchar(100) COLLATE utf8_unicode_ci NOT NULL
+  `id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `task_id` varchar(100) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `submit`
+-- Table structure for table `submit`
 --
 
 CREATE TABLE `submit` (
@@ -128,17 +127,18 @@ CREATE TABLE `submit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `submit`
+-- Dumping data for table `submit`
 --
 
 INSERT INTO `submit` (`submit_id`, `task_id`, `submit_date`, `tag_file`, `deatail`, `status`) VALUES
-('61dedada7560d', 'Array', '2022-01-12 20:42:00', ' ', '32423423423', 'Waiting'),
-('61dedae21ebe6', 'Array', '2022-01-12 20:42:00', ' ', '13212', 'Waiting');
+('61def88b57e53', '61def6b08ba21', '2022-01-12 22:49:00', '../file/google_api_key.txt', 'Trâm Võ', 'Completed'),
+('61dfa18b63846', '61df9e356b7d9', '2022-01-13 10:50:00', '../file/Huong dan.txt', 'Kiểm tra', 'Waiting'),
+('61dfa1e24a470', '61df9363a132a', '2022-01-13 10:52:00', '../file/Huong dan.txt', 'Tính toán', 'Completed');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `task`
+-- Table structure for table `task`
 --
 
 CREATE TABLE `task` (
@@ -150,49 +150,56 @@ CREATE TABLE `task` (
   `account_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `status` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `tag_file` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `department_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+  `department_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `review` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `process` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `task`
+-- Dumping data for table `task`
 --
 
-INSERT INTO `task` (`id`, `title`, `detail`, `start_day`, `deadline`, `account_id`, `status`, `tag_file`, `department_id`) VALUES
-('61dd337c67c5d', 'Assignment Web', 'Phải thực hiện nghiêm túc', '2022-01-11 14:36:00', '2022-01-12 14:35:00', 'vanA', 'Ready', '', '115'),
-('61dd49e429fe8', 'mamamamam', 'hahahahahaha', '2022-01-11 16:12:00', '2022-01-22 04:11:00', 'vanB', 'Waiting', '', '115'),
-('61dd4cb740a05', 'Traam Vo', 'Traam Vo', '2022-01-11 16:24:00', '2022-01-28 16:23:00', 'vanB', 'Ready', '', '115'),
-('61de64386a882', 'Nhiem vu moi', 'Ahhihi', '2022-01-12 12:16:00', '2022-01-12 13:16:00', 'vanB', 'Ready', '', '115');
+INSERT INTO `task` (`id`, `title`, `detail`, `start_day`, `deadline`, `account_id`, `status`, `tag_file`, `department_id`, `review`, `process`) VALUES
+('61def6b08ba21', 'Bảo Bảo', 'Trâm Võ', '2022-01-12 22:41:00', '2022-01-15 00:45:00', 'vanB', 'Completed', '../file/Huong dan.txt', '115', 'ok', 'Hoàn thành đúng hạn'),
+('61df9363a132a', 'Tính toán sổ sách', 'Tính toán sổ sách', '2022-01-13 09:50:00', '2022-01-15 09:49:00', 'vanB', 'Completed', '../file/Huong dan.txt', '115', 'GOOD', 'Hoàn thành trễ hạn'),
+('61df9e356b7d9', 'Kiểm tra', 'Kiểm tra', '2022-01-13 10:36:00', '2022-01-13 10:36:00', 'vanB', 'Waiting', ' ', '115', '', 'Hoàn thành trễ hạn');
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `account`
+-- Indexes for table `account`
 --
 ALTER TABLE `account`
   ADD PRIMARY KEY (`username`);
 
 --
--- Chỉ mục cho bảng `day_off`
+-- Indexes for table `day_off`
 --
 ALTER TABLE `day_off`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `department`
+-- Indexes for table `department`
 --
 ALTER TABLE `department`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `submit`
+-- Indexes for table `file`
+--
+ALTER TABLE `file`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `submit`
 --
 ALTER TABLE `submit`
   ADD PRIMARY KEY (`submit_id`);
 
 --
--- Chỉ mục cho bảng `task`
+-- Indexes for table `task`
 --
 ALTER TABLE `task`
   ADD PRIMARY KEY (`id`);
