@@ -11,8 +11,15 @@ require_once('../admin/db.php');
     {
         $id = $_GET['id'];
         $data = get_task_id($id);
-        $file=explode("/",$data['tag_file']); 
-        $namefile=$file['2'];
+        
+        if ($data['tag_file'] == " ") 
+        {
+            $namefile='';
+        }
+        else {
+            $file=explode("/",$data['tag_file']); 
+            $namefile=$file['2'];
+        }
     }
     else {
         header('Location: unknown.php');
@@ -24,6 +31,7 @@ if (isset($_POST['update'])) {
     $id = $_GET['id'];
 
     $result = update_task_status($id, "In progress");
+    $p = update_task_process($id, "Chưa hoàn thành");
 
     if ($_SESSION['possition'] === "leader") {
         header('Location: ../views/leader_index.php');

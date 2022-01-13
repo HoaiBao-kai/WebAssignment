@@ -1,19 +1,19 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: login.php');
-    exit();
-}
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: login.php');
+        exit();
+    }
 
-if ($_SESSION['possition'] != "leader") {
-    header('Location: ../views/unknown.php');
-    exit();
-}
+    if ($_SESSION['possition'] != "leader") {
+        header('Location: ../views/unknown.php');
+        exit();
+    }
 
-require_once('../admin/db.php');
-$user_id = $_SESSION['user'];
-$id = get_department_user($user_id);
-$data = get_task_department($id);
+    require_once('../admin/db.php');
+    $user_id = $_SESSION['user'];
+    $id = get_department_user($user_id);
+    $data = get_task_department($id);
 ?>
 <!doctype html>
 <html lang="en">
@@ -82,7 +82,18 @@ $data = get_task_department($id);
                             <td><?= $row['deadline'] ?></td>
                             <td><?= $row['status'] ?></td>
                             <td>
-                                <a class="btn btn-primary" href="../views/leadertaskview.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                <?php
+                                    if ($row['status'] == "Canceled") {
+                                        ?>
+                                            <a class="btn btn-danger" href="../views/leadertaskview.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                        <?php
+                                    } 
+                                    else {
+                                        ?>
+                                            <a class="btn btn-primary" href="../views/leadertaskview.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                        <?php
+                                    }
+                                ?>
                             </td>
                         </tr>
                 <?php

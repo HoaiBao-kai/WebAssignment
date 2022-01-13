@@ -10,8 +10,15 @@ require_once('../admin/db.php');
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $data = get_task_id($id);
-    $file=explode("/",$data['tag_file']); 
-    $namefile=$file['2'];
+    
+    if ($data['tag_file'] == " ") 
+        {
+            $namefile='';
+        }
+        else {
+            $file=explode("/",$data['tag_file']); 
+            $namefile=$file['2'];
+        }
 } else {
     header('Location: unknown.php');
     exit();
@@ -21,6 +28,7 @@ $submitId = uniqid();
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 $error = '';
 $dateSubmit = date('Y-m-d\TH:i');
+$proc = '';
 
 if (isset($_POST['detail'])) {
     $detail = $_POST['detail'];
@@ -38,6 +46,13 @@ if (isset($_POST['detail'])) {
         move_uploaded_file($fileTempName, $target_file);
     }
 
+    if ($dateSubmit > $data['deadline']) {
+        $proc = "Hoàn thành trễ hạn";
+    }
+    else {
+        $proc = "Hoàn thành đúng hạn";
+    }
+
     if (empty($detail)) {
         $error = "Hãy nhập mô tả";
     } else if (empty($id)) {
@@ -47,6 +62,7 @@ if (isset($_POST['detail'])) {
     } else {
         $result = submit_task($submitId, $id, $dateSubmit, $target_file, $detail, "Waiting");
         $result1 = update_task_status($id, "Waiting");
+        $result2 = update_task_process($id, $proc);
 
         if ($result['code'] == 0 && $result1['code'] == 0) {
             header('Location: ../views/employee_index.php');
