@@ -83,17 +83,16 @@ $data = get_dayoff_department($id, $user_id);
                             <td><?= $row['day_off_request'] ?></td>
                             <td><?= $row['result'] ?></td>
                             <td>
-                                <?php 
-                                    if ($row['result'] == "Waiting") {
-                                        ?>
-                                        <a class="btn btn-primary" href="../views/dayoff_detail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
-                                        <?php
-                                    }
-                                    else {
-                                        ?>
-                                        <button disabled class="btn btn-primary" href="">Xem chi tiết</button>
-                                        <?php
-                                    }
+                                <?php
+                                if ($row['result'] == "Waiting") {
+                                ?>
+                                    <a class="btn btn-primary" href="../views/dayoff_detail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                <?php
+                                } else {
+                                ?>
+                                    <button class="btn btn-primary" href="">Xem chi tiết</button>
+                                <?php
+                                }
                                 ?>
                             </td>
                         </tr>

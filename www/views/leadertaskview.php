@@ -24,7 +24,7 @@ if (isset($_GET['id'])) {
 
     $name = getEmployeeByID($data['account_id'])['fullname'];
 
-    if ($data['status'] != "In progress" && $data['status'] != "New") {
+    if ($data['status'] != "In progress" && $data['status'] != "New" &&     $data['status'] != "Canceled") {
         $data1 = get_submit_task($id);
 
         if ($data1['tag_file'] == " ") {
@@ -33,6 +33,7 @@ if (isset($_GET['id'])) {
             $file1 = explode("/", $data1['tag_file']);
             $namefile1 = $file1['2'];
         }
+        echo "Hihi";
     }
 } else {
     header('Location: unknown.php');
@@ -215,7 +216,7 @@ if (isset($_POST['canceled'])) {
                         } else {
                         ?>
                             <button name="accept" class="btn btn-success px-5 h-5">Accept</button>
-                            <button name="reject" class="btn btn-danger px-5 h-5">Reject</button>
+                            <input name="reject" value="reject" class="btn btn-danger px-5 h-5">Reject</input>
                             <a href="../views/leader_index.php" class="btn btn-primary px-5 h-5">Return</a>
                         <?php
                         }
