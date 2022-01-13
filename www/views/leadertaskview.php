@@ -35,7 +35,6 @@ if (isset($_GET['id'])) {
             $file1 = explode("/", $data1['tag_file']);
             $namefile1 = $file1['2'];
         }
-        echo "Hihi";
     }
 } else {
     header('Location: unknown.php');
@@ -61,6 +60,16 @@ if (isset($_POST['canceled'])) {
 
     header('Location: ../views/leader_index.php');
     exit();
+}
+
+if (isset($_POST['reject'])) {
+    $id = $data1['submit_id'];
+    if (isset($_POST['newdeadline']) && isset($_POST['reason'])) {
+        echo $id;
+        update_status_submit($id, "Reject");
+        update_response_submit($tag_file, $detail);
+        header("location:");
+    }
 }
 
 ?>
@@ -218,7 +227,7 @@ if (isset($_POST['canceled'])) {
                         } else {
                         ?>
                             <button name="accept" class="btn btn-success px-5 h-5">Accept</button>
-                            <input name="reject" value="reject" class="btn btn-danger px-5 h-5">Reject</input>
+                            <button name="reject" value="reject" class="btn btn-danger px-5 h-5">Reject</button>
                             <a href="../views/leader_index.php" class="btn btn-primary px-5 h-5">Return</a>
                         <?php
                         }

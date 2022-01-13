@@ -58,7 +58,11 @@ $data = get_submit_task($id);
 
     <div class="container">
         <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách phản hồi</h2>
-        <a href="../views//employeetasksubmit.php?id=<?php echo $id ?>" class="w3-button w3-blue" style="margin: 10px;">Create Submit</a>
+        <?php
+        if ($_SESSION['possition'] == "employee") {
+            echo '<a href="../views//employeetasksubmit.php?id=<?php echo $id ?>" class="w3-button w3-blue" style="margin: 10px;">Create Submit</a>';
+        }
+        ?>
         <table class="table table-bordered text-center">
             <tr>
                 <th>ID</th>

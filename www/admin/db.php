@@ -751,3 +751,24 @@ function add_file($id, $taskid, $file)
 
     return array('code' => 0, 'error' => 'Create successful');
 }
+
+
+function update_response_submit($tag_file, $detail)
+{
+    $sql = 'update submit set tag_file_response = ?, $detail_response = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ss', $tag_file, $detail);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'ID not exist');
+    }
+
+    return array('code' => 0, 'data' => $result);
+}
