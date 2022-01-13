@@ -19,6 +19,11 @@ if (isset($_POST['newpass']) || isset($_POST['conpass']) || isset($_POST['pass']
     $login = login($_SESSION['user'], $_POST['pass']);
     if ($login['code'] == 3) {
         $error = "Your current is not correct";
+    } else {
+        $ft_result = updatePassword($_SESSION['user'], $_POST['newpass']);
+        if ($ft_result['code'] == 0) {
+            header('Location: login.php');
+        }
     }
 }
 

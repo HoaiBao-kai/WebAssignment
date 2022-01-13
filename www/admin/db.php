@@ -632,8 +632,9 @@ function update_num_dayoff($id, $num)
     return array('code' => 0, 'data' => $result);
 }
 
-function get_submit_task($id) {
-    $sql = 'select * from submit where task_id = ? ORDER BY submit_date DESC';
+function get_submit_task($id)
+{
+    $sql = 'SELECT * FROM `submit` where task_id = ? ORDER BY submit_date DESC';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
@@ -651,7 +652,9 @@ function get_submit_task($id) {
     return array('code' => 0, 'data' => $result);;
 }
 
-function update_task_complete($id, $review) {
+
+function update_task_complete($id, $review)
+{
     $sql = 'update task set review = ?, status = "Completed" where id = ?';
     $conn = open_database();
 
@@ -690,7 +693,8 @@ function update_status_submit($id, $status)
     return array('code' => 0, 'data' => $result);
 }
 
-function update_task_process($id, $proc) {
+function update_task_process($id, $proc)
+{
     $sql = 'update task set process = ? where id = ?';
     $conn = open_database();
 
