@@ -29,8 +29,12 @@ if (!isset($_SESSION['user'])) {
                         ?>
                         Nhấn <a href="../views/leader_index.php">vào đây</a> để trở về trang chủ
                         <?php
-                    }
-                    else {
+                    } 
+                    else if ($_SESSION['possition'] === "admin") {
+                        ?>
+                        Nhấn <a href="../views/admin_index.php">vào đây</a> để trở về trang chủ
+                        <?php
+                    } else {
                         ?>
                         Nhấn <a href="../views/employee_index.php">vào đây</a> để trở về trang chủ
                         <?php

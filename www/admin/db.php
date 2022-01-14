@@ -135,14 +135,14 @@ function updatePassword($username, $password)
     return array('code' => 0, 'message' => 'Update successful');
 }
 
-function addEmployee($username, $fullname, $hashed_password, $possition, $department, $avatar)
+function addEmployee($username, $fullname, $hashed_password, $possition, $department, $avatar,$id,$phone,$gender,$birthday,$workday,$address)
 {
-    $sql = 'insert into account(username, fullname, hash_password,possition,department,avatar) values(?,?,?,?,?,?)';
+    $sql = 'insert into account(username, fullname, hash_password, possition, department, avatar, id, phone, gender, birthday, workday, address) values(?,?,?,?,?,?,?,?,?,?,?,?)';
     $conn = open_database();
 
     $stm = $conn->prepare($sql);
     $hash = password_hash($hashed_password, PASSWORD_DEFAULT);
-    $stm->bind_param('ssssss', $username, $fullname, $hash, $possition, $department, $avatar);
+    $stm->bind_param('ssssssssssss', $username, $fullname, $hash, $possition, $department, $avatar,$id,$phone,$gender,$birthday,$workday,$address);
 
     if (!$stm->execute()) {
         return array('code' => 1, 'error' => 'Can not execute command');
@@ -154,6 +154,7 @@ function addEmployee($username, $fullname, $hashed_password, $possition, $depart
 
     return array('code' => 0, 'message' => 'Create successful');
 }
+
 
 function get_departments()
 {
@@ -194,6 +195,45 @@ function get_department($id)
     return $result->fetch_assoc();
 }
 
+function get_user()
+{
+    $sql = 'select * from account where possition <> "admin"';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return $result;
+}
+
+//dangtrinh
+function update_avatar($username, $avatar)
+{
+    $sql = 'update account set avatar = ? where username = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('ss', $avatar, $username);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    if ($stm->affected_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return array('code' => 0, 'error' => 'Update successful');
+}
+
 function add_department($id, $name, $room, $detail)
 {
     $sql = 'insert into department(id, name, room, detail) values(?,?,?,?)';
@@ -211,6 +251,26 @@ function add_department($id, $name, $room, $detail)
     }
 
     return array('code' => 0, 'error' => 'Create successful');
+}
+
+function get_users($id)
+{
+    $sql = 'select * from account where username = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('s', $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'ID not exist');
+    }
+
+    return $result->fetch_assoc();
 }
 
 function update_department($id, $name, $room, $detail)
@@ -351,6 +411,25 @@ function get_dayoff_department($id, $user)
     }
 
     return array('code' => 0, 'data' => $result);
+}
+
+function get_dayoff_leader()
+{
+    $sql = 'select day_off.* from day_off inner join account on employeeId = username and possition = "leader" ORDER BY date_request DESC';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'An error occured');
+    }
+
+    return $result;
 }
 
 function get_task_id($id)

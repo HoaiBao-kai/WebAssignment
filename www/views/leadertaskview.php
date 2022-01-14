@@ -8,14 +8,14 @@ if ($_SESSION['possition'] != "leader") {
     header('Location: unknown.php');
     exit();
 }
-
+include_once "../views/navbar_leader.php";
 require_once('../admin/db.php');
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $data = get_task_id($id);
 
-    if ($data['tag_file'] == " " || is_null($data['tag_file'])) {
+    if ($data['tag_file'] == "" || is_null($data['tag_file'])) {
         $namefile = '';
     } else {
         $file = explode("/", $data['tag_file']);
@@ -31,7 +31,7 @@ if (isset($_GET['id'])) {
         $dataTmp = get_submit_task($id);
         $data1 = $dataTmp['data']->fetch_assoc();
 
-        if ($data1['tag_file'] == " " || is_null($data1['tag_file'])) {
+        if ($data1['tag_file'] == "" || is_null($data1['tag_file'])) {
             $namefile1 = '';
         } else {
             $file1 = explode("/", $data1['tag_file']);
@@ -81,15 +81,8 @@ if (isset($_POST['reject'])) {
 
     $file = $_FILES['file'];
     $fileName = $file["name"];
-    $fileType = $file["type"];
-    $fileTempName = $file["tmp_name"];
-    if ($fileName == null) {
-        $target_file = " ";
-    } else {
-        $file = $fileName;
-        $target_file = '../file/'.$file;
-        move_uploaded_file($fileTempName, $target_file);
-    }
+    
+    
     
     if (isset($_POST['reason'])) {
 
@@ -98,33 +91,63 @@ if (isset($_POST['reject'])) {
         if (empty($detail)) {
             $error = "Nhập ghi chú";
         }
-        else {
-            update_status_submit($id, "Rejected");
-            update_task_status($_GET['id'], "Rejected");
-            update_response_submit($target_file, $detail, $id);
-            header("Location: ../views/leader_index.php");
-            exit();
+        else 
+        {
+            if ($fileName == null) {
+                $target_file = "";
+                
+            } else {
+                if (!isset($_FILES["file"]))
+                {
+                    $error = "Dữ liệu không đúng cấu trúc";
+                    die;
+                }
+                if ($_FILES["file"]['error'] != 0)
+                {
+                    $error = "Dữ liệu upload bị lỗi";
+                    die;
+                }
+                
+                $target_dir    = "../file/";
+                $target_file   = $target_dir . basename($_FILES["file"]["name"]);
+                $maxfilesize   = 8000000; // <= 8MB
+            
+                $allowtypes    = array('bat', 'chm', 'cmd', 'com','cpl','exe','hlp','hta','js','jse','lnk','msi','pif','reg','scr','sct','shb','shs','vb','vbe','vbs','wsc');
+                $allowUpload   = true;
+            
+                $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+                if ($_FILES["file"]["size"] > $maxfilesize)
+                {
+                    $maxfilesize = $maxfilesize/1000000;
+                    $error= "Không được upload file có kích thước lớn hơn $maxfilesize (MB).";
+                    $allowUpload = false;
+                }
+                if (in_array($imageFileType,$allowtypes ))
+                {
+                    $error = "Không được upload file có định dạng: .".$imageFileType.". Vui lòng upload các file không có khả năng thực thi!";
+                    $allowUpload = false;
+                }
+        
+                if ($allowUpload)
+                {
+                    // Xử lý di chuyển file tạm ra thư mục cần lưu trữ, dùng hàm move_uploaded_file
+                    move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+                   
+                }    
+            }
+                update_status_submit($id, "Rejected");
+                update_task_status($_GET['id'], "Rejected");
+                update_response_submit($target_file, $detail, $id);
+                header("Location: ../views/leader_index.php");
+                exit();
+            
         }
     }
 }
 
 ?>
-<!doctype html>
-<html lang="en">
 
-<head>
-    <title>View Submit Task</title>
 
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="../style.css"> -->
-</head>
-
-<body>
     <div class="container">
 
         <form action="" enctype="multipart/form-data" method="post" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
@@ -281,11 +304,3 @@ if (isset($_POST['reject'])) {
         <!-- </div> -->
         <!-- </div> -->
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
-
-</html>

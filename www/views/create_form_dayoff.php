@@ -4,7 +4,13 @@ if (!isset($_SESSION['user'])) {
     header('Location: ../views/login.php');
     exit();
 }
-
+if ($_SESSION['possition'] == "leader") {
+    include_once "../views/navbar_leader.php";
+} else if ($_SESSION['possition'] == "employee") {
+    include_once "../views/navbar_employee.php";
+} else {
+    header('Location: unknown.php');
+}
 require_once("../admin/db.php");
 
 $user_id = $_SESSION['user'];
@@ -46,19 +52,6 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
     $starday = $_POST['startday'];
     $detail = $_POST['reason'];
 
-
-    $file = $_FILES['file'];
-    $fileName = $file["name"];
-    $fileType = $file["type"];
-    $fileTempName = $file["tmp_name"];
-    if ($fileName == null) {
-        $target_file = " ";
-    } else {
-        $file = $fileName;
-        $target_file = '../file/'.$file;
-        move_uploaded_file($fileTempName, $target_file);
-    }
-
     if ($dayrequest == 0 || ($dayrequest > $dayleff)) {
         $error = 'Số ngày nghỉ không hợp lệ';
     } else if (empty($starday)) {
@@ -67,83 +60,62 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
         $error = 'Nhập lý do xin nghỉ';
     } else if($starday < $current_date) {
         $error = 'Ngày bạn chọn không hợp lệ';
-    } 
-    else {
+    } else if ( $_FILES["file"]['name'] == "") {
+        $target_file = '';
         $result = add_request_dayoff($id, $user_id, date('Y-m-d\TH:i'), $starday, $detail, "Waiting", $departId, $dayrequest, $target_file);
         if ($result['code'] == 0) {
             header('Location: ../views/employee_dayoff.php');
             exit();
         }
     }
+    else {
+    if (!isset($_FILES["file"]))
+    {
+        $error = "Dữ liệu không đúng cấu trúc";
+        die;
+    }
+    if ($_FILES["file"]['error'] != 0)
+    {
+        $error = "Dữ liệu upload bị lỗi";
+        die;
+    }
+    
+    $target_dir    = "../file/";
+    $target_file   = $target_dir . basename($_FILES["file"]["name"]);
+    $maxfilesize   = 8000000; // <= 8MB
+
+    $allowtypes    = array('bat', 'chm', 'cmd', 'com','cpl','exe','hlp','hta','js','jse','lnk','msi','pif','reg','scr','sct','shb','shs','vb','vbe','vbs','wsc');
+    $allowUpload   = true;
+
+    $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+    if ($_FILES["file"]["size"] > $maxfilesize)
+    {
+        $maxfilesize = $maxfilesize/1000000;
+        $error= "Không được upload file có kích thước lớn hơn $maxfilesize (MB).";
+        $allowUpload = false;
+    }
+    if (in_array($imageFileType,$allowtypes ))
+    {
+        $error = "Không được upload file có định dạng: .".$imageFileType.". Vui lòng upload các file không có khả năng thực thi!";
+        $allowUpload = false;
+    }
+
+    if ($allowUpload)
+    {
+        // Xử lý di chuyển file tạm ra thư mục cần lưu trữ, dùng hàm move_uploaded_file
+        move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+        $result = add_request_dayoff($id, $user_id, date('Y-m-d\TH:i'), $starday, $detail, "Waiting", $departId, $dayrequest, $target_file);
+        if ($result['code'] == 0) {
+            header('Location: ../views/employee_dayoff.php');
+            exit();
+        }
+    }    
+        
+    }
 }
 
 ?>
 
-<!doctype html>
-<html lang="en">
-
-<head>
-    <title>Add Dayoff</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-</head>
-
-<body>
-    <div class="w3-bar w3-light-grey w3-border w3-large">
-        <div class="container">
-            <?php
-            if ($_SESSION['possition'] === "leader") {
-            ?>
-                <a href="leader_index.php" class="w3-bar-item w3-button"><i class="fas fa-house-user" style="font-size: 30px;"></i></a>
-                <a class="navbar-brand" style="margin-top: 5px;" href="#"><strong><?= $_SESSION['fullname'] ?></strong></a>
-                <div class="w3-dropdown-hover" style="float: right;">
-                    <a href="#" class="w3-bar-item w3-button"><i class="fas fa-user-alt" style="font-size: 30px;"></i></a>
-                    <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
-                        <a href="../views/employeeprofile.php?username=<?= $user_id ?>" class="w3-bar-item w3-button">Thông tin cá nhân</a>
-                        <a href="../views/resetpassword.php" class="w3-bar-item w3-button">Đổi mật khẩu</a>
-                        <a href="../views/logout.php" class="w3-bar-item w3-button">Đăng xuất</a>
-                    </div>
-                </div>
-                <div class="w3-dropdown-hover" style="float: right;">
-                    <a href="#" class="w3-bar-item w3-button"><i class="fas fa-address-card" style="font-size: 30px;"></i></a>
-                    <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
-                        <a class="w3-bar-item w3-button" href="../views/dayoff_management.php">Quản lý ngày nghỉ</a>
-                        <a class="w3-bar-item w3-button" href="../views/leader_index.php">Quản lý nhiệm vụ</a>
-                        <a class="w3-bar-item w3-button" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
-                    </div>
-                </div>
-            <?php
-            } else {
-            ?>
-                <a href="employee_index.php" class="w3-bar-item w3-button"><i class="fas fa-house-user" style="font-size: 30px;"></i></a>
-                <a class="navbar-brand" style="margin-top: 5px;" href="#"><strong><?= $_SESSION['fullname'] ?></strong></a>
-                <div class="w3-dropdown-hover" style="float: right;">
-                    <a href="#" class="w3-bar-item w3-button"><i class="fas fa-user-alt" style="font-size: 30px;"></i></a>
-                    <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
-                        <a href="../views/employeeprofile.php?username=<?= $user_id ?>" class="w3-bar-item w3-button">Thông tin cá nhân</a>
-                        <a href="../views/resetpassword.php" class="w3-bar-item w3-button">Đổi mật khẩu</a>
-                        <a href="../views/logout.php" class="w3-bar-item w3-button">Đăng xuất</a>
-                    </div>
-                </div>
-                <div class="w3-dropdown-hover" style="float: right;">
-                    <a href="#" class="w3-bar-item w3-button"><i class="fas fa-address-card" style="font-size: 30px;"></i></a>
-                    <div class="w3-dropdown-content w3-bar-block w3-card-4" style="margin-top: 50px;">
-                        <a class="w3-bar-item w3-button" href="../views/employee_index.php">Nhiệm vụ</a>
-                        <a class="w3-bar-item w3-button" href="../views/employee_dayoff.php">Ngày nghỉ phép</a>
-                    </div>
-                </div>
-            <?php
-            }
-            ?>
-        </div>
-    </div>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-5">
@@ -203,11 +175,3 @@ if (isset($_POST['startday']) && isset($_POST['reason'])) {
             </div>
         </div>
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
-
-</html>

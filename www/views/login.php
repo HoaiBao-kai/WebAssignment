@@ -1,7 +1,10 @@
 <?php
 session_start();
 if (isset($_SESSION['user'])) {
-    if (isset($_SESSION['possition']) == 'leader') {
+    if (isset($_SESSION['possition']) == 'admin') {
+        header('admin_index.php');
+    }
+    else if (isset($_SESSION['possition']) == 'leader') {
         header('leader_index.php');
     }
     header('Location: ../views/employee_index.php');
@@ -24,7 +27,7 @@ if (isset($_POST['user']) && isset($_POST['pass'])) {
         $error = 'Please enter your username';
     } else if (empty($pass)) {
         $error = 'Please enter your password';
-    } else if (strlen($pass) < 6) {
+    } else if (strlen($pass) < 6 && $pass != $user) {
         $error = 'Password must have at least 6 characters';
     } else {
         $result = login($user, $pass);
@@ -34,7 +37,9 @@ if (isset($_POST['user']) && isset($_POST['pass'])) {
             $_SESSION['user'] = $user;
             $_SESSION['fullname'] = $data['fullname'];
             $_SESSION['possition'] = $data['possition'];
-            if ($_SESSION['possition'] === 'employee') {
+            if ($_SESSION['possition'] === 'admin') {
+                header('Location: ../views/admin_index.php');
+            } else if ($_SESSION['possition'] === 'employee') {
                 header('Location: ../views/employee_index.php');
             } else {
                 header('Location: leader_index.php');
@@ -69,15 +74,16 @@ if (isset($_POST['user']) && isset($_POST['pass'])) {
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
-                <h3 class="text-center text-secondary mt-5 mb-3">User Login</h3>
+                <h2 class="text-center text-danger mt-5 mb-3">QUẢN LÝ NHÂN SỰ</h1>
+                <h3 class="text-center text-primary mt-5 mb-3">Đăng nhập</h3>
                 <form method="post" action="" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input name="user" id="user" type="text" class="form-control" placeholder="Username">
+                        <input name="user" id="user" type="text" class="form-control" placeholder="Nhập Username">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input name="pass" id="password" type="password" class="form-control" placeholder="Password">
+                        <input name="pass" id="password" type="password" class="form-control" placeholder="Nhập Password">
                     </div>
                     <div class="form-group text-center">
                         <?php

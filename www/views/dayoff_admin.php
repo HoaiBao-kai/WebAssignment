@@ -5,25 +5,24 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-if ($_SESSION['possition'] != "leader") {
+include_once "../views/navbar_admin.php";
+if ($_SESSION['possition'] != "admin") {
     header('Location: unknown.php');
     exit();
 }
 
-$user_id = $_SESSION['user'];
-include_once "../views/navbar_leader.php";
-require_once('../admin/db.php');
-$user_id = $_SESSION['user'];
-$id = get_department_user($user_id);
-$data = get_dayoff_department($id, $user_id);
-?>
 
+require_once('../admin/db.php');
+$data = get_dayoff_leader();
+
+?>
     <div class="container">
         <h2 class="text-center" style="margin:30px 30px 30px 30px">Danh sách sách yêu cầu</h2>
         <table class="table table-bordered text-center">
             <tr>
                 <th>ID</th>
-                <th>Nhân viên</th>
+                <th>Trưởng phòng</th>
+                <th>Phòng Ban</th>
                 <th>Ngày bắt đầu</th>
                 <th>Số ngày muốn nghỉ</th>
                 <th>Trạng thái</th>
@@ -31,12 +30,17 @@ $data = get_dayoff_department($id, $user_id);
             </tr>
             <tbody>
                 <?php
-                if ($data['code'] == 0) {
-                    while ($row = $data['data']->fetch_assoc()) {
+                
+                    while ($row = $data->fetch_assoc()) {
+                        $username = $row['employeeId'];
+                        $data2 = getEmployeeByID($username);
+                        $data1 = get_department($data2['department']);
                 ?>
                         <tr>
                             <td><?= $row['id'] ?></td>
                             <td><?= getEmployeeByID($row['employeeId'])['fullname'] ?></td>
+                            <td><?= $data1['name'] ?></td>
+                            <td><?= $row['day_start'] ?></td>
                             <td><?= $row['day_start'] ?></td>
                             <td><?= $row['day_off_request'] ?></td>
                             <td><?= $row['result'] ?></td>
@@ -56,7 +60,7 @@ $data = get_dayoff_department($id, $user_id);
                         </tr>
                 <?php
                     }
-                }
+                
                 ?>
             </tbody>
         </table>
