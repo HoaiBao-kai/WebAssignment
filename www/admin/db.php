@@ -172,7 +172,7 @@ function get_departments()
         return array('code' => 2, 'error' => 'An error occured');
     }
 
-    return $result;
+    return array('code' => 0, 'data' => $result);
 }
 
 function get_department($id)
@@ -211,7 +211,7 @@ function get_user()
         return array('code' => 2, 'error' => 'An error occured');
     }
 
-    return $result;
+    return array('code' => 0, 'data' => $result);
 }
 
 //dangtrinh
@@ -429,7 +429,7 @@ function get_dayoff_leader()
         return array('code' => 2, 'error' => 'An error occured');
     }
 
-    return $result;
+    return array('code' => 0, 'data' => $result);
 }
 
 function get_task_id($id)

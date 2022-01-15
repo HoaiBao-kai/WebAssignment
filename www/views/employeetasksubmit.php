@@ -117,17 +117,18 @@ if (isset($_POST['detail'])) {
                 {
                     // Xử lý di chuyển file tạm ra thư mục cần lưu trữ, dùng hàm move_uploaded_file
                     move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+
+                    $result = submit_task($submitId, $id, $dateSubmit, $target_file, $detail, "Waiting");
+                    $result1 = update_task_status($id, "Waiting");
+                    $result2 = update_task_process($id, $proc);
+
+                    if ($result['code'] == 0 && $result1['code'] == 0) {
+                        header('Location: ../views/employee_index.php');
+                        exit();
+                    }
                 }    
         }
 
-        $result = submit_task($submitId, $id, $dateSubmit, $target_file, $detail, "Waiting");
-        $result1 = update_task_status($id, "Waiting");
-        $result2 = update_task_process($id, $proc);
-
-        if ($result['code'] == 0 && $result1['code'] == 0) {
-            header('Location: ../views/employee_index.php');
-            exit();
-        }
     }
 }
 

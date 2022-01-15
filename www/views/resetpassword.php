@@ -17,19 +17,21 @@ if ($_SESSION['possition'] == "admin") {
 require_once('../admin/db.php');
 $error = '';
 if (isset($_POST['newpass']) || isset($_POST['conpass']) || isset($_POST['pass'])) {
-    if (strlen($_POST['newpass']) < 7) {
-        $error = "Your new password should be more than 6 character";
+    if (strlen($_POST['newpass']) < 6) {
+        $error = "Your new password must have at least 6 characters";
     }
-    if ($_POST['newpass'] != $_POST['conpass']) {
+    else if ($_POST['newpass'] != $_POST['conpass']) {
         $error = "Password does not match";
     }
-    $login = login($_SESSION['user'], $_POST['pass']);
-    if ($login['code'] == 3) {
-        $error = "Your current is not correct";
-    } else {
-        $ft_result = updatePassword($_SESSION['user'], $_POST['newpass']);
-        if ($ft_result['code'] == 0) {
-            header('Location: login.php');
+    else {
+        $login = login($_SESSION['user'], $_POST['pass']);
+        if ($login['code'] == 3) {
+            $error = "Your current password is not correct";
+        } else {
+            $ft_result = updatePassword($_SESSION['user'], $_POST['newpass']);
+            if ($ft_result['code'] == 0) {
+                header('Location: login.php');
+            }
         }
     }
 }

@@ -64,6 +64,7 @@ $data = get_dayoff_request($user_id);
                 <th>Ngày bắt đầu nghỉ</th>
                 <th>Số ngày muốn nghỉ</th>
                 <th>Trạng thái</th>
+                <th>Chi tiết</th>
             </tr>
             <tbody>
                 <?php
@@ -71,10 +72,23 @@ $data = get_dayoff_request($user_id);
                     while ($row = $data['data']->fetch_assoc()) {
                 ?>
                         <tr>
-                            <th><?= $row['id'] ?></th>
-                            <th><?= $row['day_start'] ?></th>
-                            <th><?= $row['day_off_request'] ?></th>
-                            <th><?= $row['result'] ?></th>
+                            <td><?= $row['id'] ?></td>
+                            <td><?= $row['day_start'] ?></td>
+                            <td><?= $row['day_off_request'] ?></td>
+                            <td><?= $row['result'] ?></td>
+                            <td>
+                                <?php
+                                if ($row['result'] == "Waiting") {
+                                ?>
+                                    <a class="btn btn-primary" href="../views/dayoff_detail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                <?php
+                                } else {
+                                ?>
+                                    <a class="btn btn-primary" href="../views/dayoff_detail.php?id=<?= $row['id'] ?>">Xem chi tiết</a>
+                                <?php
+                                }
+                                ?>
+                            </td>
                         </tr>
                 <?php
                     }

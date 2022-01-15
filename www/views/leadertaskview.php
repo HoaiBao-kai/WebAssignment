@@ -95,6 +95,11 @@ if (isset($_POST['reject'])) {
         {
             if ($fileName == null) {
                 $target_file = "";
+                update_status_submit($id, "Rejected");
+                update_task_status($_GET['id'], "Rejected");
+                update_response_submit($target_file, $detail, $id);
+                header("Location: ../views/leader_index.php");
+                exit();
                 
             } else {
                 if (!isset($_FILES["file"]))
@@ -132,14 +137,14 @@ if (isset($_POST['reject'])) {
                 {
                     // Xử lý di chuyển file tạm ra thư mục cần lưu trữ, dùng hàm move_uploaded_file
                     move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+                    update_status_submit($id, "Rejected");
+                    update_task_status($_GET['id'], "Rejected");
+                    update_response_submit($target_file, $detail, $id);
+                    header("Location: ../views/leader_index.php");
+                    exit();
                    
                 }    
             }
-                update_status_submit($id, "Rejected");
-                update_task_status($_GET['id'], "Rejected");
-                update_response_submit($target_file, $detail, $id);
-                header("Location: ../views/leader_index.php");
-                exit();
             
         }
     }

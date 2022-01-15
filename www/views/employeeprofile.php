@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
         <h2 class="text-center" style="margin:30px 30px 30px 30px">Thông tin tài khoản</h2>
         <div class="row justify-content-center">
                     
-            <div class="col-md-6 col-lg-5">
+            <div class="col-md-8 col-lg-6">
                 <form method="post" action="" enctype="multipart/form-data" class="border rounded w-100 mb-5 mx-auto px-3 pt-3 bg-light">
                     <div class="text-center">
                     <?php
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
                             <input disabled value="<?= $data['username'] ?>" class="form-control " name="manhanvien" id="manhanvien" type="text" placeholder="Chưa có mã nhân viên">
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             <label>Họ và tên</label>
                             <input disabled value="<?= $data['fullname'] ?>" class="form-control" name="hoten" id="hoten" type="text" placeholder="Nhập họ và tên">
                         </div>
@@ -147,7 +147,7 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
+                        <div class="form-group col-md -6">
                             <label>Ngày sinh</label>
                             <input disabled value="<?= $data['birthday'] ?>" class="form-control " name="birthday" id="birthday" type="text" placeholder="Chưa có ngày sinh">
                         </div>
@@ -157,7 +157,7 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             <label>Số điện thoại</label>
                             <input disabled value="<?= $data['phone'] ?>" class="form-control " name="phone" id="phone" type="text" placeholder="Chưa có số điện thoại">
                         </div>

@@ -37,11 +37,9 @@
     }
 
     if (isset($_POST['update'])) {
-        if (empty($_POST['pb']) || empty($_POST['sophong']) || empty($_POST['comment']) || empty($_POST['manager']))
+        if (empty($_POST['pb']) || empty($_POST['sophong']) || empty($_POST['comment']))
         {
             $error = "Invalid input";
-            echo $_POST['manager'];
-            echo $error;
         }
         else
         {
@@ -49,11 +47,14 @@
             $sophong = $_POST['sophong'];
             $comment = $_POST['comment'];
             $id = $_GET['id'];
-            $manager = $_POST['manager'];
+
+            if (empty($_POST['managet'])){
+                $manager = $_POST['manager'];
+                $result2 = down_manager($userN, $id);
+                $result1 = update_manager($manager, $id);
+            }
     
             $result = update_department($id, $pb, $sophong, $comment);
-            $result2 = down_manager($userN, $id);
-            $result1 = update_manager($manager, $id);
             header('Location: ../views/department_management.php');
         }
     }

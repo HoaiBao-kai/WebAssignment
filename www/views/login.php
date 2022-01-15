@@ -1,13 +1,17 @@
 <?php
 session_start();
 if (isset($_SESSION['user'])) {
-    if (isset($_SESSION['possition']) == 'admin') {
-        header('admin_index.php');
+    if ($_SESSION['possition'] == 'admin') {
+        header('Location: admin_index.php');
     }
-    else if (isset($_SESSION['possition']) == 'leader') {
-        header('leader_index.php');
+
+    if ($_SESSION['possition'] == 'leader') {
+        header('Location: leader_index.php');
     }
-    header('Location: ../views/employee_index.php');
+
+    if ($_SESSION['possition'] == 'leader') {
+        header('Location: employee_index.php');
+    }
     exit();
 }
 

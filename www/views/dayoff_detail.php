@@ -16,7 +16,6 @@ if ($_SESSION['possition'] == "admin") {
 require_once("../admin/db.php");
 
 $user_id = $_SESSION['user'];
-$employeeName = $_SESSION['fullname'];
 
 if (isset($_GET['id'])) {
 
@@ -24,6 +23,8 @@ if (isset($_GET['id'])) {
     $data = get_detail_dayoff($id);
     $data1 = get_users($data['employeeId']);
     $data2 = get_department($data1['department']);
+
+    $employeeName = $data1['fullname'];
 
     if ($data['tag_file'] == "" || $data['tag_file'] == " " || is_null($data['tag_file'])) {
         $namefile = '';
@@ -126,7 +127,7 @@ if (isset($_POST['reject'])) {
                         }
                         ?>
                         <?php
-                        if ($data['result'] == "Waiting" ) {
+                        if ($data['result'] == "Waiting" && ($_SESSION['user'] != $data['employeeId'])) {
                             ?>
                             <p class="text-center" style="margin:15px">
                             <button name="accept" class="btn btn-success px-5 h-5">Accept</button></span>

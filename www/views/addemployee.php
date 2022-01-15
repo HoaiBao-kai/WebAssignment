@@ -73,7 +73,7 @@ if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['department']))
                         <label>Phòng ban</label>
                         <select class="form-control" name="department" id="department">
                             <?php
-                            while ($row = $department->fetch_assoc()) {
+                            while ($row = $department['data']->fetch_assoc()) {
                             ?>
                                 <option value='<?php echo $row["id"] ?>'><?php echo $row['name'] ?></option>
                             <?php

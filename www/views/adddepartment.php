@@ -15,12 +15,11 @@ require_once('../admin/db.php');
 <?php
 
 $error = '';
-$id = '';
+$id = uniqid();
 $name = '';
 $room = '';
 $detail = '';
-if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['room']) && isset($_POST['detail'])) {
-    $id = $_POST['id'];
+if (isset($_POST['name']) && isset($_POST['room']) && isset($_POST['detail'])) {
     $name = $_POST['name'];
     $room = $_POST['room'];
     $detail = $_POST['detail'];
@@ -50,7 +49,7 @@ if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['room']) && iss
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Mã phòng ban</label>
-                            <input class="form-control " name="id" id="id" type="text" placeholder="Mã phòng ban">
+                            <input value="<?= $id ?>" disabled class="form-control " name="id" id="id" type="text" placeholder="Mã phòng ban">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Số phòng</label>

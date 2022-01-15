@@ -31,32 +31,39 @@ $data = get_user();
             </tr>
             <tbody id="department-body">
                 <?php
-                while ($row = $data->fetch_assoc()) {
-                    $username = $row['username'];
-                    $data2 = getEmployeeByID($username);
-                    $data1 = get_department($data2['department']);
-                ?>
-                    <tr>
-                        <td><?= $row['username'] ?></td>
-                        <td><?= $row['fullname'] ?></td>
-                        <td>
-                        <?php
-                        if ($row['possition'] === "leader") {
-                        ?>
-                            Trưởng phòng
-                        <?php
-                        } else { ?>
-                            Nhân viên
-                        <?php
-                        }
-                        ?>
-                        </td>
-                        <td><?= $data1['name']?></td>
-                        <td><a href="../views/employee_detail.php?username=<?= $row['username'] ?>" class="btn btn-primary">Chi tiết</a></td>
-                        
-
-                    </tr>
-                <?php
+                if ($data['code'] === 0) {
+                    while ($row = $data['data']->fetch_assoc()) {
+                        $username = $row['username'];
+                        $data2 = getEmployeeByID($username);
+                        $data1 = get_department($data2['department']);
+                    ?>
+                        <tr>
+                            <td><?= $row['username'] ?></td>
+                            <td><?= $row['fullname'] ?></td>
+                            <td>
+                            <?php
+                            if ($row['possition'] === "leader") {
+                            ?>
+                                Trưởng phòng
+                            <?php
+                            } else { ?>
+                                Nhân viên
+                            <?php
+                            }
+                            ?>
+                            </td>
+                            <td><?= $data1['name']?></td>
+                            <td><a href="../views/employee_detail.php?username=<?= $row['username'] ?>" class="btn btn-primary">Chi tiết</a></td>
+                            
+    
+                        </tr>
+                    <?php
+                    }
+                }
+                else {
+                    ?>
+                    <tr><td colspan="5" class="text-center">Chưa có dữ liệu</td></tr>
+                    <?php
                 }
                 ?>
             </tbody>
