@@ -826,3 +826,23 @@ function update_response_submit($tag_file, $detail, $id)
 
     return array('code' => 0, 'error' => 'Update successful');
 }
+
+function get_submit($id)
+{
+    $sql = 'select * from submit where submit_id = ?';
+    $conn = open_database();
+
+    $stm = $conn->prepare($sql);
+    $stm->bind_param('s', $id);
+
+    if (!$stm->execute()) {
+        return array('code' => 1, 'error' => 'Can not execute command');
+    }
+
+    $result = $stm->get_result();
+    if ($result->num_rows == 0) {
+        return array('code' => 2, 'error' => 'ID not exist');
+    }
+
+    return array('code' => 0, 'data' => $result);
+}

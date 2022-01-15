@@ -37,6 +37,7 @@
                 <th>Ngày nộp</th>
                 <th>Trạng thái</th>
                 <th>Ghi chú</th>
+                <th>Chi tiết</th>
             </tr>
             <tbody>
                 <?php
@@ -52,17 +53,9 @@
                             <td><?= $row['status'] ?></td>
                             <td>
                                 <?= $row['detail_response'] ?>
-                                <!-- <?php
-                                if ($_SESSION['possition'] == "leader") {
-                                ?>
-                                    <a class="btn btn-primary" href="../views/leadertaskview.php?id=<?= $id ?>">Xem chi tiết</a>
-                                <?php
-                                } else {
-                                ?>
-                                    <a class="btn btn-primary" href="../views/employeetasksubmit.php?id=<?= $id ?>">Xem chi tiết</a>
-                                <?php
-                                }
-                                ?> -->
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" href="../views/detail_submit.php?id=<?= $row['submit_id'] ?>">Xem chi tiết</a>
                             </td>
                         </tr>
                 <?php
